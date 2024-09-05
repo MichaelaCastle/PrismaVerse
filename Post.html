@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <!-- <link rel="stylesheet" href="CSS/SecondaryColors.css"> -->
+    <link rel="stylesheet" href="CSS/Defaults.css">
+    <style>
+        :root{
+            /* --bg: linear-gradient(125deg, var(--c3-0-8), var(--c3-0-8)); */
+            
+            --c3-2-55-8: hwb(var(--color3) 20% 55% / 0.9);
+            --c4-2-55-8: hwb(var(--color4) 20% 55% / 0.9);
+
+            --black-50: rgba(0, 0, 0, .5);
+            --black-25: rgba(0, 0, 0, .25);
+            --black-75: rgba(0, 0, 0, .75);
+            --black-85: rgba(0, 0, 0, .85);
+        }
+        [data-theme="light"]{
+            --black-50: rgba(200, 200, 200, .5);
+            --black-25: rgba(200, 200, 200, .25);
+            --black-75: rgba(200, 200, 200, .75);
+            --black-85: rgba(200, 200, 200, .85);
+        }
+        [data-theme="dark"]{
+            --black-50: rgba(0, 0, 0, .5);
+            --black-25: rgba(0, 0, 0, .25);
+            --black-75: rgba(0, 0, 0, .75);
+            --black-85: rgba(0, 0, 0, .85);
+        }
+        p, ul, h1, h2, #convoMenu button {
+            color: var(--c1-8-0);
+        }
+        #pageGrid{
+            display: grid;
+            grid-template-columns: 1fr 2.25fr 1fr;
+            /* background-image: url("Images/darkRed.jpg");
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center; */
+        }
+        #pageGrid > div:not(#mid-col){
+            backdrop-filter: blur(25px) brightness(60%);
+        }
+        #mid-col{
+            /* background: linear-gradient(var(--black-50), var(--black-50)), url("Images/darkRed.jpg");
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center; */
+            padding: 1.5rem;
+        }
+        #mid-col h1{
+            font-size: 2rem;
+            font-weight: 600;
+            border: solid var(--c2-4-0);
+            border-width: 0 0 0 5px;
+            padding-left: 10px;
+        }
+        .user{
+            display: flex;
+            flex-direction: row;
+        }
+        .user div{
+            display: flex;
+            flex-direction: column;
+        }
+        #mid-col .user .name{
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+        .user .status {
+            color: var(--c2-8-0);
+        }
+        .user .name, .user .status {
+            padding: 0px 0px 0px 15px;
+        }
+        .user .status {
+            font-size: 1.1rem;
+        }
+        .content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .content p{
+            font-size: 1.5rem;
+            padding: 0 1.5rem;
+        }
+        .content img{
+            width: 90%;
+            margin: 1rem 0;
+            border-radius: 10px;
+        }
+
+
+
+
+
+
+        .flexH{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+        }
+        .flexH a:hover{
+            color: var(--c2-7-0);
+            border: var(--c2-4-0) solid;
+            border-width: 0px 0px 3px 0px;
+            border-radius: 10px;
+        }
+        .flexH a {
+            min-width: 200px;
+            /* width: 100%; */
+            color: var(--c1-7-0);
+            flex-grow: 1;
+            align-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 1.25rem;
+            display: block;
+            border-radius: 10px 10px 0 0;
+            border: var(--c1-6-0) solid;
+            border-width: 0px 0px 3px 0px;
+            transition: border-radius 0.1s;
+        }
+        .likes{
+            flex-wrap: nowrap;
+            overflow-x: hidden;
+            /* width: 100%; */
+        }
+        
+        .user-image {
+            border: 2px solid var(--pfpBorderCol);
+            align-self: center;
+            border-radius: 2rem;
+            width: 3.75rem;
+            height: 3.75rem;
+        }
+        .like{
+            --like-size: 3.75rem;
+            --like-font: 2.5rem;
+            border-radius: 2rem;
+            width: var(--like-size);
+            height: var(--like-size);
+            background-color: var(--c2-8-0);
+            position: relative;
+            margin-right: 1rem;
+        }
+        .comment .like{
+            --like-size: 2.25rem;
+            --like-font: 1.75rem;
+        }
+        .like span{
+            width: var(--like-size);
+            height: var(--like-size);
+            position: absolute;
+            left: 0;
+            pointer-events: none;
+        }
+        .like span:before{
+            pointer-events: none;
+            content: '\2661';
+            width: var(--like-size);
+            height: var(--like-size);
+            font-size: var(--like-font);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--c2-0-4);
+        }
+
+        .like input{
+            appearance: none;
+            background-color: transparent;
+            margin: 0;
+            width: var(--like-size);
+            height: var(--like-size);
+            border: transparent;
+        }
+
+        .like input:checked + span:before{
+            content: '\2764';
+            font-size: calc(var(--like-font) * 0.75);
+            background-color: var(--c2-0-4);
+            color: var(--c2-8-0);
+            border-radius: 2rem;
+            animation: bounce 0.75s; 
+        }
+        @keyframes bounce {
+            0% {
+                transform: scale(1, 1);
+                background-color: var(--c2-8-0);
+                color: var(--c2-0-4);
+            }
+            40% {
+                transform: scale(1.1, 1.1) rotate(20deg);
+            }
+            60% {
+                transform: scale(1.1, 1.1) rotate(-90deg);
+                background-color: var(--c2-8-0);
+                color: var(--c2-0-4);
+            }
+            100% {
+                transform: scale(1, 1);
+                background-color: var(--c2-0-4);
+                color: var(--c2-8-0);
+            }
+        }
+
+        .comments{
+            display: flex;
+            flex-direction: column;
+            /* gap: 5px; */
+            margin-right: 20px;
+            /* background-color: var(--c1-0-7-5); */
+            border-radius: 10px;
+        }
+        .comment{
+            display: flex;
+            flex-direction: row;
+            border-radius: 10px;
+            border: var(--c1-6-0) solid;
+            border-width: 0px 0px 2px 0px;
+            /* border-radius: 10px; */
+            border-radius: 10px 10px 0 0;
+        }
+        .comment.replied{
+            width: 90%;
+            align-self: flex-end;
+        }
+        .comment > div{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .comment .user-image {
+            align-self: baseline;
+        }
+        .comment .name{
+            font-size: 1.25rem;
+            font-weight: normal;
+        }
+        .comment .text:not(.reply-user) {
+            color: var(--c2-8-0);
+        }
+        .comment .name, .comment .text {
+            padding: 0px 0px 0px 15px;
+        }
+        .comment .text {
+            font-size: 1.15rem;
+        }
+        .comment .buttons{
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .reply{
+            display: flex;
+            flex-direction: column;
+            background-color: var(--c1-4-0);
+            width: 2.25rem;
+            height: 2.25rem;
+            text-align: center;
+            justify-content: center;
+            border-radius: 2rem;
+        }
+        .reply i{
+            color: var(--c1-0-8);
+            font-size: 1.15rem;
+        }
+        .comment .time{
+            font-size: 1.15rem;
+            margin-left: 10px;
+            color: var(--c1-8-0);
+        }
+
+
+        .comment-content{
+            flex: 1;
+            background-color: var(--c1-0-7-5);
+            border: solid var(--c1-6-0);
+            border-width: 0 0 2px 0;
+            border-radius: 4px;
+            padding: 5px;
+            font-family: "Gabarito", sans-serif;
+            font-optical-sizing: auto;
+            color: var(--c1-6-0);
+        }
+        .comment-content:focus{
+            outline: none !important;
+            border: solid var(--c1-6-0);
+            border-width: 0 0 2px 0;
+        }
+        .comment-post{
+            margin-bottom: 10px;
+        }
+        .post-comment{
+            border: none;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--c1-4-0);
+            /* width: 2.5rem; */
+            /* height: 2.5rem; */
+            text-align: center;
+            justify-content: center;
+            border-radius: 2rem;
+        }
+        .post-comment i{
+            color: var(--c1-0-8);
+            font-size: 1.25rem;
+        }
+    </style>
+    <!-- Other -->
+    <style>
+        .format-img{
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The white on black PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </header>
+    <main>
+        <div id="pageGrid">
+            <div>
+
+            </div>
+            <div id="mid-col">
+                <!-- <h1>The Last of Us rp request</h1> -->
+                <h1>Jumping back in</h1>
+                <div class="user p10">
+                    <img class="user-image" src="Images/pfp2.jpg" />
+                    <div>
+                        <h2 class="name">Blood Chilling Shadow Knight</h2>
+                        <h2 class="status online">5 hours ago</h2>
+                    </div>
+                </div>
+                <div class="content">
+                    <!-- <p>Hello I have finished classes until the summer so I have quiet abit of time on my hands. I have plaid both of the games, and I really enjoyed them. I'm looking for someone to play Ellie Williams for my girl Mara Prince I am willing to double up if needed the characters I can play are Joel Miller, Abby Anderson more in my fandom wiki I do have an good plot idea in mind. Please pm/comment if you are interested in roleplaying with me. Please also read my rules</p>
+                    <img src="https://pm1.aminoapps.com/9027/8c5b64d8e1f62a5eea835f65b7cdb9ab87810f96r1-735-786v2_hq.jpg"> -->
+                    <p>Okay so first off... Hello. I am trying to get back into role-playing as it's been a few years since last time I actually got some roles going. I will possibly redo my characters or whatever to get things right. I work the graveyard shift so I'll reply whenever I can but I'll usually be busy since adulting is hard :joy: 🥲 But just know I'll try my best to keep up and would love to get started. I usually only do b(me) × f(you) but I've done a few group rps and casually chats. Bye!</p>
+                </div>
+                <h1>Linked Entries</h1>
+                <div class="flexH">
+                    <a class="format-img" style='background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 30%, rgba(0, 0, 0, 0)), url("Images/purpleH.jpg")'>Jay Star</a>
+                    <a class="format-img" style='background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 30%, rgba(0, 0, 0, 0)), url("Images/Untitled70_20230920161918.png")'>Jacob Jackson</a>
+                    <a class="format-img" style='background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 30%, rgba(0, 0, 0, 0)), url("Images/greenH.jpg")'>Samuel Broteez</a>
+                </div>
+                <h1>Likes (6)</h1>
+                <div class="flexH likes">
+                    <div class="like">
+                        <input type="checkbox">
+                        <span></span>
+                    </div>
+                    <img class="user-image" src="Images/pfp2.jpg" />
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <img class="user-image" src="Images/redVert.jpg" />
+                    <img class="user-image" src="Images/yellowH.jpg" />
+                    <img class="user-image" src="Images/verticalBG.jpeg" />
+                    <img class="user-image" src="Images/purpleVert2.jpg" />
+                </div>
+                <h1>Comments</h1>
+                <div class="flexH comment-post">
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <textarea class="comment-content" placeholder="Say something..."></textarea>
+                    <button type="submit" class="post-comment"><i class="fa fa-solid fa-comment"></i></button>
+                </div>
+                <div class="comments">
+                    <div class="comment p10">
+                        <img class="user-image" src="Images/greenH.jpg" />
+                        <div>
+                            <h2 class="name">Blood Chilling Shadow Knight</h2>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10 replied">
+                        <img class="user-image" src="Images/pfp2.jpg" />
+                        <div>
+                            <h2 class="name">Jaylex</h2>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10 replied">
+                        <img class="user-image" src="Images/pfp.jpg" />
+                        <div>
+                            <h2 class="name">Grian</h2>
+                            <p class="reply-user text">Reply to: Jaylex</p>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10">
+                        <img class="user-image" src="Images/pfp2.jpg" />
+                        <div>
+                            <h2 class="name">Blood Chilling Shadow Knight</h2>
+                            <p class="text">I'm open :)</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">1 minute ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10">
+                        <img class="user-image" src="Images/greenH.jpg" />
+                        <div>
+                            <h2 class="name">Blood Chilling Shadow Knight</h2>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10 replied">
+                        <img class="user-image" src="Images/pfp2.jpg" />
+                        <div>
+                            <h2 class="name">Jaylex</h2>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment p10 replied">
+                        <img class="user-image" src="Images/pfp.jpg" />
+                        <div>
+                            <h2 class="name">Grian</h2>
+                            <p class="reply-user text">Reply to: Jaylex</p>
+                            <p class="text">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                            <div class="buttons">
+                                <div class="like">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </div>
+                                <div class="reply"><i class="fa fa-solid fa-reply"></i></div>
+                                <p class="time">3 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script>
+        let convos = null;
+        let msgBody = null;
+        async function fetchFrom(s) {
+            const response = await fetch(s);
+            const movies = await response.json();
+        }
+
+        async function getConversations(a){
+            convos.innerHTML = `<div id="convoMenu">
+                    <button onclick="getConversations(1)">Private</button>
+                    <button onclick="getConversations(2)">Public</button>
+                    <button onclick="getConversations(3)">Invites</button>
+                    <button onclick="getConversations(4)">+</button>
+                </div>`;
+            await fetch(`http://localhost:8005/UserConversation?userID=${a}`)
+            .then(response => {
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                return response.json();
+            })
+            .then(data => {
+                convos.innerHTML += data.map((c) => `<div class="listing" onclick="getChat(${c.conversationID})">
+                    <img src="Images/GearIcon_Temp.png" class="chatIcon">
+                    <p class="name">${c.master_Name1}</p>
+                    <p class="msg">${c.contents}</p>
+                    <p class="time">1 hour ago</p>
+                    </div>`).join('');
+                })
+                .catch(error => { console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+        async function getChat(a){
+            msgBody.innerHTML = ``;
+            await fetch(`http://localhost:8005/ConversationLog?conversationID=${a}`)
+            .then(response => {
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                return response.json();
+            })
+            .then(data => {
+                msgBody.innerHTML += data.reverse().map((c) => `<div class="message${c.userID === 1 ? " self" : ""}">
+                        <div class="options">
+                            <div class="flex">
+                                <button type="button" class="tooltip"><i class="fa fa-smile-o"></i><div class="top">React</div></button>
+                                <button type="button" class="tooltip"><i class="fa fa-reply"></i><div class="top">Reply</div></button>
+                                <button type="button" class="tooltip"><i class="fa fa-ellipsis-h"></i><div class="top">More</div></button>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="username">${c.username}</p>
+                            <img class="icon" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" />
+                            <p class="text">${c.contents}</p> </div>
+                    </div>`).join('');
+                })
+                .catch(error => { console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+        
+
+        const pressedButtonSelector = '[data-theme][aria-pressed="true"]';
+        const defaultTheme = 'kiwi';
+
+        const applyTheme = (theme) => {
+            const target = document.querySelector(`[data-theme="${theme}"]`);
+            document.documentElement.setAttribute("data-selected-theme", theme);
+            document.querySelector(pressedButtonSelector).setAttribute('aria-pressed', 'false');
+            target.setAttribute('aria-pressed', 'true');
+        };
+
+        const handleThemeSelection = (event) => {
+            const target = event.target;
+            const isPressed = target.getAttribute('aria-pressed');
+            const theme = target.getAttribute('data-theme');
+            if(isPressed !== "true") {
+                applyTheme(theme);
+            }
+        }
+        const handleThemeSelectionLvd = (event) => {
+            let target = event.target;
+            let lvd = target.getAttribute('data-lvd')  === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", lvd);
+            target.setAttribute('data-lvd', lvd);
+        }
+        
+        async function starting() {
+            // convos = document.querySelector('#conversations');
+            // msgBody = document.querySelector('#chat .body');
+            // document.querySelector('#privC').addEventListener('click', async () => await getConversations(1));
+            // await getConversations(1);
+            // await getChat(1);
+
+
+            // let coll = document.querySelectorAll(".collapse .c_header");
+            // let i;
+
+            // for (i = 0; i < coll.length; i++) {
+            //     coll[i].addEventListener("click", function() {
+            //         this.parentElement.classList.toggle("active");
+            //         let content = this.lastElementSibling;
+            //         if (content.style.maxHeight){
+            //             content.style.maxHeight = null;
+            //         } else {
+            //             content.style.maxHeight = content.scrollHeight + "px";
+            //         }
+            //     });
+            // }
+            // const themeSwitcher = document.querySelector('#preset-list');
+            // const buttons = themeSwitcher.querySelectorAll('button');
+
+            // buttons.forEach((button) => {
+            //     button.addEventListener('click', handleThemeSelection);
+            // });
+            // themeSwitcher.querySelector('input').addEventListener('change', handleThemeSelectionLvd);
+        }
+        window.onload = starting;
+    </script>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="CSS/Defaults.css">
+    <link rel="stylesheet" href="SCSS/Conversations.css">
+
+    <script>
+        let inSub = false;
+        function openSubmenu(menu) {
+            // Hide all elements with class="tabcontent" by default */
+            let tabcontent = document.querySelectorAll("#options .body .section");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Show the specific tab content
+            document.querySelector(`#${menu}`).style.display = "block";
+
+            inSub = true;
+        }
+        function backOptions() {
+            if(inSub){
+                let tabcontent = document.querySelectorAll("#options .body .section");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                document.querySelector(`#o_chat`).style.display = "block";
+                document.querySelector(`#o_appearance`).style.display = "block";
+                document.querySelector(`#o_application`).style.display = "block";
+            }
+        }
+
+        
+    </script>
+    <style>
+
+        :root{
+            /* --color1: 150; */
+            /* --color2: 200; */
+        }
+        
+
+
+        /* .listing p.name, .listing:hover p.name{
+            color: var(--c1-7-0);
+        }
+        .listing{
+            margin: 0.3rem;
+            padding: 0.3rem;
+            display: grid;
+            grid-template-columns: 5rem 1fr;
+            grid-template-rows: min-content 1fr;
+            gap: 5px;
+        }
+        .listing p{
+            margin-bottom: 0.3rem;
+        }
+        .listing .heading{
+            grid-row: 1 / 2;
+            grid-column: 2 / 3;
+        }
+        .listing .heading .name{
+            font-size: 1.75rem;
+            flex: 1;
+            transition: font-size 0.15s;
+        }
+        .listing .msg{
+            text-wrap: wrap;
+            font-size: 1.25rem;
+        }
+        .listing .time{
+            text-align: right;
+            font-size: 1.25rem;
+        }
+        .listing:hover{
+            border-radius: 0.6rem;
+        }
+        .listing:hover .heading .name{
+            font-size: 1.85rem;
+        }
+        .listing .user-image{
+            grid-row: 1 / 3;
+            justify-self: center;
+        } */
+
+
+      
+
+
+
+        main{
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto;
+            width: 100%;
+        }
+        .pinned{
+            background-color: var(--c2-0-7-5);
+            position: relative;
+            border-radius: 0 0 10px 10px;
+        }
+        .pinned h2{
+            padding:0;
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .pinned img:first-child{
+            position: absolute;
+            align-self: center;
+            left: 2rem;
+            width: auto;
+            height: 2rem;
+        }
+        .search{
+            gap: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .search input{
+            outline: none;
+            border: none;
+            background-color: hsl(0deg 0% 40%);
+            border-radius: 10px;
+            padding: 3px 10px;
+        }
+    </style>
+
+    <style>
+        /* .left-panel{
+            margin-top: 2rem;
+            align-items: center;
+            gap: 2rem;
+        }
+        .progress{
+            width: 75%;
+            height: 3rem;
+            background-color: var(--c2-4-0);
+            border-radius: 1.5rem;
+        }
+        .store{
+            gap: 10px;
+        }
+        .store .heading{
+            border-width: 0px 0px 2px 0px;
+            border-color: var(--c1-4-0);
+            border-style: solid;
+        }
+        .store .heading img{
+            height: 4rem;
+        }
+        .store .heading h2{
+            font-size: 2rem;
+            padding: 0 2rem;
+            font-weight: 600;
+        }
+        .store h2{
+            font-size: 1.5rem;
+        } */
+
+        footer{
+            position: fixed;
+            bottom: 0;
+            width: 20rem;
+        }
+        footer .tab{
+            background-color: var(--c1-4-0);
+            /* width: 20rem; */
+            height: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        footer .tab .fa{
+            width: 100%;
+            text-align: center;
+            font-size: 1.75rem;
+            color: var(--c1-8-0);
+        }
+        footer .colors{
+            display: none;
+            /* height: 20rem; */
+            backdrop-filter: brightness(140%);
+        }
+        footer .curr-colors{
+            gap: 1.5rem;
+        }
+        footer .color{
+            height: 2rem;
+            width: 2rem;
+            border-radius: 1.5rem;
+            --color: 0;
+            background-color: hwb(var(--color) 0% 0%);
+            border: solid 2px;
+            border-color: hwb(var(--color) 0% 60%);
+        }
+        footer .c1{
+            --color: var(--color1);
+        }
+        footer .c2{
+            --color: var(--color2);
+        }
+        footer .more-colors{
+            display: none;
+            backdrop-filter: brightness(140%);
+            /* height: 20rem; */
+            padding-bottom: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        footer .more-colors .color:nth-child(1){ --color: 0; }
+        footer .more-colors .color:nth-child(2){ --color: 20; }
+        footer .more-colors .color:nth-child(3){ --color: 40; }
+        footer .more-colors .color:nth-child(4){ --color: 60; }
+        footer .more-colors .color:nth-child(5){ --color: 80; }
+        footer .more-colors .color:nth-child(6){ --color: 100; }
+        footer .more-colors .color:nth-child(7){ --color: 120; }
+        footer .more-colors .color:nth-child(8){ --color: 150; }
+        footer .more-colors .color:nth-child(9){ --color: 180; }
+        footer .more-colors .color:nth-child(10){ --color: 200; }
+        footer .more-colors .color:nth-child(11){ --color: 220; }
+        footer .more-colors .color:nth-child(12){ --color: 240; }
+        footer .more-colors .color:nth-child(13){ --color: 260; }
+        footer .more-colors .color:nth-child(14){ --color: 270; }
+        footer .more-colors .color:nth-child(15){ --color: 280; }
+        footer .more-colors .color:nth-child(16){ --color: 300; }
+        footer .more-colors .color:nth-child(17){ --color: 320; }
+        footer .more-colors .color:nth-child(18){ --color: 340; }
+        footer .more-colors .color:nth-child(19){
+            background-color: hsl(0 0% 0%);
+            border: solid 2px;
+            border-color: hsl(0 0% 30%);
+        }
+        footer .more-colors .color:nth-child(20){
+            background-color: hsl(0 0% 30%);
+            border: solid 2px;
+            border-color: hsl(0 0% 60%);
+        }
+        footer .more-colors .color:nth-child(21){
+            background-color: hsl(0 0% 80%);
+            border: solid 2px;
+            border-color: hsl(0 0% 50%);
+        }
+    </style>
+    <script>
+        let currColorPick = null;
+        function openColors(){
+            document.querySelector('.colors').style.display = "flex";
+        }
+        function openMoreColors(col){
+            document.querySelector('.more-colors').style.display = "flex";
+            currColorPick = col;
+            document.querySelector(`.colors .c${col}`).style.borderWidth = "5px";
+            document.querySelector(`.colors .c${col}`).style.filter = "saturate(60%) brightness(200%)";
+            document.querySelector(`.colors .c${col === 1 ? 2 : 1}`).style.borderWidth = "2px";
+            document.querySelector(`.colors .c${col === 1 ? 2 : 1}`).style.filter = "none";
+        }
+        function setCol(col){
+            if(col < 390){
+                document.documentElement.style.setProperty(`--color${currColorPick}`, col);
+                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "normal");
+                let col2 = parseInt(getComputedStyle(document.body).getPropertyValue(`--color${currColorPick === 1 ? 2 : 1}`));
+                console.log(col);
+                console.log(col2);
+                console.log(col + col2);
+                document.documentElement.style.setProperty("--color5", (Math.abs(col - col2) <= 180) ? ((col + col2) / 2) : (((col + col2) / 2) + 180));
+                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = `hwb(var(--color${currColorPick}) 0% 60%)`;
+                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = `hwb(var(--color${currColorPick}) 0% 0%)`;
+            }
+            else if(col === 400){
+                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "black");
+                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 30%)";
+                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 0%)";
+            }
+            else if(col === 500){
+                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "dark");
+                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 80%)";
+                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 50%)";
+            }
+            else{
+                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "light");
+                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 80%)";
+                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 50%)";
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav aria-label="Site Menu">
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </nav>
+    <main>
+        <section class="flex-col left-panel">
+            <!-- <div class="progress"></div>
+            <div class="store flex-col">
+                <div class="heading flex-row flex-center">
+                    <h2>Store</h2>
+                    <img src="Images/store-icon.png">
+                </div>
+                <h2>Bubbles</h2>
+                <div class="flex-row">
+                    <img src="Images/pfp.jpg" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                    <img src="Images/pfpGreen2.webp" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                </div>
+                <h2>Frames</h2>
+                <div class="flex-row">
+                    <img src="Images/pfp.jpg" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                    <img src="Images/pfpGreen2.webp" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                </div>
+            </div> -->
+        </section>
+        <section id="conversations">
+            <div id="convoMenu" class="flex-row flex-center">
+                <button id="privC" class="bottom_border">Private</button>
+                <button id="pubC" class="bottom_border">Public</button>
+                <button id="inviC" class="bottom_border">Invites</button>
+                <button class="bottom_border">+</button>
+                <div class="search flex-row flex-center bottom_border">
+                    <input type="text">
+                    <p>Search</p>
+                </div>
+            </div>
+            <div class="pinned p10 flex-row flex-center" style="gap:10px">
+                <!-- <h2>Pinned</h2> -->
+                <!-- <div class="content flex-row flex-center"> -->
+                    <img src="Images/pin.png">
+                    <img src="Images/pfp.jpg" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                    <img src="Images/pfpGreen2.webp" class="user-image">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                <!-- </div> -->
+            </div>
+            <div class="base-listing unread bottom_border user-grid p10">
+                <img src="Images/pfp.jpg" class="user-image">
+                <div class="heading flex-row name">
+                    <p class="title f175">Unread</p>
+                    <p class="time f125">1 minute ago</p>
+                </div>
+                <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree... hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree... hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do...</p>
+            </div>
+            <div class="base-listing bottom_border user-grid p10">
+                <img src="Images/pfp2.jpg" class="user-image">
+                <div class="heading flex-row name">
+                    <p class="title f175">Unread</p>
+                    <p class="time f125">1 minute ago</p>
+                </div>
+                <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree... hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree...</p>
+            </div>
+            <div class="base-listing bottom_border user-grid p10">
+                <img src="Images/pfpGreen.png" class="user-image">
+                <div class="heading flex-row name">
+                    <p class="title f175">Unread</p>
+                    <p class="time f125">1 minute ago</p>
+                </div>
+                <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree... hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree...</p>
+            </div>
+            <div class="base-listing bottom_border user-grid p10">
+                <img src="Images/pfpGreen2.webp" class="user-image">
+                <div class="heading flex-row name">
+                    <p class="title f175">Unread</p>
+                    <p class="time f125">1 minute ago</p>
+                </div>
+                <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree... hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree...</p>
+            </div>
+        </section>
+        <section></section>
+    </main>
+    <footer>
+        <section>
+            <div class="tab" onclick="openColors()">
+                <i class="fa fa-solid fa-caret-up"></i>
+            </div>
+            <div class="colors">
+                <div class="curr-colors flex-row flex-center p10">
+                    <h1>Current Colors:</h1>
+                    <div class="c1 color" onclick="openMoreColors(1)"></div>
+                    <div class="c2 color" onclick="openMoreColors(2)"></div>
+                </div>
+            </div>
+            <div class="more-colors flex-row flex-center">
+                <div class="color" onclick="setCol(0)"></div>
+                <div class="color" onclick="setCol(20)"></div>
+                <div class="color" onclick="setCol(40)"></div>
+                <div class="color" onclick="setCol(60)"></div>
+                <div class="color" onclick="setCol(80)"></div>
+                <div class="color" onclick="setCol(100)"></div>
+                <div class="color" onclick="setCol(120)"></div>
+                <div class="color" onclick="setCol(150)"></div>
+                <div class="color" onclick="setCol(180)"></div>
+                <div class="color" onclick="setCol(200)"></div>
+                <div class="color" onclick="setCol(220)"></div>
+                <div class="color" onclick="setCol(240)"></div>
+                <div class="color" onclick="setCol(260)"></div>
+                <div class="color" onclick="setCol(270)"></div>
+                <div class="color" onclick="setCol(280)"></div>
+                <div class="color" onclick="setCol(300)"></div>
+                <div class="color" onclick="setCol(320)"></div>
+                <div class="color" onclick="setCol(340)"></div>
+                <div class="color" onclick="setCol(400)"></div>
+                <div class="color" onclick="setCol(500)"></div>
+                <div class="color" onclick="setCol(600)"></div>
+            </div>
+        </section>
+    </footer>
+</body>
+</html>

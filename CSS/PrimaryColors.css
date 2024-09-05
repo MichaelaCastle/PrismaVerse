@@ -1,0 +1,254 @@
+:root{
+    --color1: 240;
+    --color2: 0;
+    --color5: 300;
+
+    /* --color1: 150;
+    --color2: 330;
+    --color5: 180;
+
+    --color1: 30;
+    --color2: 120;
+    --color5: 75; */
+
+    --color1: 150;
+    --color2: 270;
+    --color5: 210;
+    --c5-0-8: hwb(var(--color5) 00% 80%);
+    --c1-0-0: hwb(var(--color1) 00% 00%);
+    --c1-0-4: hwb(var(--color1) 00% 40%);
+    --c1-0-6: hwb(var(--color1) 00% 60%);
+    --c1-0-7-5: hwb(var(--color1) 00% 70% / 0.5);
+    --c1-0-8: hwb(var(--color1) 00% 80%);
+    --c1-0-9: hwb(var(--color1) 00% 90%);
+    --c1-1-0: hwb(var(--color1) 10% 00%);
+    --c1-4-0: hwb(var(--color1) 40% 00%);
+    --c1-6-0: hwb(var(--color1) 60% 00%);
+    --c1-6-0-5: hwb(var(--color1) 60% 00% / 0.5);
+    --c1-7-0: hwb(var(--color1) 70% 00%);
+    --c1-8-0: hwb(var(--color1) 80% 00%);
+    
+    --c2-0-0: hwb(var(--color2) 00% 00%);
+    --c2-0-4: hwb(var(--color2) 00% 40%);
+    --c2-0-6: hwb(var(--color2) 00% 60%);
+    --c2-0-7-5: hwb(var(--color2) 00% 70% / 0.5);
+    --c2-0-8: hwb(var(--color2) 00% 80%);
+    --c2-0-9: hwb(var(--color2) 00% 90%);
+    --c2-1-0: hwb(var(--color2) 10% 00%);
+    --c2-4-0: hwb(var(--color2) 40% 00%);
+    --c2-6-0: hwb(var(--color2) 60% 00%);
+    --c2-7-0: hwb(var(--color2) 70% 00%);
+    --c2-7-3: hwb(var(--color2) 70% 30%);
+    --c2-8-0: hwb(var(--color2) 80% 00%);
+
+    --bg: linear-gradient(125deg, var(--c1-0-8), var(--c5-0-8), var(--c2-0-8));
+
+    --statusCol: hwb(120 0% 30%); /*   hsl(120 var(--sm) clamp(50, var(--lm) + 50, 70));*/
+    --pfpBorderCol: hsl(var(--h2) var(--sm) calc(var(--lm) + 40));
+    --headerGradient: linear-gradient(90deg, var(--c1-0-9), var(--c2-0-9));
+    --pfpBorderCol: var(--c2-0-0);
+    --defaultColor: var(--c1-8-0);
+}
+[data-theme-1="black"]{
+    --c1-0-0: hsl(0 00% 40%);
+    --c1-0-4: hsl(0 00% 30%);
+    --c1-0-6: hsl(0 00% 20%);
+    --c1-0-7-5: hsl(0 00% 20% / 0.5);
+    --c1-0-8: hsl(var(--color2) 01% 0%);
+    --c1-0-9: hsl(0 00% 0%);
+    --c1-1-0: hsl(0 0% 40%);
+    --c1-4-0: hsl(0 0% 50%);
+    --c1-6-0: hsl(0 0% 50%);
+    --c1-6-0-5: hsl(0 0% 50% / 0.5);
+    --c1-7-0: hsl(0 0% 80%);
+    --c1-8-0: hsl(0 0% 80%);
+}
+[data-theme-1="dark"]{
+    --c1-0-0: hsl(0 00% 50%);
+    --c1-0-4: hsl(0 00% 40%);
+    --c1-0-6: hsl(0 00% 30%);
+    --c1-0-7-5: hsl(0 00% 20% / 0.5);
+    --c1-0-8: hsl(0 00% 10%);
+    --c1-0-9: hsl(0 00% 0%);
+    --c1-1-0: hsl(0 0% 40%);
+    --c1-4-0: hsl(0 0% 50%);
+    --c1-6-0: hsl(0 0% 50%);
+    --c1-6-0-5: hsl(0 0% 50% / 0.5);
+    --c1-7-0: hsl(0 0% 70%);
+    --c1-8-0: hsl(0 0% 70%);
+}
+[data-theme-1="normal"]{
+    --c1-0-0: hwb(var(--color1) 00% 00%);
+    --c1-0-4: hwb(var(--color1) 00% 40%);
+    --c1-0-6: hwb(var(--color1) 00% 60%);
+    --c1-0-7-5: hwb(var(--color1) 00% 70% / 0.5);
+    --c1-0-8: hwb(var(--color1) 00% 80%);
+    --c1-0-9: hwb(var(--color1) 00% 90%);
+    --c1-1-0: hwb(var(--color1) 10% 00%);
+    --c1-4-0: hwb(var(--color1) 40% 00%);
+    --c1-6-0: hwb(var(--color1) 60% 00%);
+    --c1-6-0-5: hwb(var(--color1) 60% 00% / 0.5);
+    --c1-7-0: hwb(var(--color1) 70% 00%);
+    --c1-8-0: hwb(var(--color1) 80% 00%);
+}
+[data-theme-1="light"]{
+    --c1-0-0: hsl(0 00% 50%);
+    --c1-0-4: hsl(0 00% 55%);
+    --c1-0-6: hsl(0 00% 65%);
+    --c1-0-7-5: hsl(0 00% 70% / 0.5);
+    --c1-0-8: hsl(0 00% 70%);
+    --c1-0-9: hsl(0 00% 80%);
+    --c1-1-0: hsl(0 0% 40%);
+    --c1-4-0: hsl(0 0% 35%);
+    --c1-6-0: hsl(0 0% 35%);
+    --c1-6-0-5: hsl(0 0% 50% / 0.5);
+    --c1-7-0: hsl(0 0% 30%);
+    --c1-8-0: hsl(0 0% 30%);
+
+    --c1-0-0: hsl(0 00% 70%);
+    --c1-0-4: hsl(0 00% 60%);
+    --c1-0-6: hsl(0 00% 50%);
+    --c1-0-7-5: hsl(0 00% 40% / 0.5);
+    --c1-0-8: hsl(0 00% 30%);
+    --c1-0-9: hsl(0 00% 20%);
+    --c1-1-0: hsl(0 0% 60%);
+    --c1-4-0: hsl(0 0% 70%);
+    --c1-6-0: hsl(0 0% 70%);
+    --c1-6-0-5: hsl(0 0% 70% / 0.5);
+    --c1-7-0: hsl(0 0% 80%);
+    --c1-8-0: hsl(0 0% 80%);
+}
+[data-theme-2="black"]{
+    --c2-0-0: hsl(0 00% 35%);
+    --c2-0-4: hsl(0 00% 25%);
+    --c2-0-6: hsl(0 00% 15%);
+    --c2-0-7-5: hsl(0 00% 15% / 0.5);
+    --c2-0-8: hsl(0 00% 0%);
+    --c2-0-9: hsl(0 00% 0%);
+    --c2-1-0: hsl(0 0% 35%);
+    --c2-4-0: hsl(0 0% 45%);
+    --c2-6-0: hsl(0 0% 45%);
+    --c2-7-0: hsl(0 0% 65%);
+    --c2-7-3: hsl(0 0% 35%);
+    --c2-8-0: hsl(0 0% 60%);
+}
+[data-theme-2="dark"]{
+    --c2-0-0: hsl(0 00% 45%);
+    --c2-0-4: hsl(0 00% 35%);
+    --c2-0-6: hsl(0 00% 25%);
+    --c2-0-7-5: hsl(0 00% 15% / 0.5);
+    --c2-0-8: hsl(0 00% 5%);
+    --c2-0-9: hsl(0 00% 0%);
+    --c2-1-0: hsl(0 0% 35%);
+    --c2-4-0: hsl(0 0% 45%);
+    --c2-6-0: hsl(0 0% 45%);
+    --c2-7-0: hsl(0 0% 65%);
+    --c2-7-3: hsl(0 0% 35%);
+    --c2-8-0: hsl(0 0% 60%);
+}
+[data-theme-2="normal"]{
+    --c2-0-0: hwb(var(--color2) 00% 00%);
+    --c2-0-4: hwb(var(--color2) 00% 40%);
+    --c2-0-6: hwb(var(--color2) 00% 60%);
+    --c2-0-7-5: hwb(var(--color2) 00% 70% / 0.5);
+    --c2-0-8: hwb(var(--color2) 00% 80%);
+    --c2-0-9: hwb(var(--color2) 00% 90%);
+    --c2-1-0: hwb(var(--color2) 10% 00%);
+    --c2-4-0: hwb(var(--color2) 40% 00%);
+    --c2-6-0: hwb(var(--color2) 60% 00%);
+    --c2-7-0: hwb(var(--color2) 70% 00%);
+    --c2-7-3: hwb(var(--color2) 70% 30%);
+    --c2-8-0: hwb(var(--color2) 80% 00%);
+}
+[data-theme-2="light"]{
+    --c2-0-0: hsl(0 00% 55%);
+    --c2-0-4: hsl(0 00% 60%);
+    --c2-0-6: hsl(0 00% 70%);
+    --c2-0-7-5: hsl(0 00% 75% / 0.5);
+    --c2-0-8: hsl(0 00% 75%);
+    --c2-0-9: hsl(0 00% 85%);
+    --c2-1-0: hsl(0 0% 45%);
+    --c2-4-0: hsl(0 0% 40%);
+    --c2-6-0: hsl(0 0% 40%);
+    --c2-7-0: hsl(0 0% 35%);
+    --c2-7-3: hsl(0 0% 35%);
+    --c2-8-0: hsl(0 0% 30%);
+
+    --c2-0-0: hsl(0 00% 65%);
+    --c2-0-4: hsl(0 00% 55%);
+    --c2-0-6: hsl(0 00% 45%);
+    --c2-0-7-5: hsl(0 00% 35% / 0.5);
+    --c2-0-8: hsl(0 00% 25%);
+    --c2-0-9: hsl(0 00% 20%);
+    --c2-1-0: hsl(0 0% 45%);
+    --c2-4-0: hsl(0 0% 65%);
+    --c2-6-0: hsl(0 0% 65%);
+    --c2-7-0: hsl(0 0% 75%);
+    --c2-7-3: hsl(0 0% 55%);
+    --c2-8-0: hsl(0 0% 75%);
+}
+[data-theme="light"]{
+    --statusCol:    hsl(120 var(--sm) clamp(50, var(--lm) * 0.6, 70));
+    --pfpBorderCol: hsl(var(--h2) var(--sm) calc(var(--lm) * 0.7));
+
+    --c1-0-4: hwb(var(--color1) 40 00);
+    --c1-0-7-5: hwb(var(--color1) 70 00 / 0.5);
+    --c1-0-8: hwb(var(--color1) 60 00);
+    --c1-0-9: hwb(var(--color1) 90 00);
+    --c1-1-0: hwb(var(--color1) 00 10);
+    --c1-4-0: hwb(var(--color1) 00 40);
+    --c1-6-0: hwb(var(--color1) 00 60);
+    --c1-6-0-5: hwb(var(--color1) 00 60 / 0.5);
+    --c1-7-0: hwb(var(--color1) 00 70);
+    --c1-8-0: hwb(var(--color1) 00 80);
+
+    --c2-0-0: hwb(var(--color2) 00 00);
+    --c2-0-4: hwb(var(--color2) 40 00);
+    --c2-0-7-5: hwb(var(--color2) 70 00 / 0.5);
+    --c2-0-8: hwb(var(--color2) 60 00);
+    --c1-0-9: hwb(var(--color2) 90 00);
+    --c2-1-0: hwb(var(--color2) 00 10);
+    --c2-4-0: hwb(var(--color2) 00 40);
+    --c2-6-0: hwb(var(--color2) 00 60);
+    --c2-7-0: hwb(var(--color2) 00 70);
+    --c2-7-3: hwb(var(--color2) 30 80);
+    --c2-8-0: hwb(var(--color2) 00 80);
+
+}
+[data-theme="dark"]{
+    --statusCol:    hsl(120 var(--sm) clamp(50, var(--lm) + 50, 70));
+    --pfpBorderCol: hsl(var(--h2) var(--sm) calc(var(--lm) + 40));
+
+    --c1-0-4: hwb(var(--color1) 00 40);
+    --c1-0-7-5: hwb(var(--color1) 00 70 / 0.5);
+    --c1-0-8: hwb(var(--color1) 00 80);
+    --c1-0-9: hwb(var(--color1) 00 90);
+    --c1-1-0: hwb(var(--color1) 10 00);
+    --c1-4-0: hwb(var(--color1) 40 00);
+    --c1-6-0: hwb(var(--color1) 60 00);
+    --c1-6-0-5: hwb(var(--color1) 60 00 / 0.5);
+    --c1-7-0: hwb(var(--color1) 70 00);
+    --c1-8-0: hwb(var(--color1) 80 00);
+
+    --c2-0-0: hwb(var(--color2) 00 00);
+    --c2-0-4: hwb(var(--color2) 00 40);
+    --c2-0-7-5: hwb(var(--color2) 00 70 / 0.5);
+    --c2-0-8: hwb(var(--color2) 00 80);
+    --c1-0-9: hwb(var(--color2) 00 90);
+    --c2-1-0: hwb(var(--color2) 10 00);
+    --c2-4-0: hwb(var(--color2) 40 00);
+    --c2-6-0: hwb(var(--color2) 60 00);
+    --c2-7-0: hwb(var(--color2) 70 00);
+    --c2-7-3: hwb(var(--color2) 70 30);
+    --c2-8-0: hwb(var(--color2) 80 00);
+}
+
+p, ul, h1, h2, textarea, button, input{
+    color: var(--c1-8-0);
+}
+body {
+    background-image: var(--bg);
+}
+body > header, body > nav {
+    background-image: var(--headerGradient);
+}

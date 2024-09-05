@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <link rel="icon" type="image/x-icon" href="Images/Pfps/Jay512.png">
+    <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <script type="text/javascript" src="JS/FakeClasses/UserData.js"></script>
+    <script type="text/javascript" src="JS/FakeClasses/WritingData.js"></script>
+    <script type="text/javascript" src="JS/FakeClasses/LikesAndComments.js"></script>
+
+    <script>
+        function extendPullout(elem){
+            pc = elem.parentElement.querySelector('.pullout-content');
+            ei = elem.querySelector('i');
+            if(pc.className.includes(" extended")){
+                pc.classList.remove("extended");
+            }
+            else{
+                pc.classList.add("extended");
+            }
+            if(ei.className.includes(" fa-caret-left")){
+                ei.classList.remove("fa-caret-left");
+                ei.classList.add("fa-bars");
+            }
+            else{
+                ei.classList.remove("fa-bars");
+                ei.classList.add("fa-caret-left");
+            }
+        }
+        function like(elem){
+            // <button class="icon-btn like-btn"><i class="fa fa-regular fa-heart"></i></button>
+            if(elem.children[0].className.includes("fa-regular")){
+                elem.children[0].classList.remove("fa-regular");
+                elem.children[0].classList.add("fas");
+                elem.classList.add("liked");
+            }
+            else{
+                elem.children[0].classList.add("fa-regular");
+                elem.children[0].classList.remove("fas");
+                elem.classList.remove("liked");
+            }
+            
+        }
+        function OnInput() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + "px";
+        }
+    </script>
+    <style>
+        .pullout{
+            top: max(calc(3rem + 5px), 40px);
+        }
+        .pullout .expand{
+            height: fit-content;
+            padding: 10px;
+            font-size: 1.5rem;
+        }
+        .pullout-content{
+            max-height: calc(100vh - max(calc(3rem + 5px), 40px));
+        }
+        .pullout-content header, .pullout .TOB{
+            width: max-content;
+            font-size: 12px;
+        }
+        .pullout-content .TOB{
+            max-height: 70vh;
+        }
+        .pullout ul{
+            list-style: none;
+            padding: 0 10px 5px 10px;
+            overflow-y: auto;
+        }
+        .pullout li{
+            font-size: 1.25em;
+            padding-bottom: 5px;
+            max-width: 30em;
+        }
+        .pullout li a{
+            margin-left: 10px;
+            text-decoration: none;
+            color: var(--c1-8-0);
+        }
+        .pullout ul li:before{
+            content: '\25CB';
+            font-size: 1.5em;
+        }
+        .pullout ul li.read:before{
+            content: '\25CF';
+        }
+        .pullout ul li.current, .pullout ul li.current a{
+            color: var(--c1-4-0);
+        }
+        .pullout ul li.current a{
+            text-decoration: underline currentColor;
+            font-weight: 600;
+        }
+        .pullout li:hover, .pullout li a:hover{
+            color: var(--c2-6-0);
+            cursor: pointer;
+        }
+        .pullout li:last-child{
+            padding-bottom: 0;
+        }
+    </style>
+    <style>
+        #book-contents header .stats{
+            gap: 20px;
+        }
+        #book-contents header .stats i{
+            color: var(--c2-6-0);
+        }
+        #book-contents header h2{
+            /* margin-top: -5px; */
+            margin-bottom: 5px;
+        }
+        #book-contents header h1{
+            margin-top: 5px;
+            margin-bottom: -5px;
+        }
+        
+
+
+        hr {
+            border: none;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--c2-4-0), transparent);
+        }
+        .content, #book-contents footer{
+            max-width: 60rem;
+            line-height: 1.5;
+        }
+        .content{
+            /* background-color: #00000090; */
+            border-radius: 10px;
+        }
+        .content p{
+            text-indent: 1.5rem;
+            padding-top: 10px;
+        }
+        .content p:first-child{
+            padding-top: 0;
+        }
+
+        
+    </style>
+    <!-- Footer -->
+    <style>
+        #book-contents footer{
+            /* max-width: 100rem; */
+            width: 100vw;
+            /* margin-top: 10px; */
+        }
+        #book-contents footer > h2{
+            color: var(--c2-6-0);
+            font-weight: 600;
+        }
+        .comment.replied{
+            width: 90%;
+            align-self: flex-end;
+        }
+        .comment .buttons{
+            justify-content: flex-start;
+            padding-left: 4.5rem;
+        }
+        .comment .time{
+            font-size: 1.15rem;
+            margin-left: 10px;
+            color: var(--c1-8-0);
+        }
+
+        .comment .name span:nth-child(2){
+            color: var(--c2-6-0);
+            margin-top: -5px;
+        }
+
+
+        .comment-post .icon-btn{
+            align-self: flex-end;
+        }
+
+        .likes{
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            overflow-x: hidden;
+            padding-left: 10px;
+            overflow-y: hidden;
+        }
+        .likes .like-btn{
+            margin-right: 10px;
+        }
+        .like-btn{
+            padding: 0;
+        }
+        .like-btn.liked{
+            animation: like 1s;
+        }
+        @keyframes like {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.1) rotate(20deg); }
+            60% { transform: scale(1.1) rotate(-90deg); }
+            100% { transform: scale(1); }
+        }
+
+
+        .message-line{
+            align-items: end;
+        }
+        .message-line textarea{
+            flex: 1;
+            background-color: var(--c1-0-7-5);
+            border-radius: 10px;
+            border: var(--c1-6-0-5) solid;
+            border-width: 2px;
+            padding: 0 5px;
+            min-height: 2.75rem;
+            max-height: 30vh;
+        }
+    </style>
+    <style>
+        @media only screen and (max-width: 1300px){
+            .menu{ padding: 0 5%; }
+            /* .content, #book-contents footer{ max-width: 75rem; } */
+        }
+        @media only screen and (max-width: 950px){
+            .menu{ padding: 0; }
+            /* .content, #book-contents footer{ max-width: 60rem; } */
+        }
+        @media only screen and (max-width: 800px){
+            #book-contents footer, .content{ font-size: 1.25rem; max-width: 95vw; border-radius: 0;}
+            .content{
+                padding: 2.5vw;
+            }
+            /* #book-contents footer{ padding: 0 20px; } */
+            /* #book-contents footer .text { font-size: 1.15rem; padding-bottom: 5px; } */
+            #book-contents footer .name span:first-child { font-size: 1.5rem; }
+            #book-contents header h1{ font-size: 1.5rem; }
+            #book-contents header .stats .f125{ font-size: 1rem; gap: 5px; }
+            #book-contents header {padding: 5px 10px; }
+            /* html{
+                font-size: 10px;
+            } */
+            /* .content, #book-contents footer{ max-width: 70rem; margin: 0 20px;} */
+            #book-contents footer .text { padding-bottom: 5px; }
+            #book-contents footer > h2 { font-size: 1.5rem; }
+            #book-contents footer .comment .name span:first-child { font-size: 1.5rem; }
+            #book-contents footer > h2:nth-of-type(2) { padding-top: 5px; }
+        }
+    </style>
+
+
+    
+    <script>
+        let chapterID = 2;
+        // let userID = 1;
+        let loadNav = (bookInfo, chapterInfo) => {
+            nav = document.createElement("nav");
+            nav.className = "flex-row pullout left";
+            nav.innerHTML = `<section class="flex-col pullout-content">
+                     <header class="flex-c-p">
+                         <h1 class="f175" id="nav-title"></h1>
+                         <h2 class="f125" id="nav-author"></h2>
+                     </header>
+                     <div class="TOB flex-c-p">
+                         <h2 class="f15">Chapters</h2>
+                         <ul id="nav-chapters">
+                         </ul>
+                     </div>
+                 </section>
+                 <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-bars"></i></button>`;
+            nav.querySelector("#nav-title").innerText = bookInfo.title;
+            nav.querySelector("#nav-author").innerText = userData.find((u) => u.userID === bookInfo.userID).username;
+            chapterUL = nav.querySelector("#nav-chapters");
+            read = readData.filter((r) => r.userID === userID);
+            chapterData.filter((c) => c.bookID === bookInfo.bookID).forEach(element => {
+                li = document.createElement("li");
+                if(element.chapterID === chapterInfo.chapterID){
+                    li.classList.add("current");
+                }
+                if((read.find((r) => r.chapterID === element.chapterID) ?? (readData[0])).read === 1){
+                    li.classList.add("read");
+                }
+                a = document.createElement("a");
+                a.innerText = element.title;
+                let url = new URL("http://127.0.0.1:5500/Chapter.html");
+                url.searchParams.append('chapterID', element.chapterID);
+                a.href = url;
+                li.appendChild(a);
+                chapterUL.appendChild(li);
+            });
+            document.querySelector("main").appendChild(nav);
+            // <nav class="flex-row pullout left">
+            //     <section class="flex-col pullout-content">
+            //         <header class="flex-c-p">
+            //             <h1 class="f175">My Fake Boyrfriend</h1>
+            //             <h2 class="f125">ToTheExtreme95</h2>
+            //         </header>
+            //         <div class="TOB flex-c-p">
+            //             <h2 class="f15">Chapters</h2>
+            //             <ul>
+            //                 <li class="read"><a>The Favor</a></li>
+            //             </ul>
+            //         </div>
+            //     </section>
+            //     <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-bars"></i></button>
+            // </nav>
+        }
+        let loadHeading = (bookInfo, chapterInfo) => {
+            header = document.createElement("header");
+            header.className = "flex-cc-p";
+            title = document.createElement("h1");
+            title.className = "f25";
+            title.innerText = chapterInfo.title;
+            header.appendChild(title);
+            if(!bookInfo.hasChapters){
+                author = document.createElement("h2");
+                author.className = "f15";
+                author.innerText = userData.find((u) => u.userID === bookInfo.userID).username;
+                header.appendChild(author);
+            }
+            // header.innerHTML += `<div class="stats flex-r-g">
+            //              <div class="flex-cc f125"><i class="fa fas fa-heart"></i><p>2.9M</p></div>
+            //              <div class="flex-cc f125"><i class="fa fas fa-comment"></i><p>12M</p></div>
+            //              <div class="flex-cc f125"><i class="fa fas fa-font"></i><p>13.7K</p></div>
+            //          </div>`;
+            return header;
+            //     <header class="flex-cc-p">
+            //         <h1 class="f25">The Favor</h1>
+            //         <h2 class="f15">ToTheExtreme95</h2>
+            //         <div class="stats flex-r-g">
+            //             <div class="flex-cc f125"><i class="fa fas fa-heart"></i><p>2.9M</p></div>
+            //             <div class="flex-cc f125"><i class="fa fas fa-comment"></i><p>12M</p></div>
+            //             <div class="flex-cc f125"><i class="fa fas fa-font"></i><p>13.7K</p></div>
+            //         </div>
+            //     </header>
+        }
+        let loadContent = (chapterInfo) => {
+            content = document.createElement("article");
+            content.className = "content p10 f15";
+            text = chapterInfo.contents.split("\n");
+            text.forEach((t) => {
+                p = document.createElement("p");
+                p.innerText = t;
+                content.appendChild(p);
+            });
+            return content;
+            //     <article class="content p10 f15">
+            //         <p>Lorem</p>
+            //     </article>
+        }
+        let loadNext = (bookInfo, chapterInfo) => {
+            btns = document.createElement("section");
+            btns.className = "next-chapter flex-rc-p-g";
+            let rtn = false;
+            if(chapterInfo.chapterIndex != 1){
+                prev = document.createElement("a");
+                prev.className = "icon-btn";
+                prev.innerHTML = '<i class="fa fas fa-caret-left"></i><p>Previous</p>';
+                let url = new URL("http://127.0.0.1:5500/Chapter.html");
+                url.searchParams.append('chapterID', chapterData.find((c) => (c.bookID ===chapterInfo.bookID) && (c.chapterIndex === chapterInfo.chapterIndex - 1)).chapterID);
+                prev.href = url;
+                btns.appendChild(prev);
+                rtn = true;
+            }
+            if(chapterData.find((c) => (c.bookID ===chapterInfo.bookID) && (c.chapterIndex === chapterInfo.chapterIndex + 1)) != null){
+                next = document.createElement("a");
+                next.className = "icon-btn";
+                next.innerHTML = '<i class="fa fas fa-caret-right"></i><p>Next</p>';
+                let url = new URL("http://127.0.0.1:5500/Chapter.html");
+                url.searchParams.append('chapterID', chapterData.find((c) => (c.bookID ===chapterInfo.bookID) && (c.chapterIndex === chapterInfo.chapterIndex + 1)).chapterID);
+                next.href = url;
+                btns.appendChild(next);
+                rtn = true;
+            }
+            return rtn ? btns : document.createElement("div");
+            //     <section class="next-chapter flex-rc-p-g">
+            //         <button class="icon-btn"><i class="fa fas fa-caret-left"></i><p>Previous</p></button>
+            //         <button class="icon-btn"><p>Next</p><i class="fa fas fa-caret-right"></i></button>
+            //     </section>
+        }
+        /*
+        let loadFooter = (contentInfo) => {
+            let footer = document.createElement("footer");
+            let likesList = likesData.filter((l) => l.contentTypeID === 2).filter((l) => l.contentID === contentInfo.chapterID);
+            let likesTitle = document.createElement("h2");
+            likesTitle.className = "f175";
+            likesTitle.innerText = `Likes (${likesList.length})`;
+            footer.appendChild(likesTitle);
+            let likesDiv = document.createElement("div");
+            likesDiv.className = "flex-rc-g likes";
+            likesDiv.innerHTML = '<button class="icon-btn like-btn user-scale" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>';
+            likesList.forEach((l) => {
+                likeImg = document.createElement("img");
+                likeImg.src = userData.find((u) => u.userID === l.userID).pfp;
+                likeImg.className = "user-image";
+                likesDiv.appendChild(likeImg);
+            });
+            footer.append(likesDiv);
+
+            let cList = commentData.filter((l) => l.contentTypeID === 2).filter((l) => l.contentID === contentInfo.chapterID);
+            let cTitle = document.createElement("h2");
+            cTitle.className = "f175";
+            cTitle.innerText = `Comments (${cList.length})`;
+            footer.appendChild(cTitle);
+            footer.innerHTML += `
+                     <div class="flex-r-g message-line">
+                         <img class="user-image-bottom" src="Images/pfp.jpg" />
+                         <textarea placeholder="Type something..." rows="1"></textarea>
+                         <button class="icon-btn"><i class="fa fas fa-comment"></i><p>Comment</p></button>
+                     </div>`;
+            let cDiv = document.createElement("div");
+            cDiv.className = "comments flex-col";
+            cList.forEach((l) => {
+                ccDiv = document.createElement("div");
+                ccDiv.className = "comment flex-c-p";
+                if(l.isReply){ ccDiv.classList.add("replied"); }
+
+                ug = document.createElement("div");
+                ug.className = "user-grid top";
+
+                cImg = document.createElement("img");
+                cImg.src = userData.find((u) => u.userID === l.userID).pfp;
+                cImg.className = "user-image";
+                ug.appendChild(cImg);
+
+                let name = document.createElement("h2");
+                name.className = "name flex-col f125";
+                nameText = document.createElement("span");
+                nameText.innerText = userData.find((u) => u.userID === l.userID).username;
+                name.appendChild(nameText);
+                if(l.isReply && l.replyTo != 0){
+                    replyText = document.createElement("span");
+                    replyText.innerText = `Reply to: ${userData.find((u) => u.userID === l.replyTo).username}`;
+                    replyText.className = "f125";
+                    name.appendChild(replyText);
+                }
+                ug.appendChild(name);
+
+                text = document.createElement("p");
+                text.className = "text f115";
+                text.innerText = l.content;
+                ug.appendChild(text);
+                ccDiv.appendChild(ug);
+
+                btns = document.createElement("div");
+                btns.className = "buttons flex-rc-g";
+                btns.innerHTML = '<button class="icon-btn small like-btn" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button> <button class="icon-btn small"><i class="fa fa-solid fa-reply"></i><p>Reply</p></button>';
+
+                time = document.createElement("p");
+                time.className = "f115";
+                time.innerText = l.time;
+                btns.appendChild(time);
+                ccDiv.appendChild(btns);
+
+                cDiv.appendChild(ccDiv);
+            });
+            footer.appendChild(cDiv);
+            return footer;
+            //     <footer>
+            //         <h2 class="f175">Likes (6)</h2>
+            //         <div class="flex-rc-g likes">
+            //             <button class="icon-btn like-btn user-scale" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+            //             <img class="user-image" src="Images/pfp2.jpg" />
+            //         </div>
+            //         <h2 class="f175">Comments</h2>
+            //         <div class="flex-r-g message-line">
+            //             <img class="user-image-bottom" src="Images/pfp.jpg" />
+            //             <textarea placeholder="Type something..." rows="1"></textarea>
+            //             <button class="icon-btn"><i class="fa fas fa-comment"></i><p>Comment</p></button>
+            //         </div>
+            //         <div class="comments flex-col">
+            //             <div class="comment flex-c-p">
+            //                 <div class="user-grid top">
+            //                     <img class="user-image" src="Images/pfp.jpg" />
+            //                     <h2 class="name flex-col f125"><span>Starlight</span></h2>
+            //                     <p class="text f115">This is an example comment. Great post!</p>
+            //                 </div>
+            //                 <div class="buttons flex-rc-g">
+            //                     <button class="icon-btn small like-btn" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+            //                     <button class="icon-btn small"><i class="fa fa-solid fa-reply"></i><p>Reply</p></button>
+            //                     <p class="f125">3 hours ago</p>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </footer>
+        }
+        */
+        let loadWriting = (id) => {
+            let chapterInfo = chapterData.find((c) => c.chapterID === id);
+            let bookInfo = bookData.find((b) => b.bookID === chapterInfo.bookID);
+            if(bookInfo.hasChapters){ loadNav(bookInfo, chapterInfo); }
+            book = document.createElement("section");
+            book.id = "book-contents";
+            book.className = "flex-cc";
+            book.appendChild(loadHeading(bookInfo, chapterInfo));
+            book.appendChild(document.createElement("hr"));
+            book.appendChild(loadContent(chapterInfo));
+            if(bookInfo.hasChapters) { book.appendChild(loadNext(bookInfo, chapterInfo)); };
+            document.querySelector("main").appendChild(book);
+            book.appendChild(loadFooter(chapterInfo, 2, userID));
+        }
+        function starting() {
+            loadStyle(userID);
+            const tx = document.querySelectorAll("textarea");
+            for(let i = 0; i < tx.length; i++){
+                tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight - 7) + "px;");
+                tx[i].addEventListener("input", OnInput, false);
+            }
+            let urlSearch = new URLSearchParams(window.location.search);
+            if(urlSearch.get('chapterID') != null){
+                chapterID = parseInt(urlSearch.get('chapterID'));
+            }
+            loadWriting(chapterID);
+        }
+        window.onload = starting;
+    </script>
+</head>
+<body>
+    <nav>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </nav>
+    <main>
+        <!-- <nav class="flex-row pullout left">
+            <section class="flex-col pullout-content">
+                <header class="flex-c-p">
+                    <h1 class="f175">My Fake Boyrfriend</h1>
+                    <h2 class="f125">ToTheExtreme95</h2>
+                </header>
+                <div class="TOB flex-c-p">
+                    <h2 class="f15">Chapters</h2>
+                    <ul>
+                        <li class="read"><a>The Favor</a></li>
+                        <li class="read"><a>Popping The Question</a></li>
+                        <li class="read"><a>Yes Or No?</a></li>
+                        <li class="read"><a>Just Give Me A Reason</a></li>
+                        <li class="read"><a>You Don't Know Me</a></li>
+                        <li><a>Girldfriend?</a></li>
+                        <li><a>Happy Mom, Happy Me</a></li>
+                        <li><a>Our Fake Beginnings</a></li>
+
+                        <li><a>The Favor</a></li>
+                        <li><a>Popping The Question</a></li>
+                        <li><a>Yes Or No?</a></li>
+                        <li><a>Just Give Me A Reason</a></li>
+                        <li><a>You Don't Know Me</a></li>
+                        <li><a>Girldfriend?</a></li>
+                        <li><a>Happy Mom, Happy Me</a></li>
+                        <li><a>Our Fake Beginnings</a></li>
+                        <li><a>The Favor</a></li>
+                        <li><a>Popping The Question</a></li>
+                        <li><a>Yes Or No?</a></li>
+                        <li><a>Just Give Me A Reason</a></li>
+                        <li><a>You Don't Know Me</a></li>
+                        <li><a>Girldfriend?</a></li>
+                        <li><a>Happy Mom, Happy Me</a></li>
+                        <li><a>Our Fake Beginnings</a></li>
+                        <li><a>The Favor</a></li>
+                        <li><a>Popping The Question</a></li>
+                        <li><a>Yes Or No?</a></li>
+                        <li><a>Just Give Me A Reason</a></li>
+                        <li><a>You Don't Know Me</a></li>
+                        <li><a>Girldfriend?</a></li>
+                        <li><a>Happy Mom, Happy Me</a></li>
+                        <li><a>Our Fake Beginnings</a></li>
+                    </ul>
+                </div>
+            </section>
+            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-bars"></i></button>
+        </nav> -->
+        <!-- <section id="book-contents" class="flex-cc">
+            <header class="flex-cc-p">
+                <h1 class="f25">The Favor</h1>
+                <h2 class="f15">ToTheExtreme95</h2>
+                <div class="stats flex-r-g">
+                    <div class="flex-cc f125"><i class="fa fas fa-heart"></i><p>2.9M</p></div>
+                    <div class="flex-cc f125"><i class="fa fas fa-comment"></i><p>12M</p></div>
+                    <div class="flex-cc f125"><i class="fa fas fa-font"></i><p>13.7K</p></div>
+                </div>
+            </header>
+            <hr>
+            <article class="content p10 f15">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec magna metus, lobortis ac purus vel, dignissim cursus ligula. Etiam dignissim odio nisl, ac finibus elit consectetur in. Sed maximus elit quam, ac malesuada sapien scelerisque eu. Praesent dignissim placerat lobortis. Nunc interdum convallis nisi et eleifend. Aliquam in ullamcorper massa. Mauris nec neque metus. Curabitur finibus orci neque, id fermentum mauris mollis ac. Pellentesque ullamcorper risus quis dignissim scelerisque.</p>
+                <p>Curabitur sit amet nulla bibendum, auctor neque ac, laoreet neque. Curabitur et nulla vel arcu imperdiet bibendum. Nulla eget pretium enim. Aenean scelerisque pretium leo, id volutpat elit. Sed porta leo nunc, in pretium tellus dapibus non. Praesent eget lorem iaculis, venenatis tortor sodales, varius libero. Donec non accumsan magna. Aliquam sit amet mattis ex. Donec eget pellentesque augue. Aliquam nec magna at orci maximus aliquam. Aenean condimentum dolor in blandit malesuada.</p>
+                <p>Fusce imperdiet diam a elit hendrerit tempor. Aenean imperdiet magna sit amet odio pretium, sed egestas neque sollicitudin. Duis accumsan sollicitudin justo et commodo. Proin sit amet suscipit nisl. Nullam luctus mauris turpis, ultrices tincidunt eros imperdiet eu. Quisque non felis dui. Quisque euismod, tortor sit amet egestas congue, urna risus tempus mi, vel varius eros nisi a sem. Proin dictum nisi sit amet massa pharetra, at ultrices sapien porta. Curabitur pretium sapien sed cursus porttitor. Suspendisse quis sagittis magna. Proin sit amet augue ut urna sollicitudin aliquam.</p>
+            </article>
+            <section class="next-chapter flex-rc-p-g">
+                <button class="icon-btn"><i class="fa fas fa-caret-left"></i><p>Previous</p></button>
+                <button class="icon-btn"><p>Next</p><i class="fa fas fa-caret-right"></i></button>
+            </section>
+            <footer>
+                <h2 class="f175">Likes (6)</h2>
+                <div class="flex-rc-g likes">
+                    <button class="icon-btn like-btn user-scale" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+                    <img class="user-image" src="Images/pfp2.jpg" />
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <img class="user-image" src="Images/redVert.jpg" />
+                    <img class="user-image" src="Images/yellowH.jpg" />
+                    <img class="user-image" src="Images/verticalBG.jpeg" />
+                    <img class="user-image" src="Images/purpleVert2.jpg" />
+                </div>
+                <h2 class="f175">Comments</h2>
+                <div class="flex-r-g message-line">
+                    <img class="user-image-bottom" src="Images/pfp.jpg" />
+                    <textarea placeholder="Type something..." rows="1"></textarea>
+                    <button class="icon-btn"><i class="fa fas fa-comment"></i><p>Comment</p></button>
+                </div>
+                <div class="comments flex-col">
+                    <div class="comment flex-c-p">
+                        <div class="user-grid top">
+                            <img class="user-image" src="Images/pfp.jpg" />
+                            <h2 class="name flex-col f125"><span>Starlight</span></h2>
+                            <p class="text f115">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                        </div>
+                        <div class="buttons flex-rc-g">
+                            <button class="icon-btn small like-btn" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+                            <button class="icon-btn small"><i class="fa fa-solid fa-reply"></i><p>Reply</p></button>
+                            <p class="f125">3 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="comment flex-c-p replied">
+                        <div class="user-grid top">
+                            <img class="user-image" src="Images/Pfps/Jay512.png" />
+                            <h2 class="name flex-col f125"><span>Jaylex</span></h2>
+                            <p class="text f115">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                        </div>
+                        <div class="buttons flex-rc-g">
+                            <button class="icon-btn small like-btn" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+                            <button class="icon-btn small"><i class="fa fa-solid fa-reply"></i><p>Reply</p></button>
+                            <p class="f125">3 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="comment flex-c-p replied">
+                        <div class="user-grid top">
+                            <img class="user-image" src="Images/pfp.jpg" />
+                            <h2 class="name flex-col f125"><span>Starlight</span><span class="f125">Reply to: Jaylex</span></h2>
+                            <p class="text f115">This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post! This is an example comment. Great post!</p>
+                        </div>
+                        <div class="buttons flex-rc-g">
+                            <button class="icon-btn small like-btn" onclick="like(this)"><i class="fa fa-regular fa-heart"></i></button>
+                            <button class="icon-btn small"><i class="fa fa-solid fa-reply"></i><p>Reply</p></button>
+                            <p class="f125">3 hours ago</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </footer>
+        </section> -->
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

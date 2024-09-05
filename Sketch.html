@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <link rel="stylesheet" href="CSS/SecondaryColors.css">
+    <link rel="stylesheet" href="SCSS/Hr.css">
+    <link rel="stylesheet" href="SCSS/Sketch1.css">
+    <style>
+        :root {
+            --color3: 90;
+            --color4: 60;
+
+            --middleHR: "🛠";
+            --middleImageHR: "•~❉᯽❉~•";
+            --middleLength: 7;
+            --middleAddition: "──";
+
+            --answerDecor: "⫘⫘ ";
+            --answerDecor: ";ଓ ";
+
+        }
+        .t2{
+            padding: 10px 0;
+        }
+    </style>
+
+
+    <style>
+
+        .hide {
+        display: none !important;
+        }
+
+        textarea {
+        font-size: 12px;
+        text-align: left;
+        width: calc(100% - 20px - 2px);
+        border-radius: 10px;
+        padding: 10px;
+        resize: none;
+        overflow: hidden;
+        height: 15em;
+        }
+
+        input[type=checkbox] {
+        cursor: pointer;
+        }
+
+        div.box {
+        margin-top: 10px;
+        }
+
+        
+        .t2 article > section div.passive-perception input {
+        width: 30px;
+        height: 28px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 10px;
+        }
+        .t2 article > section div.otherprofs textarea {
+        height: 26em;
+        }
+        .t2 article section.combat {
+        background-color: #eee;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 10px;
+        }
+        .t2 article section.combat > div {
+        overflow: hidden;
+        }
+        .t2 article section.combat > div.armorclass, .t2 article section.combat > div.initiative, .t2 article section.combat > div.speed {
+        flex-basis: 33.333%;
+        }
+        .t2 article section.combat > div.armorclass > div, .t2 article section.combat > div.initiative > div, .t2 article section.combat > div.speed > div {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-top: 10px;
+        }
+        .t2 article section.combat > div.armorclass > div label, .t2 article section.combat > div.initiative > div label, .t2 article section.combat > div.speed > div label {
+        font-size: 8px;
+        width: 50px;
+        border: 1px solid black;
+        border-top: 0;
+        background-color: white;
+        text-align: center;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 0 0 10px 10px;
+        }
+        .t2 article section.combat > div.armorclass > div input, .t2 article section.combat > div.initiative > div input, .t2 article section.combat > div.speed > div input {
+        height: 70px;
+        width: 70px;
+        border-radius: 10px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 30px;
+        }
+        .t2 article section.combat > div.hp {
+        flex-basis: 100%;
+        }
+        .t2 article section.combat > div.hp > div.regular {
+        background-color: white;
+        border: 1px solid black;
+        margin: 10px;
+        margin-bottom: 5px;
+        border-radius: 10px 10px 0 0;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.max {
+        display: flex;
+        justify-content: space-around;
+        align-items: baseline;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.max label {
+        font-size: 10px;
+        text-transform: none;
+        color: #bbb;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.max input {
+        width: 40%;
+        border: 0;
+        border-bottom: 1px solid #ddd;
+        font-size: 12px;
+        text-align: center;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.current {
+        display: flex;
+        flex-direction: column-reverse;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.current input {
+        border: 0;
+        width: 100%;
+        padding: 1em 0;
+        font-size: 20px;
+        text-align: center;
+        }
+        .t2 article section.combat > div.hp > div.regular > div.current label {
+        font-size: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+        font-weight: bold;
+        }
+        .t2 article section.combat > div.hp > div.temporary {
+        margin: 10px;
+        margin-top: 0;
+        border: 1px solid black;
+        border-radius: 0 0 10px 10px;
+        display: flex;
+        flex-direction: column-reverse;
+        background-color: white;
+        }
+        .t2 article section.combat > div.hp > div.temporary input {
+        padding: 1em 0;
+        font-size: 20px;
+        border: 0;
+        text-align: center;
+        }
+        .t2 article section.combat > div.hp > div.temporary label {
+        font-size: 10px;
+        padding-bottom: 5px;
+        text-align: center;
+        font-weight: bold;
+        }
+        .t2 article section.combat > div.hitdice, .t2 article section.combat > div.deathsaves {
+        flex: 1 50%;
+        height: 100px;
+        }
+        .t2 article section.combat > div.hitdice > div, .t2 article section.combat > div.deathsaves > div {
+        height: 80px;
+        }
+        .t2 article section.combat > div.hitdice > div {
+        background-color: white;
+        margin: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        }
+        .t2 article section.combat > div.hitdice > div > div.total {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-around;
+        padding: 5px 0;
+        }
+        .t2 article section.combat > div.hitdice > div > div.total label {
+        font-size: 10px;
+        color: #bbb;
+        margin: 0.25em;
+        text-transform: none;
+        }
+        .t2 article section.combat > div.hitdice > div > div.total input {
+        font-size: 12px;
+        flex-grow: 1;
+        border: 0;
+        border-bottom: 1px solid #ddd;
+        width: 50%;
+        margin-right: 0.25em;
+        padding: 0 0.25em;
+        text-align: center;
+        }
+        .t2 article section.combat > div.hitdice > div > div.remaining {
+        flex: 1;
+        display: flex;
+        flex-direction: column-reverse;
+        }
+        .t2 article section.combat > div.hitdice > div > div.remaining label {
+        text-align: center;
+        padding: 2px;
+        font-size: 10px;
+        }
+        .t2 article section.combat > div.hitdice > div > div.remaining input {
+        text-align: center;
+        border: 0;
+        flex: 1;
+        }
+        .t2 article section.combat > div.deathsaves > div {
+        margin: 10px;
+        background: white;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column-reverse;
+        }
+        .t2 article section.combat > div.deathsaves > div > div.label {
+        text-align: center;
+        }
+        .t2 article section.combat > div.deathsaves > div > div.label label {
+        font-size: 10px;
+        }
+        .t2 article section.combat > div.deathsaves > div > div.marks {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        }
+        .t2 article section.combat > div.deathsaves > div > div.marks div.deathsuccesses, .t2 article section.combat > div.deathsaves > div > div.marks div.deathfails {
+        display: flex;
+        align-items: center;
+        }
+        .t2 article section.combat > div.deathsaves > div > div.marks div.deathsuccesses label, .t2 article section.combat > div.deathsaves > div > div.marks div.deathfails label {
+        font-size: 8px;
+        text-align: right;
+        flex: 1 50%;
+        }
+        .t2 article section.combat > div.deathsaves > div div.bubbles {
+        flex: 1 40%;
+        margin-left: 5px;
+        }
+        .t2 article section.combat > div.deathsaves > div div.bubbles input[type=checkbox] {
+        -webkit-appearance: none;
+            -moz-appearance: none;
+                appearance: none;
+        width: 10px;
+        height: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        }
+        .t2 article section.combat > div.deathsaves > div div.bubbles input[type=checkbox]:checked {
+        background-color: black;
+        }
+        .t2 article section.attacksandspellcasting {
+        border: 1px solid black;
+        border-radius: 10px;
+        margin-top: 10px;
+        }
+        .t2 article section.attacksandspellcasting > div {
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        }
+        .t2 article section.attacksandspellcasting > div > label {
+        order: 3;
+        text-align: center;
+        }
+        .t2 article section.attacksandspellcasting > div > table {
+        width: 100%;
+        }
+        .t2 article section.attacksandspellcasting > div > table th {
+        font-size: 10px;
+        color: #ddd;
+        }
+        .t2 article section.attacksandspellcasting > div > table input {
+        width: calc(100% - 4px);
+        border: 0;
+        background-color: #eee;
+        font-size: 10px;
+        padding: 3px;
+        }
+        .t2 article section.attacksandspellcasting > div textarea {
+        border: 0;
+        }
+        .t2 article section.equipment {
+        border: 1px solid black;
+        border-radius: 10px;
+        margin-top: 10px;
+        }
+        .t2 article section.equipment > div {
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        }
+        .t2 article section.equipment > div > div.money ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        }
+        .t2 article section.equipment > div > div.money ul > li {
+        display: flex;
+        align-items: center;
+        }
+        .t2 article section.equipment > div > div.money ul > li label {
+        border: 1px solid black;
+        border-radius: 10px 0 0 10px;
+        border-right: 0;
+        width: 20px;
+        font-size: 8px;
+        text-align: center;
+        padding: 3px 0;
+        }
+        .t2 article section.equipment > div > div.money ul > li input {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 40px;
+        padding: 10px 3px;
+        font-size: 12px;
+        text-align: center;
+        }
+        .t2 article section.equipment > div > label {
+        order: 3;
+        text-align: center;
+        flex: 100%;
+        }
+        .t2 article section.equipment > div > textarea {
+        flex: 1;
+        border: 0;
+        }
+        .t2 article section.flavor {
+        padding: 10px;
+        background: #bbb;
+        border-radius: 10px;
+        }
+        .t2 article section.flavor div {
+        background: white;
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 5px;
+        border: 1px solid black;
+        }
+        .t2 article section.flavor div label {
+        text-align: center;
+        font-size: 10px;
+        margin-top: 3px;
+        }
+        .t2 article section.flavor div textarea {
+        border: 0;
+        border-radius: 0;
+        height: 4em;
+        }
+        .t2 article section.flavor div:first-child {
+        border-radius: 10px 10px 0 0;
+        }
+        .t2 article section.flavor div:not(:first-child) {
+        margin-top: 10px;
+        }
+        .t2 article section.flavor div:last-child {
+        border-radius: 0 0 10px 10px;
+        }
+        .t2 article section.features {
+        padding: 10px;
+        }
+        .t2 article section.features div {
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column-reverse;
+        }
+        .t2 article section.features div label {
+        text-align: center;
+        }
+        .t2 article section.features div textarea {
+        border: 0;
+        padding: 5px;
+        height: 43em;
+        }
+    </style>
+
+    <style>
+        .t2 header {
+            /* align-content: stretch; */
+            /* align-items: stretch; */
+            width: 100%;
+        }
+        .charname {
+            border: 1px solid black;
+            border-right: 0;
+            border-radius: 10px 0 0 10px;
+            width: 30%;
+            align-items: flex-start;
+            gap: 5px;
+        }
+        .charname p:nth-child(1), .misc ul li p:nth-child(1) {
+            font-size: 1.5rem;
+            line-height: 1.15;
+        }
+        .charname p:nth-child(2), .misc ul li p:nth-child(2) {
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+        .misc {
+            flex: 1;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .misc ul {
+            flex-wrap: wrap;
+        }
+        .misc ul li {
+            width: 33.33333%;
+        }
+        .misc ul li p:nth-child(2) {
+            margin-bottom: 5px;
+        }
+        .misc ul li p:nth-child(1) {
+            border-bottom: 1px solid var(--c1-6-0);
+            font-size: 1.25rem;
+        }
+    </style>
+
+    <style>
+        
+        .t2 .list-section div.label {
+            margin-top: 10px;
+            margin-bottom: 2.5px;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .t2 article > section div.passive-perception {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .t2 .lb {
+            justify-content: flex-end;
+        }
+        .t2 .lb .value {
+            border: 1px solid black;
+            min-width: 1.25rem;
+            min-height: 1.25rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+        .lb p:nth-child(2) {
+            width: 100%;
+            /* height: 18px; */
+            /* margin-top: 6px; */
+            border: 1px solid black;
+            border-left: 0;
+            border-radius: 0 10px 10px 0;
+            text-align: center;
+            font-size: 1rem;
+            padding: 3px 0;
+        }
+        .t2 article div.label-container {
+            position: relative;
+            width: 100%;
+            height: 18px;
+            margin-top: 6px;
+            border: 1px solid black;
+            border-left: 0;
+            text-align: center;
+        }
+        .t2 article div.label-container > label {
+            position: absolute;
+            left: 0;
+            top: 1px;
+            transform: translate(0%, 50%);
+            width: 100%;
+            font-size: 8px;
+        }
+        .t2 article > section {
+            width: 32%;
+            display: flex;
+            flex-direction: column;
+        }
+        .t2 article > section section.attributes {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+
+        .t2 .list-section {
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        .t2 .list-section ul li > * {
+            margin-left: 5px;
+        }
+        .t2 .saves ul li{
+            line-height: 1.5;
+        }
+        .t2 .list-section ul li .value{
+            width: 25px;
+        }
+        .box-label{
+            text-align: center;
+            font-weight: 500;
+            line-height: 2;
+        }
+    </style>
+    <style>
+        .t2 {
+            width: 800px;
+            margin: 10px auto 0 auto;
+        }
+        .t2 div.textblock {
+            display: flex;
+            flex-direction: column-reverse;
+            width: 100%;
+            align-items: center;
+        }
+        .t2 div.textblock label {
+            text-align: center;
+            border: 1px solid black;
+            border-top: 0;
+            font-size: 10px;
+            width: calc(100% - 20px - 2px);
+            border-radius: 0 0 10px 10px;
+            padding: 4px 0;
+            font-weight: bold;
+        }
+        .t2 div.textblock textarea {
+            border: 1px solid black;
+        }
+        .t2 ul {
+            margin: 0;
+            padding: 0;
+        }
+        .t2 ul li {
+            list-style-image: none;
+            /* display: block; */
+        }
+        .t2 ::-moz-placeholder {
+            color: #bbb;
+        }
+        .t2 :-ms-input-placeholder {
+            color: #bbb;
+        }
+        .t2 ::placeholder {
+            color: #bbb;
+        }
+        .t2 label {
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        
+        .t2 article {
+            justify-content: space-between;
+        }
+        
+
+
+
+        .scores {
+            /* width: 101px; */
+            background-color: var(--c3-6-0-5);
+            border-radius: 10px;
+            /* padding-bottom: 5px; */
+            padding: 0 10px;
+        }
+        .score-container {
+            justify-content: space-around;
+            text-align: center;
+            /* position: relative; */
+        }
+        .score {
+            background-color: var(--c4-0-8);
+            min-height: 80px;
+            width: 70px;
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        .score .label {
+            font-size: 1rem;
+            padding-top: 5px;
+        }
+        .score .value {
+            font-size: 3.5rem;
+        }
+        .score-container .modifier {
+            background-color: var(--c3-0-8);
+            margin-top: -15px;
+            min-width: 30px;
+            min-height: 20px;
+            border: 1px solid black;
+            border-radius: 20px;
+            text-align: center;
+        }
+        
+    </style>
+
+    <script>
+        
+        function loadCS() {
+            // if (!supportsLocalStorage()) { return false; }
+            // localStorage["cs"] = gGameInProgress;
+            if(!localStorage["cs.viewing"] == "true"){ return; }
+            let sketch = document.querySelector(".sketch");
+            sketch.querySelector("#name").innerText = localStorage["cs.name"];
+            document.documentElement.style.setProperty('--middleHR', `'${localStorage["cs.sectionDecal"]}'`);
+            document.documentElement.style.setProperty('--middleImageHR', `' ${localStorage["cs.imgFrmDecal"]} '`);
+            document.documentElement.style.setProperty('--answerDecor', `'${localStorage["cs.answerDecal"]} '`);
+            if(localStorage["cs.tw.display"] == "true"){
+                sketch.innerHTML += `<div class="trigger-warnings">
+                    <h2>Trigger Warnings</h2>
+                    <p id="twv"></p>
+                </div>`;
+                sketch.querySelector("#twv").innerText = localStorage["cs.tw.value"];
+            }
+            if(localStorage["cs.toc.display"] == "true"){
+                sketch.innerHTML += `<div class="section-label flex-cc">
+                    <hr class="decor">
+                    <h2>Contents</h2>
+                    <hr class="decor">
+                </div>
+                <div class="contents"><p id="tocv"></p></div>`;
+                sketch.querySelector("#tocv").innerText = localStorage["cs.toc.value"];
+            }
+            for (let s = 0; s < localStorage[`cs.sections.count`]; s++) {
+                sketch.innerHTML += `<div class="section-label flex-cc">
+                    <hr class="decor">
+                    <h2>${localStorage[`cs.sections.${s}.value`]}</h2>
+                    <hr class="decor">
+                </div>`;
+                for(let c = 0; c < localStorage[`cs.sections.${s}.count`]; c++){
+                    if(localStorage[`cs.sections.${s}.${c}.type`] === "text"){
+                        // localStorage[`cs.sections.${s}.${c}.value`] = contents[c].value;
+                    }
+                    else if(localStorage[`cs.sections.${s}.${c}.type`] === "img"){
+                        sketch.innerHTML += `<hr class="ImageTop">
+                        <img src="${localStorage[`cs.sections.${s}.${c}.img`]}">
+                        <p class="quote">“${localStorage[`cs.sections.${s}.${c}.quote`]}”</p>
+                        <hr class="ImageBottom">`;
+                    }
+                    else if(localStorage[`cs.sections.${s}.${c}.type`] === "detail"){
+                        sketch.innerHTML += `<div class="info" id="info-${s}-${c}"></div>`;
+                        sketch.querySelector(`#info-${s}-${c}`).innerHTML += `<p class="q">${localStorage[`cs.sections.${s}.${c}.q`]}</p>`;
+                        for(let a = 0; a < localStorage[`cs.sections.${s}.${c}.count`]; a++){
+                            sketch.querySelector(`#info-${s}-${c}`).innerHTML += `<p class="a">${localStorage[`cs.sections.${s}.${c}.${a}.value`]}</p>`;
+                        }
+                    }
+                }
+            }
+        }
+
+        function starting(){
+            if(localStorage["cs.viewing"] != null) { loadCS(); }
+        }
+
+        window.onload = starting;
+    </script>
+</head>
+<body>
+    <nav>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </nav>
+    <main>
+        <article class="sketch t1 flex-cc">
+            <h1 id="name">Elliot Evans</h1>
+            <hr class="shard">
+            <!-- <div class="trigger-warnings">
+                <h2>Trigger Warnings</h2>
+                <p>Gore, Abuse, Depression</p>
+            </div>
+            <div class="section-label flex-cc">
+                <hr class="decor">
+                <h2>Contents</h2>
+                <hr class="decor">
+            </div>
+            <div class="contents">
+                <p>I. Teaser</p>
+                <p>II. Basic info</p>
+                <p>III. Health and Abilities</p>
+                <p>IV. Appearance</p>
+                <p>V. Personality</p>
+                <p>VI. Self Perception</p>
+                <p>VII. Relations</p>
+                <p>VIII. Roleplay Info</p>
+            </div>
+            <hr class="ImageTop">
+            <img src="Images/yellowH.jpg">
+            <p class="quote">“I don't have much time left.”</p>
+            <hr class="ImageBottom">
+            <div class="section-label flex-cc">
+                <hr class="decor">
+                <h2>Teaser</h2>
+                <hr class="decor">
+            </div>
+            <div class="teaser">
+                <p>"Get back to work then!" The scrawny man commands the group of scientists, who were previously coming to him to report an issue with the latest experiment. "What do I pay you for?"</p>
+                <p>"Sir, you don't pay us-" One of the scientists speak up.</p>
+                <p>He doesn't have time for this. He can feel the mutation about to kick in again, he needs to get back to his office asap. "I don't care, just get back to work and fix it! We don't have much more time." With that, he walks off to get back to his office. By now, the scientists are used to him just walking off like that, and they all know exactly what's happening.</p>
+            </div>
+            <hr class="ImageTop">
+            <img src="Images/yellowH.jpg">
+            <p class="quote">“I don't have much time left.”</p>
+            <hr class="ImageBottom">
+            <div class="section-label flex-cc">
+                <hr class="decor">
+                <h2>Basic Info</h2>
+                <hr class="decor">
+            </div>
+            <div class="info">
+                <p class="q">Birth Name</p>
+                <p class="a">Elliot Servius Evans</p>
+                <p class="q">Current Name</p>
+                <p class="a">Elliot Servius Evans</p>
+                <div class="brLarge"></div>
+                <p class="q">First Name</p>
+                <p class="a">Elliot</p>
+                <p class="q">Meaning</p>
+                <p class="a">"God on high," "The Lord is my God"</p>
+                <p class="q">Birth Name</p>
+                <p class="a">Elliot Servius Evans</p>
+                <p class="q">Current Name</p>
+                <p class="a">Elliot Servius Evans</p>
+                <div class="brLarge"></div>
+                <p class="q">First Name</p>
+                <p class="a">Elliot</p>
+                <p class="q">Meaning</p>
+                <p class="a">"God on high," "The Lord is my God"</p>
+                <p class="q">Birth Name</p>
+                <p class="a">Elliot Servius Evans</p>
+                <p class="q">Current Name</p>
+                <p class="a">Elliot Servius Evans</p>
+            </div> -->
+        </article>
+
+        <!-- <article class="sketch t2 flex-cc-g">
+            <header class="flex-rc">
+                <section class="charname flex-cc-p">
+                    <p>Thoradin Fireforge</p>
+                    <p>Character Name</p>
+                </section>
+                <section class="misc p10">
+                    <ul class="flex-row">
+                        <li class="flex-col">
+                            <p>Paladin 2</p>
+                            <p>Class & Level</p>
+                        </li>
+                        <li class="flex-col">
+                            <p>Acolyte</p>
+                            <p>Background</p>
+                        </li>
+                        <li class="flex-col">
+                            <p>Player</p>
+                            <p>Player Name</p>
+                        </li>
+                        <li class="flex-col">
+                            <p>Half-elf</p>
+                            <p>Race</p>
+                        </li>
+                        <li class="flex-col">
+                            <p>Lawful Good</p>
+                            <p>Alignment</p>
+                        </li>
+                        <li class="flex-col">
+                            <p>3240</p>
+                            <p>Experience Points</p>
+                        </li>
+                    </ul>
+                </section>
+            </header>
+            <article class="flex-rc-g">
+                <section>
+                    <section class="attributes flex-r-g">
+                        <div class="scores flex-cc-g">
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Strength</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Dexterity</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Constitution</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Wisdom</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Intelligence</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                            <div class="score-container flex-cc">
+                                <div class="score flex-col">
+                                    <p class="label">Charisma</p>
+                                    <p class="value">10</p>
+                                </div>
+                                <p class="modifier flex-cc">+0</p>
+                            </div>
+                        <!-- <ul>
+                            <li>
+                                <div class="score">
+                                    <label for="Strengthscore">Strength</label>
+                                    <input name="Strengthscore" placeholder="10" />
+                                </div>
+                                <div class="modifier">
+                                    <input name="Strengthmod" placeholder="+0" />
+                                </div>
+                            </li>
+                            <li>
+                            <div class="score">
+                                <label for="Dexterityscore">Dexterity</label>
+                                <input name="Dexterityscore" placeholder="10" />
+                            </div>
+                            <div class="modifier">
+                                <input name="Dexteritymod" placeholder="+0" />
+                            </div>
+                            </li>
+                            <li>
+                            <div class="score">
+                                <label for="Constitutionscore">Constitution</label>
+                                <input name="Constitutionscore" placeholder="10" />
+                            </div>
+                            <div class="modifier">
+                                <input name="Constitutionmod" placeholder="+0" />
+                            </div>
+                            </li>
+                            <li>
+                            <div class="score">
+                                <label for="Wisdomscore">Wisdom</label>
+                                <input name="Wisdomscore" placeholder="10" />
+                            </div>
+                            <div class="modifier">
+                                <input name="Wisdommod" placeholder="+0" />
+                            </div>
+                            </li>
+                            <li>
+                            <div class="score">
+                                <label for="Intelligencescore">Intelligence</label>
+                                <input name="Intelligencescore" placeholder="10" />
+                            </div>
+                            <div class="modifier">
+                                <input name="Intelligencemod" placeholder="+0" />
+                            </div>
+                            </li>
+                            <li>
+                            <div class="score">
+                                <label for="Charismascore">Charisma</label>
+                                <input name="Charismascore" placeholder="10" />
+                            </div>
+                            <div class="modifier">
+                                <input name="Charismamod" placeholder="+0" />
+                            </div>
+                            </li>
+                        </ul> -
+                        </div>
+                        <div class="attr-applications flex-col">
+                            <div class="box flex-rc lb">
+                                <p class="value p10"></p>
+                                <p>Inspiration</p>
+                            </div>
+                            <div class="box flex-rc lb">
+                                <p class="value p10">+2</p>
+                                <p>Proficiency Bonus</p>
+                            </div>
+                            <div class="saves list-section box">
+                                <ul>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+99</p>
+                                        <p class="label">Strength</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Dexterity</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Constitution</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Wisdom</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Intelligence</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Charisma</p>
+                                    </li>
+                                </ul>
+                                <p class="box-label">Saving Throws</p>
+                            </div>
+                            <div class="skills list-section box">
+                                <ul>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Acrobatics</p>
+                                        <p class="skill">(Dex)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Animal Handling</p>
+                                        <p class="skill">(Wis)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Arcana</p>
+                                        <p class="skill">(Int)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Athletics</p>
+                                        <p class="skill">(Str)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Deception</p>
+                                        <p class="skill">(Cha)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">History</p>
+                                        <p class="skill">(Int)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Insight</p>
+                                        <p class="skill">(Wis)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Intimidation</p>
+                                        <p class="skill">(Cha)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Investigation</p>
+                                        <p class="skill">(Int)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Medicine</p>
+                                        <p class="skill">(Wis)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Nature</p>
+                                        <p class="skill">(Int)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Perception</p>
+                                        <p class="skill">(Wis)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Performance</p>
+                                        <p class="skill">(Cha)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Persuasion</p>
+                                        <p class="skill">(Cha)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Religion</p>
+                                        <p class="skill">(Int)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Sleight of Hand</p>
+                                        <p class="skill">(Dex)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fa-regular fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Stealth</p>
+                                        <p class="skill">(Dex)</p>
+                                    </li>
+                                    <li class="flex-row">
+                                        <i class="fa fas fa-circle"></i>
+                                        <p class="value">+0</p>
+                                        <p class="label">Survival</p>
+                                        <p class="skill">(Wis)</p>
+                                    </li>
+                                </ul>
+                                <p class="box-label">Skills</p>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="passive-perception box">
+                        <div class="label-container">
+                        <label for="passiveperception">Passive Wisdom (Perception)</label>
+                        </div>
+                        <input name="passiveperception" placeholder="10" />
+                    </div>
+                    <div class="otherprofs box textblock">
+                        <label for="otherprofs">Other Proficiencies and Languages</label><textarea name="otherprofs"></textarea>
+                    </div>
+                </section>
+                <section>
+                    <section class="combat">
+                        <div class="armorclass">
+                        <div>
+                            <label for="ac">Armor Class</label><input name="ac" placeholder="10" type="text" />
+                        </div>
+                        </div>
+                        <div class="initiative">
+                        <div>
+                            <label for="initiative">Initiative</label><input name="initiative" placeholder="+0" type="text" />
+                        </div>
+                        </div>
+                        <div class="speed">
+                        <div>
+                            <label for="speed">Speed</label><input name="speed" placeholder="30" type="text" />
+                        </div>
+                        </div>
+                        <div class="hp">
+                        <div class="regular">
+                            <div class="max">
+                            <label for="maxhp">Hit Point Maximum</label><input name="maxhp" placeholder="10" type="text" />
+                            </div>
+                            <div class="current">
+                            <label for="currenthp">Current Hit Points</label><input name="currenthp" type="text" />
+                            </div>
+                        </div>
+                        <div class="temporary">
+                            <label for="temphp">Temporary Hit Points</label><input name="temphp" type="text" />
+                        </div>
+                        </div>
+                        <div class="hitdice">
+                        <div>
+                            <div class="total">
+                            <label for="totalhd">Total</label><input name="totalhd" placeholder="2d10" type="text" />
+                            </div>
+                            <div class="remaining">
+                            <label for="remaininghd">Hit Dice</label><input name="remaininghd" type="text" />
+                            </div>
+                        </div>
+                        </div>
+                        <div class="deathsaves">
+                        <div>
+                            <div class="label">
+                            <label>Death Saves</label>
+                            </div>
+                            <div class="marks">
+                            <div class="deathsuccesses">
+                                <label>Successes</label>
+                                <div class="bubbles">
+                                <input name="deathsuccess1" type="checkbox" />
+                                <input name="deathsuccess2" type="checkbox" />
+                                <input name="deathsuccess3" type="checkbox" />
+                                </div>
+                            </div>
+                            <div class="deathfails">
+                                <label>Failures</label>
+                                <div class="bubbles">
+                                <input name="deathfail1" type="checkbox" />
+                                <input name="deathfail2" type="checkbox" />
+                                <input name="deathfail3" type="checkbox" />
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </section>
+                    <section class="attacksandspellcasting">
+                        <div>
+                        <label>Attacks & Spellcasting</label>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>
+                                Name
+                                </th>
+                                <th>
+                                Atk Bonus
+                                </th>
+                                <th>
+                                Damage/Type
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                <input name="atkname1" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkbonus1" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkdamage1" type="text" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <input name="atkname2" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkbonus2" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkdamage2" type="text" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <input name="atkname3" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkbonus3" type="text" />
+                                </td>
+                                <td>
+                                <input name="atkdamage3" type="text" />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <textarea></textarea>
+                        </div>
+                    </section>
+                    <section class="equipment">
+                        <div>
+                        <label>Equipment</label>
+                        <div class="money">
+                            <ul>
+                            <li>
+                                <label for="cp">cp</label><input name="cp" />
+                            </li>
+                            <li>
+                                <label for="sp">sp</label><input name="sp" />
+                            </li>
+                            <li>
+                                <label for="ep">ep</label><input name="ep" />
+                            </li>
+                            <li>
+                                <label for="gp">gp</label><input name="gp" />
+                            </li>
+                            <li>
+                                <label for="pp">pp</label><input name="pp" />
+                            </li>
+                            </ul>
+                        </div>
+                        <textarea placeholder="Equipment list here"></textarea>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section class="flavor">
+                        <div class="personality">
+                        <label for="personality">Personality</label><textarea name="personality"></textarea>
+                        </div>
+                        <div class="ideals">
+                        <label for="ideals">Ideals</label><textarea name="ideals"></textarea>
+                        </div>
+                        <div class="bonds">
+                        <label for="bonds">Bonds</label><textarea name="bonds"></textarea>
+                        </div>
+                        <div class="flaws">
+                        <label for="flaws">Flaws</label><textarea name="flaws"></textarea>
+                        </div>
+                    </section>
+                    <section class="features">
+                        <div>
+                        <label for="features">Features & Traits</label><textarea name="features"></textarea>
+                        </div>
+                    </section>
+                </section>
+            </article>
+        </article> -->
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

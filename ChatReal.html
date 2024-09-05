@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <link rel="stylesheet" href="SCSS/Chats.css">
+    <link rel="stylesheet" href="SCSS/Conversations.css">
+
+    <script>
+        let characters = null;
+        let c_expand = null;
+        let c_expand_class = null;
+        let c_open = false;
+        let c_info = null;
+        let cv = null;
+        let cv_expand = null;
+        let cv_open = false;
+        function OnInput() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + "px";
+        }
+
+        function openCharacters(){
+            if(!c_open){
+                characters.style.width = "var(--c-width)";
+                characters.style.borderWidth = "2px 0 2px 2px";
+                c_expand_class.remove("fa-caret-left");
+                c_expand_class.add("fa-caret-right");
+            }
+            else{
+                closeCharacter();
+                characters.style.width = "0px";
+                c_expand_class.remove("fa-caret-right");
+                c_expand_class.add("fa-caret-left");
+                setTimeout(() => {characters.style.borderWidth = "0px";}, 50);
+            }
+            c_open = !c_open;
+        }
+        function openConvos(){
+            if(!cv_open){
+                cv.classList.add("extended");
+                // cv.style.maxWidth = "100%";
+                // cv.style.borderWidth = "2px 2px 2px 0";
+                cv_expand.classList.remove("fa-caret-right");
+                cv_expand.classList.add("fa-caret-left");
+            }
+            else{
+                // cv.style.maxWidth = "0px";
+                cv.classList.remove("extended");
+                cv_expand.classList.remove("fa-caret-left");
+                cv_expand.classList.add("fa-caret-right");
+                // setTimeout(() => {cv.style.borderWidth = "0px";}, 25);
+            }
+            cv_open = !cv_open;
+        }
+        function extendPullout(elem){
+            pu = elem.parentElement;
+            pc = pu.querySelector('.pullout-content');
+            let other_pc = document.querySelectorAll(`.pullout${pu.className.includes(" left") ? ".left" : ".right"}`);
+            ei = elem.querySelector('i');
+            if(pc.className.includes(" extended")){
+                pc.classList.remove("extended");
+                other_pc.forEach(element => {
+                    if(element != pu){
+                        element.classList.remove("hidden");
+                    }
+                });
+            }
+            else{
+                pc.classList.add("extended");
+                other_pc.forEach(element => {
+                    if(element != pu){
+                        element.classList.add("hidden");
+                    }
+                });
+            }
+            if(ei.className.includes(" fa-caret-left")){
+                ei.classList.remove("fa-caret-left");
+                ei.classList.add("fa-caret-right");
+            }
+            else{
+                ei.classList.remove("fa-caret-right");
+                ei.classList.add("fa-caret-left");
+            }
+        }
+        
+        function closeCharacter(){
+            c_info.style.maxHeight = "0px";
+            c_info.style.overflowY = "hidden";
+        }
+        function showHide(elemName){
+            let elem = document.querySelector(elemName);
+            if(elem.className.includes(" hidden")){
+                elem.classList.remove("hidden");
+            }
+            else{
+                elem.classList.add("hidden");
+            }
+        }
+    </script>
+    <script>
+        let userId = 2;
+        let participants = [
+            {
+                id: 1,
+                name: "Starlight",
+                pfp: "Images/pfp.jpg",
+                color: "hsl(270 100% 30%)"
+            },
+            {
+                id: 2,
+                name: "Jaylex",
+                pfp: "Images/pfp2.jpg",
+                color: "hsl(300 100% 15%)"
+            },
+            {
+                id: 3,
+                name: "Flora",
+                pfp: "Images/pfpGreen2.webp",
+                color: "hsl(120 100% 20%)"
+            }
+        ];
+        let msgData = [
+            {
+                userId: 1,
+                content: "Hello, this is a test message",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 2,
+                content: "Hi, how are you?",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "mulitple from one person",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 2,
+                content: "just need more messages",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 2,
+                content: "Good. We need a longer message,aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 2,
+                content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk aw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: true,
+                isImage: false
+            },
+            {
+                userId: 2,
+                content: "***BOLD ITALIC*** *_*UNDERLINED and ** BOLD and *<#FFFF00>*COLORS*</>* ** yeah! *_* Also * ITALIC * *-*and STRIKETHROUGH yeah yeah yeah*-*\n*<#FFFF00>*IT EXTENDS\nLINES*</>*\nJust please don't keyboard spam...",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            }
+            ,
+            {
+                userId: 2,
+                content: "That message is really just this but with * instead of |:\n|||BOLD ITALIC||| |_|UNDERLINED and || BOLD and |<#FFFF00>|COLORS|</>| || yeah! |_| Also | ITALIC | |-|and STRIKETHROUGH yeah yeah yeah|-|\n|<#FFFF00>|IT EXTENDS\nLINES|</>|\nJust please don't keyboard spam...",
+                usingCharacter: false,
+                characterId: 0,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "this is a *<#FF0000>*character*</>* message",
+                usingCharacter: true,
+                characterId: 1,
+                deleted: false,
+                isImage: false
+            },
+            {
+                userId: 1,
+                content: "Images/pfp.jpg",
+                usingCharacter: true,
+                characterId: 2,
+                deleted: false,
+                isImage: true
+            }//,
+            // {
+            //     userId: 2,
+            //     content: "Images/darkRed.jpg",
+            //     usingCharacter: false,
+            //     characterId: 0,
+            //     deleted: false,
+            //     isImage: true
+            // }
+        ];
+        let characterData = [
+            {
+                id: 1,
+                userid: 1,
+                name: "Jay Star",
+                nickname: "Magic boi",
+                color: "hsl(200 100% 15%)",
+                pfp: "Images/Pfps/Jay512.png",
+                notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
+                description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html"
+            },
+            {
+                id: 2,
+                userid: 2,
+                name: "Jacob",
+                nickname: "Ray of sunshine",
+                color: "hsl(0 100% 15%)",
+                pfp: "Images/Pfps/Jacob512.png",
+                notes: "",
+                description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html"
+            },
+            {
+                id: 3,
+                userid: 2,
+                name: "Elliot",
+                nickname: "Doggo",
+                color: "hsl(75 100% 15%)",
+                pfp: "Images/Pfps/Elliot512.png",
+                notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
+                description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html"
+            },
+            {
+                id: 4,
+                userid: 1,
+                name: "Sam",
+                nickname: "NERD",
+                color: "hsl(120 100% 15%)",
+                pfp: "Images/Pfps/Sam512.png",
+                notes: "",
+                description: ""
+            },
+            {
+                id: 5,
+                userid: 2,
+                name: "Rene",
+                nickname: "Computer boi",
+                color: "hsl(270 100% 15%)",
+                pfp: "Images/Pfps/Rene512.png",
+                notes: "",
+                description: ""
+            },
+            {
+                id: 6,
+                userid: 1,
+                name: "Adam",
+                nickname: " ",
+                color: "hsl(30 100% 15%)",
+                pfp: "Images/Pfps/Adam512.png",
+                notes: "",
+                description: ""
+            }
+        ];
+        function loadMessages(){
+            let msg_c = document.querySelector('#chat > section');
+            msgData = msgData.reverse();
+            // <div class="message deleted flex-row p10">
+            //     <p class="f125">X has deleted this message</p>
+            // </div>
+            for(let m = 0; m < msgData.length; m++){
+                let p = participants.find((u) => u.id == msgData[m].userId);
+                if(msgData[m].deleted){
+                    let message = document.createElement("div");
+                    message.className = "message deleted flex-row p10";
+                    let name = document.createElement("p");
+                    name.className = "f125";
+                    name.innerText = `${p.name} has deleted this message`;
+                    message.appendChild(name);
+                    msg_c.appendChild(message);
+                    continue
+                }
+                //vars
+                let uc = msgData[m].usingCharacter;
+                let c = uc ? characterData.find((u) => u.id == msgData[m].characterId) : null;
+                let color = uc ? c.color : p.color;
+                //main message div
+                let message = document.createElement("div");
+                message.className = "message user-grid top p10";
+                if(msgData[m].userId === userId) { message.classList.add("flip"); }
+                // if(uc) { message.classList.add("character-msg"); }
+                //pfp
+                let icon = document.createElement("img");
+                icon.src = !uc ? p.pfp : c.pfp;
+                icon.classList.add("user-image");
+                if(uc) icon.style.borderColor = color;
+                if(uc) icon.style.backgroundColor = color;
+                if(uc) icon.style.borderWidth = "3px";
+                if(!uc) icon.addEventListener("click", () =>
+                {
+                    localStorage.setItem("id", p.id);
+                    window.location.href = "Profile2.html";
+                });
+                if(uc) icon.addEventListener("click", () => { openCharacter(c.id - 1); });
+                message.appendChild(icon);
+                //name
+                let name = document.createElement("h2");
+                name.className = "name";
+                name.innerText = !uc ? p.name : c.name;
+                name.style.backgroundColor = color;
+                message.appendChild(name);
+                //content
+                let text = !msgData[m].isImage ? document.createElement('p') : document.createElement('img');
+                text.className = "text p10";
+                if(!msgData[m].isImage)
+                {
+                    text.innerHTML = styleText(msgData[m].content);//msgData[m].content;
+                }
+                else {text.src = msgData[m].content; }
+                text.style.backgroundColor = color;
+                //combine
+                message.appendChild(text);
+                msg_c.appendChild(message);
+            }
+        }
+        function loadCharacters(){
+            let role_c = document.querySelector('.roles');
+            let cs = document.querySelector('.character-select');
+            for(let c = 0; c < characterData.length; c++){
+                let role = document.createElement("div");
+                role.className = "role flex-cc";
+                role.style.setProperty('--role-color', characterData[c].color);
+                //pfp
+                let icon = document.createElement("img");
+                icon.src = characterData[c].pfp;
+                role.appendChild(icon);
+                //name
+                let name = document.createElement("p");
+                name.innerText = characterData[c].name;
+                role.appendChild(name);
+                //combine
+                role_c.appendChild(role);
+
+                if(characterData[c].userid === userId){
+                    let roleP = document.createElement("button");
+                    roleP.className = "icon-btn labeled";
+                    roleP.style.setProperty('--c-col', characterData[c].color);
+                    let nameP = document.createElement("p");
+                    nameP.innerText = characterData[c].name;
+                    roleP.appendChild(nameP);
+                    cs.appendChild(roleP);
+                }
+            }
+
+            // <button class="icon-btn"><p>Jacob</p></button>
+
+            // <div class="role flex-col flex-center">
+            //     <img src="Images/pfp.jpg"/>
+            //     <p>Jay Star</p>
+            // </div>
+        }
+
+
+        function loadUsers(){
+            let role_c = document.querySelector('.users');
+            for(let c = 0; c < participants.length; c++){
+                let role = document.createElement("div");
+                role.className = "role flex-cc";
+                role.style.setProperty('--role-color', participants[c].color);
+                //pfp
+                let icon = document.createElement("img");
+                icon.src = participants[c].pfp;
+                role.appendChild(icon);
+                //name
+                let name = document.createElement("p");
+                name.innerText = participants[c].name;
+                role.appendChild(name);
+                //combine
+                role_c.appendChild(role);
+            }
+        }
+
+        let styleText = (s) => {
+            if(!s.includes('*')) return s;
+            s = styleSubtext(s, '***', "font-weight:600;font-style: italic;");
+            s = styleSubtext(s, '**', "font-weight:600;");
+            s = styleSubtext(s, '*_*', "text-decoration: underline solid currentColor");
+            s = styleSubtext(s, '*-*', "text-decoration: line-through solid currentColor");
+            
+            
+            let b = (s + " ").split('*<#').join("[special{word}]*nobodyuses").split("*</>*").join("[special{word}]*nobodyuses").split(">*").join("[special{word}]*nobodyuses").split("[special{word}]*nobodyuses");
+            s = b[0];
+            for(let si = 3; si - 2 < b.length; si += 3){
+                if(b.length > si){
+                    s += `<span style='color:#${b[si-2]}'>${b[si-1]}</span>${b[si]}`;
+                }
+                else if(b.length > si - 1){
+                    s += `*<#${b[si-1]}>*${b[si-1]}`;
+                }
+                else if(b.length > si - 2){
+                    s += `*<#${b[si-1]}`;
+                }
+            }
+            s = styleSubtext(s, '*', "font-style: italic;");
+            return s;
+            /*
+            let bi = (s + " ").split('***');
+            s = bi[0];
+            for(let si = 2; si - 1 < bi.length; si += 2){
+                if(bi.length > si){
+                    s += `<span style='font-weight:600;font-style: italic;'>${bi[si-1]}</span>${bi[si]}`;
+                }
+                else if(bi.length > si - 1){
+                    s += `***${bi[si-1]}`;
+                }
+            }
+            let b = (s + " ").split('**');
+            s = b[0];
+            for(let si = 2; si - 1 < b.length; si += 2){
+                if(b.length > si){
+                    s += `<span style='font-weight:600;'>${b[si-1]}</span>${b[si]}`;
+                }
+                else if(b.length > si - 1){
+                    s += `**${b[si-1]}`;
+                }
+            }
+            let i = (s + " ").split('*');
+            s = i[0];
+            for(let si = 2; si - 1 < i.length; si += 2){
+                if(i.length > si){
+                    s += `<span style='font-style: italic;'>${i[si-1]}</span>${i[si]}`;
+                }
+                else if(i.length > si - 1){
+                    s += `*${i[si-1]}`;
+                }
+            }
+            */
+            return s;
+        }
+        let styleSubtext = (s, splitter, style) => {
+            let b = (s + " ").split(splitter);
+            s = b[0];
+            for(let si = 2; si - 1 < b.length; si += 2){
+                if(b.length > si){
+                    s += `<span style='${style}'>${b[si-1]}</span>${b[si]}`;
+                }
+                else if(b.length > si - 1){
+                    s += `${splitter}${b[si-1]}`;
+                }
+            }
+            return s;
+        }
+        let c_info_notes = null;
+        let c_info_desc = null;
+        function openCharacter(c){
+            c_info.style.setProperty('--character-color', characterData[c].color);
+            c_info.querySelector('header h2').innerText = characterData[c].name;
+            c_info.querySelector('header p').innerText = characterData[c].nickname;
+            c_info.querySelector('header img').src = characterData[c].pfp;
+            c_info_notes.value = characterData[c].notes;
+            c_info_desc.value = characterData[c].description;
+            OnInput.call(c_info_notes);
+            OnInput.call(c_info_desc);
+            c_info_notes.disabled = characterData[c].userid != userId;
+            c_info_desc.disabled = characterData[c].userid != userId;
+            c_info.style.maxHeight = "90vh";
+            setTimeout(() => {c_info.style.overflowY = "visible";}, 50);
+        }
+        async function starting() {
+            const tx = document.querySelectorAll("textarea");
+            for(let i = 0; i < tx.length; i++){
+                tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight - 7) + "px;");
+                tx[i].addEventListener("input", OnInput, false);
+            }
+
+            characters = document.querySelector('.characters');
+            c_expand = document.querySelector('#characters .expand i');
+            c_expand_class = c_expand.classList;
+            c_info = document.querySelector('#character-info');
+            c_info_notes = c_info.querySelector('.notes');
+            c_info_desc = c_info.querySelector('.description');
+            cv = document.querySelector('.convos');
+            cv_expand = document.querySelector('#convos .expand i');
+
+            loadMessages();
+            loadCharacters();
+            loadUsers();
+            
+            const cr = characters.querySelectorAll('.roles .role');
+            for(let c = 0; c < cr.length; c++){
+                cr[c].addEventListener("click", () => openCharacter(c));
+            }
+
+
+            // focus events don't bubble, must use capture phase
+            document.body.addEventListener("focus", event => {
+                const target = event.target;
+                switch (target.tagName) {
+                    case "INPUT":
+                    case "TEXTAREA":
+                    case "SELECT":
+                        document.body.classList.add("keyboard");
+                }
+            }, true); 
+            document.body.addEventListener("blur", () => {
+                document.body.classList.remove("keyboard");
+            }, true); 
+        }
+        window.onload = starting;
+    </script>
+
+    <style>
+        .base-listing .text, .base-listing .time{
+            font-size: 1.15rem;
+        }
+        .show-all{
+            background-color: var(--c2-0-7-5);
+        }
+        .show-all a{
+            padding: 5px 0;
+        }
+    </style>
+
+    <!-- Convos pullout -->
+    <style>
+        #convos{
+            /* position: fixed;
+            left: 0; */
+            top: calc(10rem + 6vh);
+        }
+        /* #convos .expand{
+            height: 10rem;
+            border-radius: 0 10px 10px 0;
+            background-color: var(--c1-6-0);
+            border: none;
+            color: var(--c1-0-6);
+            font-size: 2.5rem;
+        }
+        #convos .convos{
+            margin-top: -10rem;
+            height: calc(90vh - 10rem);
+            max-width: 0;
+            background-color: var(--c1-0-8);
+            border-radius: 0 20px 20px 0;
+            border: var(--c1-6-0) solid;
+            border-width: 0;
+            transition: max-width 0.25s;
+            will-change: max-width;
+            transform: translateZ(0);
+            overflow: hidden;
+        } */
+        #convos .convos{
+            margin-top: -6vh;
+            height: calc(90vh - 10rem - 6vh);
+            /* border-radius: 0 20px 20px 0; */
+        }
+        #convos .convos #convoMenu button{
+            padding-top: 5px;
+        }
+        #convos .convos .user-grid{
+            grid-template-rows: auto auto;
+            overflow: hidden;
+        }
+        #convos .convos .heading{
+            /* max-width: 30vw; */
+            overflow-x: hidden;
+        }
+        #convos .convos .title{
+            margin-bottom: 5px;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            text-wrap: nowrap;
+        }
+        #convos .convos .text{
+            max-width: 30vw;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            text-wrap: nowrap;
+        }
+    </style>
+
+
+
+
+    <style>
+        #members .members{
+            /* width: 10rem; */
+            /* padding-left: 3rem; */
+            background-color: var(--c1-0-8);
+        }
+        #members .members .users{
+            max-width: 70vw;
+        }
+        #members .members .users .role img{
+            border-radius: 50%;
+        }
+
+
+        .progress {
+            align-self: center;
+            margin: 10px 0 0 0;
+            width: 80%;
+            max-width: 16rem;
+            text-align: center;
+            padding: 5px;
+            border-radius: 30px;
+            background: var(--c1-0-9);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .progress-bar {
+            height: 1.5rem;
+            border-radius: 30px;
+            background-image: linear-gradient(175deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.05));
+        }
+
+        .progress-moved .progress-bar {
+            width: 73%;
+            background-color: var(--c2-4-0);
+        }
+        .searched button, .backgrounds .card{
+            background-color: transparent;
+            border: var(--c2-4-0) solid;
+            border-width: 0 0 0 2px;
+            gap: 5px;
+            font-size: 1.5rem;
+            color: var(--c1-8-0);
+        }
+        .searched button p, .backgrounds .card p{
+            font-size: 1.25rem;
+        }
+        .searched button:first-child, .backgrounds .card:first-child{
+            border-width: 0;
+        }
+        .searched button:hover, .searched button:hover p, .backgrounds .card:hover p{
+            color: var(--c2-6-0);
+            cursor: pointer;
+        }
+        .members hr{
+            width: 80%;
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--c2-4-0), transparent);
+            margin: 0;
+            padding: 0;
+            align-self: center;
+        }
+        .backgrounds .card img{
+            width: 5rem;
+            height: 5rem;
+            object-fit: cover;
+            overflow-clip-margin: unset;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .backgrounds .card:hover img{
+            transform: scale(1.1);
+        }
+        .members > .icon-btn{
+            width: 80%;
+            align-self: center;
+            margin: 0 0 10px 0;
+        }
+
+    </style>
+    <style>
+        .character-select{
+            /* position: absolute; */
+            /* top: -30px; */
+            /* flex-direction: column-reverse; */
+            /* width: 5vw; */
+            /* bottom: 9rem; */
+            width: fit-content;
+        }
+        .character-select .icon-btn{
+            --c-col: var(--c2-0-6);
+            background: var(--c-col);
+            & p{
+                color: #FFFFFFC0;
+                font-style: normal;
+            }
+        }
+        .character-select .icon-btn:hover{
+            /* background: var(--c-col); */
+            filter: hue-rotate(50deg);
+            -webkit-filter: hue-rotate(50deg);
+            /* & p{
+                color: black;
+            } */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </nav>
+    <main>
+        <aside id="members" class="flex-row pullout left">
+            <section class="members flex-col pullout-content">
+                <h1>Chat Info</h1>
+                <div class="users flex-rc-p-g">
+                </div>
+                <div class="progress progress-moved">
+                    <div class="progress-bar">
+                    </div>
+                </div>
+                <div class="searched flex-rc-p">
+                    <button class="flex-cc-p"><i class="fa fas fa-image"></i><p>Search</p></button>
+                    <button class="flex-cc-p"><i class="fa fas fa-message"></i><p>Search</p></button>
+                    <button class="flex-cc-p"><i class="fa fas fa-link"></i><p>Search</p></button>
+                </div>
+                <hr>
+                <div class="backgrounds flex-rc-p">
+                    <div class="card flex-cc-p">
+                        <img src="Images/purpleVert.jpg">
+                        <p>Vertical</p>
+                    </div>
+                    <div class="card flex-cc-p">
+                        <img src="Images/purpleH.jpg">
+                        <p>Horizontal</p>
+                    </div>
+                </div>
+                <button class="icon-btn labeled"><i class="fa fas fa-plus"></i><p>Add Users</p></button>
+                <button class="icon-btn labeled"><i class="fa fas fa-door-closed"></i><p>Leave</p></button>
+            </section>
+            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+        </aside>
+        <aside id="convos" class="flex-row pullout left secondary">
+            <section class="convos flex-col pullout-content">
+                <div id="convoMenu" class="flex-rc">
+                    <button id="privC" class="bottom_border">Private</button>
+                    <button id="pubC" class="bottom_border">Public</button>
+                    <button id="inviC" class="bottom_border">Invites</button>
+                    <button id="addC" class="bottom_border">+</button>
+                </div>
+                <div class="base-listing unread bottom_border user-grid p10">
+                    <img src="Images/pfp.jpg" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Starlight</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree that we should</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Jaylex, Starlight, Nix, Levi</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey!</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Unread</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">short sorry))</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfpGreen2.webp" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Unread</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d.</p>
+                </div>
+            </section>
+            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+        </aside>
+        <section id="chat" class="flex-col">
+            <header class="p10 user-grid">
+                <img class="user-image" src="Images/pfp.jpg" />
+                <h1 class="name">Starlight</h1>
+                <p class="text online">Online</p>
+            </header>
+            <section class="flex-col">
+                <!-- <div class="message dice user-grid top p10">
+                    <img src="Images/Pfps/Jacob512.png" class="user-image" style="border-color: rgb(77, 0, 0); background-color: rgb(77, 0, 0); border-width: 3px;">
+                    <h2 class="name" style="background-color: rgb(77, 0, 0);">Jacob</h2>
+                    <div class="text p10">
+                        <img src="Images/Dice/d20.jpg" style="background-color: rgb(77, 0, 0);">
+                        <p class="dice-number">14</p>
+                    </div>
+                </div> -->
+            </section>
+            <footer class="flex-c-p-g">
+                <div class="character-select flex-r-g hidden">
+                    <button class="icon-btn labeled"><p>None</p></button>
+                </div>
+                <div class="flex-r-g message-line">
+                    <button class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/Pfps/Jacob512.png"><p>Roles</p></button>
+                    <textarea placeholder="Type something..." rows="1"></textarea>
+                    <button class="icon-btn"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
+                </div>
+                <div class="flex-rc-g buttons">
+                    <button class="icon-btn"><i class="fa fas fa-microphone"></i><p>Voice Message</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-image"></i><p>Image</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-gamepad"></i><p>Game</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-face-laugh-beam"></i><p>Sticker</p></button>
+                    <button class="icon-btn" onclick="showHide('.dice-options')"><i class="fa fas fa-dice-three"></i><p>Dice</p></button>
+                </div>
+                <div class="dice-options flex-rc-g hidden">
+                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>4</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>6</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>8</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>12</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>20</p></button>
+                </div>
+            </footer>
+        </section>
+        <aside id="characters" class="flex-row pullout right">
+            
+            <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
+            <section class="characters flex-col pullout-content">
+                <h1>Roles</h1>
+                <div class="btns flex-r-g">
+                    <button class="icon-btn"><i class="fa fas fa-plus"></i><p>New</p></button>
+                    <button class="icon-btn"><i class="fa fas fa-bars"></i><p>Manage</p></button>
+                </div>
+                <div class="flex-rc-p-g roles">
+                </div>
+            </section>
+            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>
+        </aside>
+        <article id="character-info">
+            <h1 class="f2" onclick="closeCharacter()">Role Info</h1>
+            <i class="lower fa fas fa-caret-down"></i>
+            <hr>
+            <header class="flex-cc-p">
+                <img src="Images/pfpGreen2.webp">
+                <h2 class="f175">Jay Star</h2>
+                <p class="f125">nickname thing</p>
+            </header>
+            <hr>
+            <section class="p10">
+                <h2 class="f15">Notes</h2>
+                <textarea class="f125 notes"></textarea>
+                <h2 class="f15">Description</h2>
+                <textarea class="f125 description"></textarea>
+            </section>
+            <footer class="flex-r-g">
+                <button class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
+                <button class="icon-btn"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
+            </footer>
+        </article>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

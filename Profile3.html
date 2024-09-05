@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="CSS/SecondaryColors.css">
+    <link rel="stylesheet" href="CSS/Defaults.css">
+
+    <!-- Redo Styling -->
+    <style>
+        .flex-row{
+            display: flex;
+            flex-direction: row;
+        }
+        .flex-col{
+            display: flex;
+            flex-direction: column;
+        }
+        .flex-center{
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+
+    <!-- Profile -->
+    <style>
+        :root{
+
+            --c3-2-55-8: hwb(var(--color3) 20% 55% / 0.9);
+            --c4-2-55-8: hwb(var(--color4) 20% 55% / 0.9);
+
+            --black-15: rgba(0, 0, 0, .15);
+            --black-50: rgba(0, 0, 0, .5);
+            --black-25: rgba(0, 0, 0, .25);
+            --black-75: rgba(0, 0, 0, .75);
+            --black-85: rgba(0, 0, 0, .85);
+        }
+        main{
+            display: grid;
+            grid-template-columns: 1fr 2.75fr 1fr;
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center;
+        }
+        main > section:not(#mid-col){
+            backdrop-filter: blur(20px);
+        }
+        #mid-col{
+            /* background: linear-gradient(var(--black-25), var(--black-25)); */
+            background-color: var(--black-15);
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center;
+        }
+    </style>
+    <!-- Name -->
+    <style>
+        .name{
+            background: linear-gradient(var(--black-15), var(--black-50));
+            border: var(--c3-4-0) solid;
+            border-width: 0px 0px 3px 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .name .graphics{
+            width: calc(100% - 20px);
+        }
+        .name .levels, .name .joined, .name .info div, .wiki a{
+            flex: 1;
+        }
+        .name .levels{
+            gap: 7.5px;
+        }
+        .name .levels div{
+            background-color: var(--c4-6-0);
+            width: 2rem;
+            height: 2rem;
+            border-radius: 2rem;
+            border: var(--c3-0-8) solid;
+            border-width: 2px;
+        }
+        .name .joined{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .name .joined h2{
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: right;
+            width: fit-content;
+            padding: 0 10px;
+            border-radius: 10px;
+            background-color: var(--c3-0-8);
+            height: fit-content;
+        }
+        .name .icon{
+            --icon-size: 150px;
+            --icon-pic: 100px;
+            --half-size: calc(var(--icon-size) / 2);
+            width: var(--icon-size);
+            height: var(--icon-size);
+            border-radius: calc(var(--icon-size) / 2);
+            position: relative;
+            margin-top: 10px;
+        }
+        .name .icon .pfp{
+            width: var(--icon-pic);
+            height: var(--icon-pic);
+            border-radius: calc(var(--icon-pic) / 2);
+            background-color: var(--c3-0-4);
+            position: absolute;
+            top: calc((var(--icon-size) - var(--icon-pic)) / 2);
+            left: calc((var(--icon-size) - var(--icon-pic)) / 2);
+        }
+        .name .icon .pfp:hover + .progress-number, .icon:has(circle:hover) > .progress-number{
+            display: block;
+        }
+        .name .progress-number{
+            font-size: 1.25rem;
+            position: absolute;
+            top: 75%;
+            display: none;
+            /* left: calc(50% - max-content); */
+            left: 30px;
+            /* align-content: center; */
+            color: var(--c3-0-8);
+            font-weight: 600;
+            background-color: var(--c3-6-0);
+            padding: 5px 10px;
+            width: max-content;
+            border-radius: 10px;
+            border: var(--c3-0-8) solid;
+            border-width: 2px;
+        }
+        .name .username{
+            text-align: center;
+            font-weight: 600;
+            font-family: "Baloo Bhaijaan 2", sans-serif;
+        }
+        .name .info{
+            text-align: center;
+            flex-wrap: nowrap;
+            width: 80%;
+        }
+        .name .info div p:last-of-type{
+            font-size: 1.25rem;
+        }
+    </style>
+    <!-- Progress Bar -->
+    <style>
+        .circular-progress{
+            --progress: 0;
+            --progress2: clamp(0, 100 - var(--progress) - 10, 100);
+            --stroke-width: 10px;
+            --stroke-width-o: calc(var(--stroke-width) * 1.1);
+            --radius: calc((var(--icon-size) - var(--stroke-width)) / 2);
+            --circumference: calc(var(--radius) * pi * 2);
+            --dash: calc((var(--progress) * var(--circumference)) / 100);
+            --dash2: calc((var(--progress2) * var(--circumference)) / 100);
+            margin: -20px 0 0 -20px;
+        }
+
+        .circular-progress circle{
+            cx: calc(var(--half-size) + 20px);
+            cy: calc(var(--half-size) + 20px);
+            r: var(--radius);
+            stroke-width: var(--stroke-width);
+            fill: none;
+            stroke-linecap: round;
+            transform-origin: calc(var(--half-size) + 20px) calc(var(--half-size) + 20px);
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .circular-progress circle.bg {
+            stroke: var(--c4-0-7-5);
+        }
+
+        .circular-progress circle.fgu {
+            /* transform-origin: calc(var(--half-size) + 20px) calc(var(--half-size) + 20px); */
+            stroke-dasharray: var(--dash2) calc(var(--circumference) - var(--dash2));
+            stroke-width: calc(var(--stroke-width) / 2);
+            stroke: var(--c4-0-0);
+            animation: rotate2 14s linear infinite;
+        }
+        .circular-progress circle.fg {
+            /* transform-origin: calc(var(--half-size) + 20px) calc(var(--half-size) + 20px); */
+            stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
+            stroke: var(--c3-4-0);
+            animation: rotate 30s linear infinite;
+        }
+        .circular-progress circle.online{
+            display: none;
+            cx: calc(var(--half-size) + 20px);
+            cy: calc(var(--half-size) + 20px);
+            r: var(--stroke-width-o);
+            --online-width: calc(calc((var(--half-size) + 20px) / 2) + calc(var(--stroke-width-o) / 4));
+            /* transform: translate(var(--online-width), var(--online-width)); */
+            fill: var(--c4-6-0);
+            stroke-width: 2px;
+            stroke: var(--c3-0-8);
+            animation: rotate3 20s linear infinite;
+        }
+        @keyframes rotate{
+            from{
+                transform: rotate(360deg);
+            }
+            to{
+                transform: rotate(0deg);
+            }
+        }
+        @keyframes rotate2{
+            from{
+                transform: rotate(350deg);
+            }
+            to{
+                transform: rotate(-10deg);
+            }
+        }
+        @keyframes rotate3{
+            from{
+                transform: rotate(350deg) translate(var(--online-width), var(--online-width));
+            }
+            to{
+                transform: rotate(-10deg) translate(var(--online-width), var(--online-width));
+            }
+        }
+    </style>
+    <!-- Links -->
+    <style>
+        .links{
+            backdrop-filter: blur(20px) brightness(50%);
+            /* background: linear-gradient(90deg, transparent, var(--c3-0-9) 30% 70%, transparent); */
+            /* height: 5rem; */
+            gap: 10px;
+        }
+        .link{
+            border: var(--c3-6-0) solid;
+            border-width: 0 2px 0 0;
+        }
+        .link:last-of-type{
+            border-width: 0;
+        }
+        .link img{
+            /* background-color: var(--c4-8-0);
+            padding: 2.5px;
+            border-radius: 5px; */
+            height: 1.25rem;
+            width: auto;
+            transition: transform 1s;
+        }
+        .link:hover img{
+            transform: rotate(360deg);
+        }
+        .link p{
+            font-size: 1.25rem;
+            padding: 0 10px;
+        }
+    </style>
+    <!-- Bio -->
+    <style>
+        .bio{
+            backdrop-filter: brightness(50%);
+            /* background-color: #00ff0010; */
+            padding: 10px 10px 0px 10px;
+            overflow-y: hidden;
+            text-overflow: ellipsis;
+            min-height: 5rem;
+            height: min-content;
+            max-height: 22.5rem;
+            /* height: calc(100% - 10px); */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: var(--c3-4-0) solid;
+            border-width: 0px 0px 2px 0px;
+        }
+        .bio h2, .posts h2{
+            margin-bottom: 10px;
+        }
+        .bio p{
+            /* height: 50%; */
+            overflow-y: hidden;
+            padding-left: 15px;
+            padding-right: 15px;
+            white-space: pre-wrap;
+            margin-bottom: 2rem;
+        }
+        .bio .expand{
+            background: linear-gradient(90deg, transparent 5%, var(--c3-0-7-5) 20%, var(--c3-0-9), var(--c3-0-7-5) 80%, transparent 95%);
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            width: 100%;
+            color: var(--c3-6-0);
+            
+        }
+        .bio .expand i{
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+        }
+        .bio .expand:hover{
+            background: linear-gradient(90deg, transparent 5%, var(--c4-0-7-5) 20%, var(--c4-0-9), var(--c4-0-7-5) 80%, transparent 95%);
+            color: var(--c4-6-0);
+        }
+    </style>
+    <!-- Wikis -->
+    <style>
+        a:link, a:visited, a:active{
+            color: var(--c3-7-0);
+        }
+        a:hover, a:hover p {
+            color: var(--c3-7-0);
+            border: var(--c4-1-0) 2px solid;
+            border-width: 0px 0px 3px 0px;
+            font-size: 1.65rem;
+        }
+        .wiki a {
+            color: var(--c3-7-0);
+            text-align: center;
+            flex-grow: 1;
+            height: 100%;
+            align-content: center;
+        }
+        .dropdown {
+            overflow: hidden;
+            height: 100%;
+            align-content: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        .dropdown .dropbtn {
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border: none;
+            outline: none;
+            color: var(--c3-7-0);
+            background-color: transparent;
+            margin: 0;
+        }
+        .wiki a:hover, .dropdown:hover {
+            background-color: var(--c4-0-8);
+        }
+        .dropdown-content {
+            margin-top: 0.5rem;
+            display: none;
+            position: absolute;
+            background-color: var(--c4-0-6);
+            box-shadow: 0px 8px 16px 0px var(--black-25);
+            width: 100%;
+            z-index: 10;
+        }
+        .dropdown-content a {
+            padding: 1.25rem;
+            display: block;
+            text-align: left;
+            transition: font-size 0.1s;
+        }
+        .dropdown-content a:last-of-type:hover, .dropdown-content {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover{
+            overflow: visible;
+        }
+        .wiki{
+            /* background-color: #08550850; */
+            background: var(--c4-0-6);
+            font-size: 1.5rem;
+            font-weight: 600;
+
+            flex-wrap: nowrap;
+            /* justify-content: flex-end; */
+            height: 3.5rem;
+            position: initial;
+        }
+    </style>
+    <!-- Posts -->
+    <style>
+        .post{
+            margin: 10px;
+            background-color: var(--c3-2-55-8);
+            border: 2px var(--c3-6-0) solid;
+            border-radius: 10px;
+            transition: transform 0.15s;
+        }
+        .post:hover{
+            transform: scale(1.05, 1.05);
+        }
+        .post .heading{
+            flex-wrap: nowrap;
+            gap: 5px;
+            align-items: flex-start;
+        }
+        .post h1{
+            font-size: 1.375rem;
+            text-wrap: wrap;
+            margin-bottom: 5px;
+            flex: 1;
+        }
+        .post .pin, .post .nsfw-label{
+            content: ' ';
+            background-image: url("Images/pin.png");
+            background-size: 1.15rem 1.15rem;
+            height: 1.15rem;
+            width: 1.15rem;
+            position: relative;
+        }
+        .post .nsfw-label{ background-image: url("Images/half-shield.png"); }
+        .post.sfw .nsfw-label{ background-image: url("Images/shield-check.png"); }
+        .post.nsfw .nsfw-label{ background-image: url("Images/shield.png"); }
+        .post .nsfw-label:after, .post .pin:after{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            content: "";
+            background-color: var(--c3-7-0);
+            mix-blend-mode: multiply;
+        }
+        .post p{
+            color: var(--c4-6-0);
+            font-size: 1.15rem;
+        }
+        .post .date, .post h1{
+            color: var(--c3-7-0);
+        }
+        .post img{
+            max-width: 35rem;
+            max-height: 35rem;
+            border-radius: 10px;
+            margin: 5px auto 10px auto;
+            display: block;
+        }
+        .post:nth-child(even){
+            background-color: var(--c4-2-55-8);
+            border: 2px var(--c4-6-0) solid;
+        }
+        .post:nth-child(even) h1, .post:nth-child(even) .date{
+            color: var(--c4-7-0);
+        }
+        .post:nth-child(even) p{
+            color: var(--c3-6-0);
+        }
+        .post:nth-child(even) .nsfw-label:after, .post:nth-child(even) .pin:after{
+            background-color: var(--c4-7-0);
+        }
+    </style>
+    <!-- Other -->
+    <style>
+        .format-img{
+            background-size: cover;
+            background-repeat: no-repeat, no-repeat;
+            background-position: center;
+        }
+    </style>
+
+
+    <!-- Media Queries -->
+    <style>
+        @media (max-height: 750px) {
+            .name .icon{
+                --icon-size: 100px;
+                --icon-pic: 65px;
+            }
+            .circular-progress {
+                --stroke-width: 7.5px;
+            }
+            .circular-progress circle.online{
+                --online-width: calc(calc((var(--half-size) + 12.5px) / 2) + calc(var(--stroke-width-o) / 4));
+            }
+            .name .progress-number{
+                left: 12.5px;
+                padding: 2.5px 5px;
+                font-size: 1.15rem;
+            }
+            .name .username{
+                font-size: 2rem;
+            }
+            .name .info, .bio h1{
+                font-size: 1.5rem;
+            }
+            .bio p{
+                font-size: 1.35rem;
+            }
+            .bio {
+                max-height: 15em;
+            }
+            .dropdown-content a {
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 1400px){
+            #pageGrid{
+                grid-template-columns: 1fr 4fr 1fr;
+            }
+            .post img{
+                max-width: 100%;
+                width: calc(100% - 20px);
+                min-height: 10rem;
+                max-height: 30rem;
+                object-fit: cover;
+            }
+        }
+        @media (max-width: 1150px){
+            #pageGrid{
+                grid-template-columns: 0fr 4fr 0fr;
+            }
+        }
+        @media (max-width: 500px){
+            .post img{
+                min-height: 5rem;
+                max-height: 10rem;
+            }
+        }
+    </style>
+
+    <script>
+        let bioMaxHeight = "25rem;"
+        function expand(target)
+        {
+            let parent = target.parentElement;
+            if(parent.style.maxHeight === "min-content"){
+                parent.style.maxHeight = bioMaxHeight;
+                target.innerHTML = `<i class="fa fa-caret-down"></i>`;
+            }
+            else{
+                bioMaxHeight = parent.style.maxHeight;
+                parent.style.maxHeight = "min-content";
+                target.innerHTML = `<i class="fa fa-caret-up"></i>`;
+            }
+        }
+    </script>
+
+<script>
+    let pageGrid = null;
+    let midCol = null;
+    let name = null;
+    let data = {
+        profileID: 1,
+        userID: 1,
+        joined: "May 2024",
+        totalXP: 1983,
+        followers: 12000,
+        following: 1268,
+        wikiBar: 1,
+        hasBG: true,
+        bG_Reference: "Images/purpleVert.jpg",
+        hasTopPic: true,
+        topPic_Reference: "Images/purpleH.jpg",
+        hue1: 270,
+        hue2: 330,
+        hasPfp: true,
+        pfp_Reference: "Images/pfp2.jpg",
+        username: "Jaylex",
+        linkID: 1,
+        online: true,
+        bio: "|< font-weight: 600 >||< color:#FF00F0 >|Hi!|</>| I'm not pink|</>|\nHello **This is bold** *This is italic*\n *<#insert hex>* text *<#insert hex>*"
+    };
+    let link = [
+        {
+            icon: "Images/discord-logo.png",
+            username: "jaylex_05"
+        },
+        {
+            icon: "Images/twitter-logo.webp",
+            username: "Broteez"
+        },
+        {
+            icon: "Images/tumblr-logo.png",
+            username: "jaylex_05"
+        },
+        {
+            icon: "Images/Toyhouse.svg",
+            username: "jaylex_05"
+        }
+    ];
+    let wikiBarData = [
+        {
+            id: 0,
+            text: "Characters"
+        },
+        {
+            id: 1,
+            text: "Stories"
+        }
+    ];
+    let wikiContent = [
+        {
+            barId: 0,
+            name: "Jay Star",
+            hasImage: true,
+            image: "Images/blue-cyan-gradient-linear-1920x1080-c2-1e90ff-58f2ce-a-330-f-14.png"
+        },
+        {
+            barId: 0,
+            name: "Jacob Jackson",
+            hasImage: true,
+            image: "Images/Untitled70_20230920161918.png"
+        },
+        {
+            barId: 0,
+            name: "Samuel Broteez",
+            hasImage: true,
+            image: "Images/greenH.jpg"
+        },
+        {
+            barId: 0,
+            name: "Elliot Evans",
+            hasImage: false,
+            image: ""
+        },
+        {
+            barId: 0,
+            name: "Adam Zondervan",
+            hasImage: false,
+            image: ""
+        },
+        {
+            barId: 1,
+            name: "The Briefcase",
+            hasImage: false,
+            image: ""
+        },
+        {
+            barId: 1,
+            name: "The Chistmas Tree",
+            hasImage: false,
+            image: ""
+        },
+        {
+            barId: 1,
+            name: "White",
+            hasImage: false,
+            image: ""
+        }
+    ]
+    let levelReqs = [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550];
+    
+    async function fetchFrom(s) {
+        const response = await fetch(s);
+        const movies = await response.json();
+    }
+
+    async function getProfile(a){
+        await fetch(`http://localhost:8005/Profile?profileID=${a}`)
+        .then(response => {
+            if (!response.ok) { throw new Error('Network response was not ok'); }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            document.documentElement.style.setProperty('--color3', data.hue1);
+            document.documentElement.style.setProperty('--color4', data.hue2);
+            pageGrid.style.backgroundImage = `url(${data.bG_Reference})`;
+            midCol.style.backgroundImage = `linear-gradient(var(--black-50), var(--black-50)), url(${data.bG_Reference})`;
+            name.style.backgroundImage = `linear-gradient(var(--black-25), var(--black-85)), url(${data.topPic_Reference})`;
+            })
+            .catch(error => { console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+    function kFormatter(num) {
+        return Math.abs(num) > 1999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
+    }
+    function getProfile2(){
+        let levels = 0;
+        if(data.totalXP > levelReqs[0]) { levels = 1; }
+        if(data.totalXP > levelReqs[1]) { levels = 2; }
+        if(data.totalXP > levelReqs[2]) { levels = 3; }
+        if(data.totalXP > levelReqs[3]) { levels = 4; }
+        if(data.totalXP > levelReqs[4]) { levels = 5; }
+        if(data.totalXP > levelReqs[5]) { levels = 6; }
+        if(data.totalXP > levelReqs[6]) { levels = 7; }
+        if(data.totalXP > levelReqs[7]) { levels = 8; }
+        if(data.totalXP > levelReqs[8]) { levels = 9; }
+        if(data.totalXP > levelReqs[9]) { levels = 10; }
+        let currentXP = data.totalXP - levelReqs[levels - 1];
+        let progress = (currentXP / 255) * 100;
+        //"|<#FF00F0>||<C>|Hi!|</C>||</#FF00F0>||<new-line>|Hello"
+        data.bio = data.bio.replaceAll("|< ", "<span style='");
+        console.log(data.bio);
+        data.bio = data.bio.replaceAll(" >|", "'>");
+        console.log(data.bio);
+        data.bio = data.bio.replaceAll("|</>|", "</span>");
+        console.log(data.bio);
+
+        document.documentElement.style.setProperty('--color3', data.hue1);
+        document.documentElement.style.setProperty('--color4', data.hue2);
+        name.querySelector('.circular-progress').style.setProperty('--progress', progress);
+        pageGrid.style.backgroundImage = `url(${data.bG_Reference})`;
+        midCol.style.backgroundImage = `linear-gradient(var(--black-50), var(--black-50)), url(${data.bG_Reference})`;
+        name.style.backgroundImage = `linear-gradient(var(--black-25), var(--black-85)), url(${data.topPic_Reference})`;
+        name.querySelector('.joined h2').innerText = `Joined ${data.joined}`;
+        name.querySelector('.pfp').style.backgroundImage = `url(${data.pfp_Reference})`;
+        name.querySelector('.username').innerText = `${data.username}`;
+        midCol.querySelector('.bio p').innerHTML = data.bio;
+        if(data.online) { name.querySelector('.online').style.display = "block"; }
+        for(let i = 0; i < levels; i++){
+            name.querySelector('.levels').appendChild(document.createElement("div"));
+        }
+        name.querySelector('.progress-number').innerText = `${currentXP} / 255`;
+        let info = name.querySelector('.info');
+        info.children[0].children[1].innerText = kFormatter(data.totalXP);
+        info.children[1].children[1].innerText = kFormatter(data.followers);
+        info.children[2].children[1].innerText = kFormatter(data.following);
+        if(link.length > 0){
+            let links = midCol.querySelector('.links');
+            links.classList.add('p10');
+            for(let l = 0; l < link.length; l++){
+                console.log(link[l]);
+                let linkE = document.createElement("div");
+                linkE.classList.add("link");
+                linkE.classList.add("flex-row");
+                let img = new Image();
+                img.src = link[l].icon;
+                linkE.appendChild(img);
+                let p = document.createElement("p");
+                p.innerText = link[l].username;
+                linkE.appendChild(p);
+                links.appendChild(linkE);
+            }
+        }
+        if(wikiBarData.length > 0){
+            let wiki = midCol.querySelector('.wiki');
+            wiki.querySelector('.dropdown').remove();
+            let wall= wiki.querySelector("a");
+            for(let w1 = 0; w1 < wikiBarData.length; w1++){
+                console.log(wikiBarData[w1]);
+                let dd = document.createElement("div");
+                let wiki1 = wikiContent.filter((w) => w.barId === wikiBarData[w1].id);
+                dd.classList.add("dropdown");
+                dd.appendChild(document.createElement("button"));
+                dd.children[0].classList.add("dropbtn");
+                dd.children[0].innerText = `${wikiBarData[w1].text} (${wiki1.length})`;
+                let ddc = document.createElement("div");
+                ddc.classList.add("dropdown-content");
+                for(let w2 = 0; w2 < wiki1.length; w2++){
+                    let a = document.createElement("a");
+                    a.classList.add("format-img");
+                    if(wiki1[w2].hasImage){
+                        a.style.backgroundImage = `linear-gradient(90deg, rgba(0, 0, 0, 0.85) 20%, rgba(0, 0, 0, 0)), url("${wiki1[w2].image}")`;
+                    }
+                    a.innerText = wiki1[w2].name;
+                    ddc.appendChild(a);
+                }
+                dd.appendChild(ddc);
+                wiki.insertBefore(dd, wall);
+            }
+        }
+    }
+    async function starting() {
+        pageGrid = document.querySelector('main');
+        midCol = document.querySelector('#mid-col');
+        name = document.querySelector('.name');
+        // await getProfile(2);
+        getProfile2();
+    }
+    window.onload = starting;
+</script> 
+</head>
+<body>
+    <nav aria-label="Site Menu">
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The white on black PrismaVerse logo" id="logo"/>
+        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+    </nav>
+    <main>
+        <section>
+
+        </section>
+        <section id="mid-col" class="flex-col">
+            <section class="name format-img flex-col flex-center">
+                <div class="graphics flex-row ">
+                    <div class="levels flex-row"></div>
+                    <div class="icon">
+                        <svg width="200" height="200" viewBox="0 0 200 200" class="circular-progress">
+                            <circle class="bg"></circle>
+                            <circle class="fgu"></circle>
+                            <circle class="fg"></circle>
+                            <circle class="online"></circle>
+                        </svg>
+                        <div class="pfp format-img"></div>
+                        <p class="progress-number">203 / 255</p>
+                    </div>
+                    <div class="joined"><h2>Joined --- ----</h2></div>
+                </div>
+                <h2 class="username f25">------</h2>
+                <div class="info f175 flex-row flex-center">
+                    <div>
+                        <p>Colors</p>
+                        <p>---</p>
+                    </div>
+                    <div>
+                        <p>Followers</p>
+                        <p>---</p>
+                    </div>
+                    <div>
+                        <p>Following</p>
+                        <p>---</p>
+                    </div>
+                </div>
+            </section>
+            <div class="links flex-row flex-center">
+            </div>
+            <nav class="wiki flex-row flex-center" aria-label="Wiki Menu">
+                <div class="dropdown">
+                    <button class="dropbtn">Wiki (0)
+                    </button>
+                    <div class="dropdown-content">
+                    </div>
+                </div>
+                <a>Wall</a>
+            </nav>
+            <article class="bio">
+                <h2 class="f175">Bio:</h2>
+                <p class="f15">This user has no bio...</p>
+                <div class="expand" onclick="expand(this)"><i class="fa fa-caret-down"></i></div>
+            </article>
+            
+            <section class="posts flex-col p10">
+                <h2 class="f175">Posts:</h2>
+                <div class="pinned flex-row">
+                </div>
+                <div class="main flex-row">
+                    <div class="flex-col">
+                    </div>
+                    <div class="flex-col">
+                    </div>
+                    <div class="flex-col">
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section>
+
+        </section>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

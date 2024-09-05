@@ -1,0 +1,329 @@
+// html, main, #chat {
+//     height: calc(100vh - 3rem);
+// }
+#chat{
+    background-image: linear-gradient(#000000F0/*, #000000A0*/, #00000050), url("../Images/purpleH.jpg");
+    background-size: cover;
+}
+#chat header, #chat footer{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+#chat section{
+    flex: 1;
+    overflow-y: auto;
+    flex-direction: column-reverse;
+}
+
+
+
+
+
+.message{
+    &.deleted{
+        background-color: var(--c1-0-7-5);
+        border-radius: 5px;
+        justify-content: center;
+        margin: 5px 10vw;
+    }
+    & .name{
+        font-size: 1.25rem;
+        background-color: var(--c1-0-4);
+        width: fit-content;
+        padding: 0 5px;
+        border-radius: 10px 5px;
+        margin-bottom: 5px;
+    }
+    & .text{
+        background-color: var(--c1-0-4);
+        border-radius: 0 10px 10px 10px;
+        width: 87.5%;
+        max-width: fit-content;
+    }
+    & p.text, & p.text span{
+        white-space: pre-line;
+    }
+    & img.text{
+        max-width: 30vw;
+        max-height: 30vh;
+        width: auto;
+        height: auto;
+    }
+    &.flip{
+        justify-items: flex-end;
+        grid-template-columns: 1fr auto;
+        & .name{
+            background-color: var(--c2-0-4);
+            border-radius: 5px 10px;
+        }
+        & .text{
+            background-color: var(--c2-0-4);
+            border-radius: 10px 0 10px 10px;
+        }
+    }
+    & .user-image:hover{
+        cursor: pointer;
+    }
+}
+
+
+
+
+
+
+
+
+#chat footer{
+    position: relative;
+}
+.message-line{
+    align-items: end;
+}
+.message-line textarea{
+    flex: 1;
+    background-color: var(--c1-0-7-5);
+    border-radius: 10px;
+    border: var(--c1-6-0-5) solid;
+    border-width: 2px;
+    padding: 0 5px;
+    min-height: 2.75rem;
+    max-height: 30vh;
+}
+
+
+
+
+
+
+
+#characters .expand{
+    background-color: var(--c2-6-0);
+    color: var(--c2-0-6);
+}
+#characters .characters{
+    background-color: var(--c2-0-8);
+    border-color: var(--c2-6-0);
+    --c-width: 70vw;
+}
+.characters .roles{
+    width: var(--c-width);
+}
+.characters .btns{
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+.characters .btns .icon-btn{
+    min-width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1.25rem;
+    font-size: 1.25rem;
+}
+.characters .roles{
+    flex-wrap: wrap;
+}
+.role{
+    --role-color: rgb(9, 70, 16);
+}
+.role p{
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: var(--role-color);
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: 5px 15px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    max-width: 6rem;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+.role img{
+    background-color: var(--role-color);
+    border: 2px solid var(--role-color);
+    border-radius: 5px 20px;
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    overflow-clip-margin: unset;
+    overflow: hidden;
+    will-change: transform;
+    transform: translateZ(0);
+    transition: transform 0.1s;
+}
+.role img:hover, .role:has(p:hover) img{
+    transform: scale(1.25, 1.25);
+}
+.role p:hover, .role img:hover, .expand:hover{
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+#character-info{
+    --character-color: rgb(9, 70, 16);
+    width: 50%;
+    max-height: 0px;
+    background-color: var(--character-color);
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    border-radius: 10px 10px 0 0;
+    transition: max-height 0.5s;
+    overflow-y: hidden;
+    & h1{
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        mix-blend-mode: luminosity;
+        cursor: pointer;
+    }
+    & hr{
+        margin: 0 0 0 0;
+        border: var(--c1-6-0) 1px dashed;
+        mix-blend-mode: color-dodge;
+    }
+    & header img{
+        max-height: 10vh;
+        max-width: 50vw;
+    }
+    & header p{
+        opacity: 50%;
+        mix-blend-mode: luminosity;
+    }
+    & h2{
+        mix-blend-mode: luminosity;
+        font-weight: 600;
+    }
+    & section h2:not(:first-child){
+        padding-top: 10px;
+    }
+    & section textarea{
+        mix-blend-mode: luminosity;
+        width: calc(100% - 20px);
+        background-color: transparent;
+        border: var(--c2-6-0) solid;
+        border-width: 0 0 0 3px;
+        white-space: pre-wrap;
+        padding-left: 10px;
+    }
+    & section textarea:disabled{
+        background-color: var(--c1-0-7-5);
+    }
+    & section textarea.notes{
+        max-height: 15vh;
+    }
+    & section textarea.description{
+        max-height: 30vh;
+    }
+    & footer{
+        justify-content: flex-end;
+        padding: 0 10px 10px 10px;
+    }
+}
+
+.lower{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 2rem;
+    pointer-events: none;
+    mix-blend-mode: luminosity;
+    color: var(--c1-8-0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1300px){
+    #character-info{
+        width: 70%;
+    }
+}
+@media (max-width: 900px){
+    #addC{
+        display: none;
+    }
+    #character-info{
+        width: 80%;
+    }
+    #characters .characters{
+        --c-width: calc(80vw - 2rem);
+    }
+}
+@media (max-width: 600px){
+    #convoMenu{
+        display: none;
+    }
+    #character-info{
+        width: 90%;
+    }
+    #characters .characters{
+        --c-width: calc(90vw - 2rem);
+    }
+}
+@media (max-width: 300px){
+    .user-image{
+        width: 3rem;
+        height: 3rem;
+    }
+    #character-info{
+        width: 98%;
+    }
+    .convos .title{
+        font-size: 1.25rem;
+    }
+    .base-listing:hover .title{
+        font-size: 1.5rem;
+    }
+    aside .characters{
+        --c-width: calc(100vw - 2rem);
+    }
+    aside .characters .roles{
+        padding: 0 0 10px 0;
+    }
+}
+@media (max-height: 800px){
+    #chat header.user-grid .name{
+        font-size: 1.5rem;
+    }
+    #chat header.user-grid .text{
+        font-size: 1rem;
+        padding-bottom: 5px;
+    }
+
+    #chat footer{ gap: 5px; }
+    .message-line textarea{
+        min-height: 2.5rem;
+    }
+    .icon-btn{
+        min-width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        font-size: 1.25rem;
+    }
+    .icon-btn img{
+        max-width: 2.25rem;
+        max-height: 2.25rem;
+    }
+}

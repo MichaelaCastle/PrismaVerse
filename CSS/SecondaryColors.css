@@ -1,0 +1,40 @@
+:root{
+    --color3: 120;
+    --color4: 150;
+
+    /* --color3: 150;
+    --color4: 210; */
+    --c3-0-4: hwb(var(--color3) 00% 40%);
+    --c3-0-6: hwb(var(--color3) 00% 60%);
+    --c3-0-7-5: hwb(var(--color3) 00% 70% / 0.5);
+    --c3-0-8: hwb(var(--color3) 00% 80%);
+    --c3-0-9: hwb(var(--color3) 00% 90%);
+    --c3-1-0: hwb(var(--color3) 10% 00%);
+    --c3-4-0: hwb(var(--color3) 40% 00%);
+    --c3-6-0: hwb(var(--color3) 60% 00%);
+    --c3-6-0-5: hwb(var(--color3) 60% 00% / 0.5);
+    --c3-7-0: hwb(var(--color3) 70% 00%);
+    --c3-8-0: hwb(var(--color3) 80% 00%);
+
+    --c4-0-0: hwb(var(--color4) 00% 00%);
+    --c4-0-4: hwb(var(--color4) 00% 40%);
+    --c4-0-6: hwb(var(--color4) 00% 60%);
+    --c4-0-7-5: hwb(var(--color4) 00% 70% / 0.5);
+    --c4-0-8: hwb(var(--color4) 00% 80%);
+    --c4-0-9: hwb(var(--color4) 00% 90%);
+    --c4-1-0: hwb(var(--color4) 10% 00%);
+    --c4-4-0: hwb(var(--color4) 40% 00%);
+    --c4-6-0: hwb(var(--color4) 60% 00%);
+    --c4-7-0: hwb(var(--color4) 70% 00%);
+    --c4-7-3: hwb(var(--color4) 70% 30%);
+    --c4-8-0: hwb(var(--color4) 80% 00%);
+
+    --bg: linear-gradient(125deg, var(--c3-0-8), var(--c4-0-8));
+}
+
+p, ul, h1, h2, textarea, button{
+    color: var(--c3-8-0);
+}
+body {
+    background-image: var(--bg);
+}

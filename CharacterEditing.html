@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <link rel="stylesheet" href="SCSS/Hr.css">
+
+    <script>
+        let name = null;
+        let main = null;
+        let addBtn = null;
+        let hasTW = false;
+        let hasTOC = false;
+        let hasSection = false;
+        let addBtns;
+        function swapTag(tag, elem){
+            if(elem.className.includes(` ${tag}`)){
+                elem.classList.remove(tag);
+            }
+            else{
+                elem.classList.add(tag);
+            }
+        }
+        let _el;
+
+        function dragOver(e) {
+            e.preventDefault();
+            if (isBefore(_el, e.target))
+                e.target.parentNode.insertBefore(_el, e.target);
+            else
+                e.target.parentNode.insertBefore(_el, e.target.nextSibling);
+        }
+
+        function dragStart(e) {
+            // e.target.style.cursor = "grabbing !important";
+            e.dataTransfer.effectAllowed = "drag";
+            e.dataTransfer.setData("text/plain", null);
+            e.dataTransfer.setDragImage(e.target, window.outerWidth, window.outerHeight);
+            swapTag("dragging", e.target);
+            _el = e.target;
+        }
+        function dragEnd(e) {
+            swapTag("dragging", e.target);
+        }
+
+        function isBefore(el1, el2) {
+            if (el2.parentNode === el1.parentNode)
+                for (var cur = el1.previousSibling; cur && cur.nodeType !== 9; cur = cur.previousSibling)
+                if (cur === el2)
+                    return true;
+            return false;
+        }
+
+        function insertAfter(newNode, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+        function starting(){
+            let dragables = document.querySelectorAll(".list-item");
+            dragables.forEach((d) => {
+                d.addEventListener('dragstart', e => dragStart(e));
+                d.addEventListener('dragend', e => dragEnd(e));
+                d.addEventListener('dragover', e => dragOver(e));
+                d.addEventListener("touchstart", e => dragStart(e)); 
+                d.addEventListener("touchmove", e => dragOver(e)); 
+                d.addEventListener("touchend", e => dragEnd(e));
+            });
+            name = document.querySelector("#Name");
+            main = document.querySelector("main");
+            addBtn = document.querySelector('.add-btn');
+            addBtns = [
+                addBtn.querySelector('.top-add'),
+                addBtn.querySelector('.right-add'),
+                addBtn.querySelector('.bottom-add'),
+                addBtn.querySelector('.left-add'),
+                addBtn.querySelector('.bottom-right-add'),
+                addBtn.querySelector('.bottom-left-add')
+            ]
+        }
+        window.onload = starting;
+
+        function updateName(elem){
+            name.innerText = elem.value;
+            name.innerHTML += '<button class="icon-btn circular" onclick="viewCS()"><i class="fas fa-eye"></i></button>';
+        }
+        function updateVar(elem, style){
+            document.documentElement.style.setProperty(style, `'${elem.value}'`);
+        }
+
+        function moveUpBy(elem, number){
+            let article = null;
+            if(number === 1){article = elem.parentElement;}
+            if(number === 2){article = elem.parentElement.parentElement;}
+            if(number === 3){article = elem.parentElement.parentElement.parentElement;}
+            if(number === 4){article = elem.parentElement.parentElement.parentElement.parentElement;}
+            if(number === 5){article = elem.parentElement.parentElement.parentElement.parentElement.parentElement;}
+            article.parentElement.insertBefore(article, article.previousElementSibling);
+        }
+        function moveDownBy(elem, number){
+            let article = null;
+            if(number === 1){article = elem.parentElement;}
+            if(number === 2){article = elem.parentElement.parentElement;}
+            if(number === 3){article = elem.parentElement.parentElement.parentElement;}
+            if(number === 4){article = elem.parentElement.parentElement.parentElement.parentElement;}
+            if(number === 5){article = elem.parentElement.parentElement.parentElement.parentElement.parentElement;}
+            article.parentElement.insertBefore(article, article.nextElementSibling.nextElementSibling);
+        }
+        function addSomething(elem){
+            swapTag("active", elem.parentElement.querySelector(".middle-add"));
+            updateAddToggle = false;
+            if(elem.children[1].innerText.includes("Trigger Warnings")){
+                addTW();
+                if(!hasTW) { updateAddToggle = true; }
+                hasTW = true;
+            }
+            else if(elem.children[1].innerText.includes("Section")){
+                let sec = addSection();
+                sec.querySelector('.section-label').innerHTML += `<div class="flex-cc-g">
+                    <button class="icon-btn circular" onclick='moveUpBy(this, 3)'  ><i class="fa fas fa-caret-up"  ></i></button>
+                    <button class="icon-btn circular" onclick='swapTag("collapsed", this)'  ><i class="fa fas fa-minus"  ></i></button>
+                    <button class="icon-btn circular" onclick='moveDownBy(this, 3)'><i class="fa fas fa-caret-down"></i></button>
+                </div>`;
+                elem.parentElement.parentElement.insertBefore(sec, elem.parentElement);
+                sec.querySelector("input").focus();
+                if(!hasSection) { updateAddToggle = true; }
+                hasSection = true;
+            }
+            else if(elem.children[1].innerText.includes("Detail")){
+                let sec = addDetail();
+                elem.parentElement.parentElement.insertBefore(sec, elem.parentElement);
+                sec.querySelector(".question").focus();
+            }
+            else if(elem.children[1].innerText.includes("Table")){
+                addTOC();
+                if(!hasTOC) { updateAddToggle = true; }
+                hasTOC = true;
+            }
+            else if(elem.children[1].innerText.includes("Image")){
+                let sec = addImage();
+                elem.parentElement.parentElement.insertBefore(sec, elem.parentElement);
+                sec.querySelector("input").focus();
+                return;
+            }
+            else if(elem.children[1].innerText.includes("Text")){
+                let sec = addText();
+                elem.parentElement.parentElement.insertBefore(sec, elem.parentElement);
+                sec.focus();
+            }
+            if(updateAddToggle){
+                updateAdd();
+            }
+        }
+        function addSection(){
+            // <div class="section-label"><hr class="decor"><input class="input"><hr class="decor"></div>
+            let article = document.createElement("article");
+            article.style.borderColor = "var(--c2-4-0)"
+            article.style.borderStyle = "solid";
+            article.style.borderWidth = "0 1px 2px 1px";
+            article.className = "section-article";
+            let section = document.createElement("div");
+            section.className = "section-label flex-cc";
+            section.style.padding = "5px 0";
+            section.style.marginTop = "0";
+            let decor1 = document.createElement("hr");
+            decor1.className = "decor";
+            decor1.style.margin = "15px 10px";
+            section.appendChild(decor1);
+            let input = document.createElement("input");
+            input.type = "text";
+            input.className = "input";
+            input.maxLength = "40";
+            section.appendChild(input);
+            let decor2 = document.createElement("hr");
+            decor2.className = "decor";
+            decor2.style.margin = "15px 10px";
+            section.appendChild(decor2);
+            section.innerHTML += `<button class="icon-btn circular delete" onclick="removeBy(this, 2)"><i class="fas fa-trash"></i></button>`;
+            article.appendChild(section);
+            addAddBtns(article);
+            return article;
+        }
+        function addTW(){
+            let tw = document.createElement("div");
+            tw.className = "trigger-warnings flex-cc";
+            tw.style.padding = "0";
+            let h2 = document.createElement("h2");
+            h2.innerText = "Trigger Warnings"
+            tw.appendChild(h2);
+            let input = document.createElement("input");
+            input.type = "text";
+            input.className = "input";
+            // input.maxLength = "40";
+            tw.appendChild(input);
+            insertAfter(tw, name);
+            input.focus();
+            // <div class="trigger-warnings flex-cc">
+            //     <h2>Trigger Warnings</h2>
+            //     <input typ="text" class="input" placeholder="Type something...">
+            // </div>
+        }
+        function addTOC(){
+            let section = addSection();
+            section.querySelector("input").value = "Contents";
+            section.querySelector("input").disabled = true;
+            let input = document.createElement("textarea");
+            input.className = "toc input large-text";
+            input.style.textAlign = "center";
+            if(hasTW){
+                insertAfter(section, main.querySelector(".trigger-warnings"));
+                insertAfter(input, section);
+            }
+            else{
+                insertAfter(section, name);
+                insertAfter(input, section);
+            }
+            input.focus();
+            // <div class="section-label flex-cc">
+            //     <hr class="decor">
+            //     <h2>Contents</h2>
+            //     <hr class="decor">
+            // </div>
+            // <textarea class="input large-text"></textarea>
+        }
+        function addImage(){
+            let section = document.createElement("div");
+            section.className = "flex-cc section-element";
+            let decor1 = document.createElement("hr");
+            decor1.className = "ImageTop";
+            section.appendChild(decor1);
+            let img = document.createElement("img");
+            img.src = "Images/yellowH.jpg";
+            section.appendChild(img);
+            let input = document.createElement("input");
+            input.type = "text";
+            input.className = "quote input";
+            input.placeholder = "Insert quote..."
+            section.appendChild(input);
+            let decor2 = document.createElement("hr");
+            decor2.className = "ImageBottom";
+            section.appendChild(decor2);
+            //main.insertBefore(section, addBtn);
+            // input.focus();
+            return section;
+            // <div class="flex-cc">
+            //     <hr class="ImageTop">
+            //     <img src="Images/yellowH.jpg">
+            //     <p class="quote">“I don't have much time left.”</p>
+            //     <hr class="ImageBottom">
+            // </div>
+        }
+        function addText(){
+            let input = document.createElement("textarea");
+            input.className = "input large-text section-element";
+            input.style.textAlign = "center";
+            return input;
+            // main.insertBefore(input, addBtn);
+            // input.focus();
+        }
+        let details = null;
+        function enableAdd(){
+            swapTag("hidden", addBtn);
+            if(details != null){
+                details.remove();
+                details = null;
+            }
+        }
+        function addAnswer(elem){
+            let item = document.createElement('li');
+            item.className = "flex-r-g added-item";
+            item.innerHTML += `<button class="icon-btn circular small" onclick="removeBy(this, 1)"><i class="fas fa-trash"></i></button>`;
+            let input = document.createElement("input");
+            input.type = "text";
+            input.value = elem.parentElement.querySelector("input").value;
+            input.className = "input answer";
+            item.appendChild(input);
+            elem.parentElement.parentElement.insertBefore(item, elem.parentElement);
+            elem.parentElement.querySelector("input").value = "";
+            elem.parentElement.querySelector("input").focus();
+        }
+        function addDetail(){
+            let detail = document.createElement("div");
+            detail.className = "detail flex-cc-p-g section-element"
+            detail.innerHTML = `<input type='text' class="input question">
+            <ul class="flex-c-g">
+                <li class="flex-r-g add-item">
+                    <button class="icon-btn circular small" onclick='addAnswer(this)'><i class="fa fas fa-plus"></i></button>
+                    <input type='text' class="input answer">
+                </li>
+            </ul>
+            <button class="icon-btn circular delete" onclick="removeBy(this, 1)"><i class="fas fa-trash"></i></button>
+            <div class="flex-cc-g">
+                <button class="icon-btn circular" onclick='moveUpBy(this, 2)'  ><i class="fa fas fa-caret-up"  ></i></button>
+                <button class="icon-btn circular" onclick='moveDownBy(this, 2)'><i class="fa fas fa-caret-down"></i></button>
+            </div>`;
+            return detail;
+            // main.insertBefore(detail, addBtn);
+            // detail.querySelector(".question").focus();
+
+
+            // <ul class="flex-c-g">
+            //     <li class="flex-r-g">
+            //         <input type='text' class="input answer">
+            //     </li>
+            //     <li class="flex-r-g add-item">
+            //         <button class="icon-btn circular"><i class="fa fas fa-plus"></i></button>
+            //         <input type='text' class="input answer">
+            //     </li>
+            // </ul>
+        }
+        function removeBy(elem, number){
+            if(number === 1){elem.parentElement.remove();}
+            if(number === 2){elem.parentElement.parentElement.remove();}
+            if(number === 3){elem.parentElement.parentElement.parentElement.remove();}
+            if(number === 4){elem.parentElement.parentElement.parentElement.parentElement.remove();}
+            if(number === 5){elem.parentElement.parentElement.parentElement.parentElement.parentElement.remove();}
+        }
+        let label = (btn, text) => addBtns[btn].children[1].innerText = text;
+        function updateAdd(){
+            addBtns[0].style.display = "flex";
+            addBtns[5].style.display = "none";
+            addBtns[4].style.display = "none";
+            if(!hasTW && !hasTOC && !hasSection){
+                label(0, "Image");
+                label(1, "Table of Contents");
+                label(2, "Section");
+                label(3, "Trigger Warnings");
+            }
+            if(!hasTW && !hasTOC && hasSection){
+                label(0, "Image");
+                label(1, "Table of Contents");
+                label(2, "Section");
+                label(3, "Trigger Warnings");
+                addBtns[4].style.display = "flex";
+                addBtns[5].style.display = "flex";
+                label(4, "Plain Text");
+                label(5, "Detail");
+            }
+            if(!hasTW && hasTOC && hasSection){
+                label(0, "Image");
+                label(1, "Plain Text");
+                label(2, "Section");
+                label(3, "Trigger Warnings");
+                addBtns[5].style.display = "flex";
+                label(5, "Detail");
+            }
+            if(!hasTW && hasTOC && !hasSection){
+                addBtns[0].style.display = "none";
+                label(1, "Image");
+                label(2, "Section");
+                label(3, "Trigger Warnings");
+            }
+
+            if(hasTW && !hasTOC && !hasSection){
+                addBtns[0].style.display = "none";
+                label(1, "Table of Contents");
+                label(2, "Section");
+                label(3, "Image");
+            }
+            if(hasTW && !hasTOC && hasSection){
+                label(0, "Image");
+                label(1, "Table of Contents");
+                label(2, "Section");
+                label(3, "Detail");
+                addBtns[5].style.display = "flex";
+                label(5, "Plain Text");
+            }
+            if(hasTW && hasTOC && hasSection){
+                label(0, "Image");
+                label(1, "Plain Text");
+                label(2, "Section");
+                label(3, "Detail");
+            }
+            if(hasTW && hasTOC && !hasSection){
+                addBtns[0].style.display = "none";
+                label(1, "Image");
+                label(2, "Section");
+                label(3, "Plain Text");
+            }
+        }
+        let addAddBtns = (elem) => {
+            elem.innerHTML += `<div class="add-btn" style='grid-template-rows: 0px auto 1fr; margin: 10px auto;'>
+                <button class="icon-btn middle-add circular" onclick="swapTag('active', this)"><i class="fa fas fa-plus"></i></button>
+                <button onclick="addSomething(this)" class="icon-btn labeled bottom-add"><p>Add</p><p>Detail</p></button>
+                <button onclick="addSomething(this)" class="icon-btn labeled left-add"  ><p>Add</p><p>Image</p></button>
+                <button onclick="addSomething(this)" class="icon-btn labeled right-add" ><p>Add</p><p>Plain Text</p></button>
+            </div>`;
+        }
+    </script>
+    <script>
+        function viewCS(){
+            saveCS();
+            window.location.href = 'http://127.0.0.1:5500/Sketch.html';
+        }
+        function saveCS() {
+            // if (!supportsLocalStorage()) { return false; }
+            // localStorage["cs"] = gGameInProgress;
+            localStorage.clear();
+            localStorage["cs.viewing"] = true;
+            localStorage["cs.name"] = name.innerText.replace(`<button class="icon-btn circular"><i class="fas fa-eye"></i></button>`, '');
+            let topSettings = document.querySelector('.top-divided');
+            localStorage["cs.sectionDecal"] = topSettings.children[0].children[1].value;
+            localStorage["cs.answerDecal"] = topSettings.children[1].children[1].value;
+            localStorage["cs.imgFrmDecal"] = topSettings.children[2].children[1].value;
+            localStorage["cs.tw.display"] = hasTW;
+            if(hasTW){
+                localStorage["cs.tw.value"] = document.querySelector(".trigger-warnings").querySelector("input").value;
+            }
+            localStorage["cs.toc.display"] = hasTOC;
+            if(hasTW){
+                localStorage["cs.toc.value"] = document.querySelector(".toc").value;
+            }
+            let sections = main.querySelectorAll(".section-article");
+            localStorage[`cs.sections.count`] = sections.length;
+            for (let s = 0; s < sections.length; s++) {
+                // console.log(sections[s]);
+                localStorage[`cs.sections.${s}.value`] = sections[s].querySelector('.section-label').querySelector('input').value;
+                let contents = sections[s].querySelectorAll('.section-element');
+                localStorage[`cs.sections.${s}.count`] = contents.length;
+                for(let c = 0; c < contents.length; c++){
+                    // console.log(contents[c]);
+                    let type = contents[c].className.includes('large-text') ? "text" : contents[c].className.includes("detail") ? "detail" : "img";
+                    localStorage[`cs.sections.${s}.${c}.type`] = type;
+                    if(type === "text"){
+                        localStorage[`cs.sections.${s}.${c}.value`] = contents[c].value;
+                    }
+                    else if(type === "img"){
+                        localStorage[`cs.sections.${s}.${c}.img`] = contents[c].querySelector("img").src;
+                        localStorage[`cs.sections.${s}.${c}.quote`] = contents[c].querySelector(".quote").value;
+                    }
+                    else if(type === "detail"){
+                        localStorage[`cs.sections.${s}.${c}.q`] = contents[c].querySelector(".question").value;
+                        let answers = contents[c].querySelectorAll('.added-item');
+                        localStorage[`cs.sections.${s}.${c}.count`] = answers.length;
+                        for(let a = 0; a < answers.length; a++){
+                            localStorage[`cs.sections.${s}.${c}.${a}.value`] = answers[a].querySelector("input").value;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    </script>
+    <style>
+        .input{
+            outline: none;
+            border: 1px solid var(--c1-0-4);
+            border-radius: 10px;
+            background-color: var(--c1-0-7-5);
+        }
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: var(--c1-0-0);
+        }
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: var(--c1-0-0);
+        }
+        :-ms-input-placeholder { /* IE 10+ */
+            color: var(--c1-0-0);
+        }
+        :-moz-placeholder { /* Firefox 18- */
+            color: var(--c1-0-0);
+        }
+    </style>
+    <style>
+        .add-btn{
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            grid-template-rows: 1fr auto 1fr;
+            width: fit-content;
+            justify-items: center;
+            gap: 5px;
+            margin: 0 auto;
+        }
+        .add-btn .icon-btn:not(.circular){
+            width: fit-content;
+            will-change: transform;
+            transition: transform 0.25s;
+        }
+        .add-btn .middle-add{
+            grid-column: 2;
+            grid-row: 2;
+            z-index: 10;
+        }
+        .add-btn .middle-add.active, .collapsed{
+            background-image: linear-gradient(45deg, hwb(0 60% 00%), hwb(30 60% 00%));
+            color: hwb(30 00% 80%);
+            border-color: hwb(0 00% 40%);
+        }
+        .add-btn .middle-add.active:hover, .collapsed:hover{
+            background-image: linear-gradient(45deg, hwb(0 00% 60%), hwb(30 00% 60%));
+            color: hwb(30 80% 00%);
+            border-color: hwb(0 40% 00%);
+        }
+        .add-btn .bottom-add{
+            grid-column: 2;
+            grid-row: 3;
+            transform: translate(0, calc(-100% - 5px)) scale(0);
+        }
+        .add-btn .left-add{
+            grid-column: 1;
+            grid-row: 2;
+            justify-self: flex-end;
+            transform: translate(calc(100% + 5px), 0) scale(0);
+        }
+        .add-btn .right-add{
+            grid-column: 3;
+            grid-row: 2;
+            justify-self: flex-start;
+            transform: translate(calc(-100% - 5px), 0) scale(0);
+        }
+        .add-btn .top-add{
+            grid-column: 2;
+            grid-row: 1;
+            transform: translate(0, calc(100% + 5px)) scale(0);
+        }
+
+        .add-btn .bottom-left-add{
+            grid-column: 1;
+            grid-row: 3;
+            justify-self: flex-end;
+            transform: translate(calc(100% + 5px), calc(-100% - 5px)) scale(0);
+            display: none;
+        }
+        .add-btn .bottom-right-add{
+            grid-column: 3;
+            grid-row: 3;
+            justify-self: flex-start;
+            transform: translate(calc(-100% - 5px), calc(-100% - 5px)) scale(0);
+            display: none;
+        }
+        .add-btn .top-left-add{
+            grid-column: 1;
+            grid-row: 3;
+            justify-self: flex-end;
+            transform: translate(calc(100% + 5px), calc(-100% - 5px)) scale(0);
+            display: none;
+        }
+        .add-btn .top-right-add{
+            grid-column: 3;
+            grid-row: 3;
+            justify-self: flex-start;
+            transform: translate(calc(-100% - 5px), calc(-100% - 5px)) scale(0);
+            display: none;
+        }
+
+
+        .add-btn:has(.middle-add.active) .icon-btn:not(.circular)/*,
+        .add-btn:has(.middle-add.active) .top-add,
+        .add-btn:has(.middle-add.active) .left-add,
+        .add-btn:has(.middle-add.active) .right-add, 
+        .add-btn:has(.middle-add.active) .bottom-left-add*/{
+            transform: translate(0, 0) scale(1);
+        }
+
+        @media (max-width: 500px) {
+            .add-btn .icon-btn p:first-child{
+                display: none;
+            }
+        }
+    </style>
+    <style>
+        .top-info{
+            /* padding-top: 15px; */
+            display: grid;
+            grid-template-columns: 6.5rem auto 1fr;
+            justify-items: center;
+            gap: 5px;
+        }
+        .top-info .colors{
+            position: relative;
+            gap: 10px;
+        }
+        .top-info .colors .circle{
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 2rem;
+            background-color: black;
+            border: 1px solid white;
+        }
+        .top-info .input{
+            width: 100%;
+        }
+        .top-info .title{
+            box-sizing: border-box;
+            padding: 5px;
+        }
+        .top-info:has(.title:focus) .dropdown{
+            width: 5rem;
+        }
+        .top-info:has(.title:focus) .dropdown .down-icon{
+            display: none;
+        }
+
+        .top-info .dropdown {
+            width: 15rem;
+            transition: width 0.25s;
+        }
+        .dropdown .dropbtn {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-wrap: nowrap;
+            width: inherit;
+            text-align: left;
+        }
+
+
+
+
+
+        a:hover{
+            border: var(--c1-0-4) solid;
+            border-width: 0px 0px 1px 0px;
+            font-size: 1.35rem;
+        }
+        .dropdown {
+            align-content: center;
+            position: relative;
+        }
+        .dropdown .dropbtn {
+            padding: 0 10px;
+            font-size: 1.25rem;
+            border: none;
+            outline: none;
+            color: var(--c1-7-0);
+            background-color: transparent;
+        }
+        a:hover, .dropdown:hover {
+            background-color: var(--c1-0-8);
+        }
+        .dropdown:hover {
+            border-radius: 10px 10px 0 0;
+        }
+        .dropdown-content {
+            margin-top: 0.5rem;
+            max-height: 0;
+            overflow: clip;
+            position: absolute;
+            background-color: var(--c1-0-9);
+            border: 1px solid var(--c1-0-4);
+            border-width: 0px;
+            width: 100%;
+            z-index: 20;
+            margin-left: -1px;
+            transition: max-height 0.25s, border 0.25s;
+            will-change: max-height;
+            transform: translateZ(0);
+        }
+        .dropdown-content a {
+            color: var(--c1-6-0);
+            display: block;
+            text-wrap: nowrap;
+            transition: font-size 0.1s;
+            will-change: font-size;
+            transform: translateZ(0);
+        }
+        .dropdown-content a:last-of-type:hover, .dropdown-content {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .dropdown:hover .dropdown-content {
+            max-height: 100vh;
+            border-width: 0 1px 1px 1px;
+        }
+        .down-icon{
+            position: absolute;
+            right: 10px;
+            top: 0px;
+            font-size: 2rem;
+            color: var(--c1-6-0);
+        }
+    </style>
+
+    <style>
+        .color{
+            height: 2rem;
+            width: 2rem;
+            border-radius: 1.5rem;
+            --color: 0;
+            background-color: hwb(var(--color) 0% 0%);
+            border: solid 2px;
+            border-color: hwb(var(--color) 0% 80%);
+        }
+        .colors:has(.circle.active) .more-colors{
+            display: flex;
+        }
+        .color:hover{
+            background-color: hwb(var(--color) 50% 00%);
+            border-color: hwb(var(--color) 85% 0%);
+        }
+        .top-info .more-colors{
+            display: none;
+            position: absolute;
+            flex-wrap: wrap;
+            width: calc(20rem + 5px);
+            top: calc(3rem + 10px);
+            z-index: 20;
+        }
+        .more-colors .color:nth-child(1){ --color: 0; }
+        .more-colors .color:nth-child(2){ --color: 20; }
+        .more-colors .color:nth-child(3){ --color: 40; }
+        .more-colors .color:nth-child(4){ --color: 60; }
+        .more-colors .color:nth-child(5){ --color: 80; }
+        .more-colors .color:nth-child(6){ --color: 100; }
+        .more-colors .color:nth-child(7){ --color: 120; }
+        .more-colors .color:nth-child(8){ --color: 150; }
+        .more-colors .color:nth-child(9){ --color: 180; }
+        .more-colors .color:nth-child(10){ --color: 200; }
+        .more-colors .color:nth-child(11){ --color: 220; }
+        .more-colors .color:nth-child(12){ --color: 240; }
+        .more-colors .color:nth-child(13){ --color: 260; }
+        .more-colors .color:nth-child(14){ --color: 270; }
+        .more-colors .color:nth-child(15){ --color: 280; }
+        .more-colors .color:nth-child(16){ --color: 300; }
+        .more-colors .color:nth-child(17){ --color: 320; }
+        .more-colors .color:nth-child(18){ --color: 340; }
+    </style>
+
+    <style>
+        .top-divided > div h2{
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.25;
+            text-wrap: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .top-divided > div{
+            border: solid var(--c1-0-4);
+            border-width: 0 2px 0 0;
+            flex: 1;
+        }
+        .top-divided > div:last-child{
+            border-width: 0;
+        }
+        .top-divided > div input[type='text']{
+            text-align: center;
+            width: 100%;
+            font-size: 1.25rem;
+            padding: 5px;
+        }
+        .top-divided > div:has(input[type='text']:focus){
+            flex: 2;
+        }
+        .top-divided > div img{
+            border: 1px solid var(--c1-0-4);
+            width: 10rem;
+            height: 10rem;
+            border-radius: 10px;
+            object-fit: cover;
+            overflow-clip-margin: unset;
+            overflow: hidden;
+        }
+    </style>
+
+    <style>
+        article:has(.section-label):first-of-type .section-label .flex-cc-g .icon-btn:first-child{
+            display: none;
+        }
+        article:has(.section-label):last-of-type .section-label .flex-cc-g .icon-btn:last-child{
+            display: none;
+        }
+        article:has(.collapsed) > *:not(.section-label){
+            display: none;
+        }
+        article:has(.collapsed) .section-label{
+            margin-bottom: 0;
+            border-bottom: 5px var(--c2-1-0) solid;
+        }
+        .section-label{
+            text-align: center;
+            padding: 10px 0;
+            background-color: var(--c2-4-0);
+            color: var(--c2-0-8);
+            font-size: 1.75rem;
+            font-family: "Baloo Bhaijaan 2", sans-serif;
+            font-weight: 500;
+            margin: 10px 0;
+            position: relative;
+        }
+        .section-label input{
+            width: min(80%, calc(100% - 40px - 6rem));
+            font-size: 1.5rem;
+            padding: 5px;
+            text-align: center;
+            color: var(--c2-0-8);
+            border: 0px;
+            background-color: transparent;
+        }
+        .section-label input:focus{
+            border: 2px solid var(--c2-0-0);
+        }
+        .section-label .flex-cc-g{
+            position: absolute;
+            right: 10px;
+            height: 100%;
+            gap: 0;
+            justify-content: space-evenly;
+        }
+        .section-label#Name .icon-btn{
+            position: absolute;
+            right: 10px;
+        }
+        .large-text{
+            width: 85%;
+            margin: 0 auto;
+            display: block;
+            padding: 5px;
+            background-color: transparent;
+            border-radius: 5px;
+        }
+        .trigger-warnings{
+            width: clamp(45ch, fit-content, 75ch);
+            padding: 10px 30px;
+            margin: 1rem 0 1.5rem 0;
+            border: solid var(--c3-6-0);
+            border-radius: 10px;
+            border-width: 1px 0;
+        }
+        .trigger-warnings h2{
+            font-size: 1.5rem;
+        }
+        .trigger-warnings input{
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+
+    <style>
+        main{
+            margin-bottom: 5rem;
+        }
+        footer{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            z-index: 15;
+        }
+        footer .btns{
+            justify-content: flex-end;
+        }
+        footer .options{
+            width: fit-content;
+            display: none;
+            margin-right: 10px;
+        }
+        footer:has(> .btns .active) .options{
+            display: initial;
+        }
+        footer .options .btns{
+            justify-content: flex-start;
+        }
+        footer .options .btns:last-child{
+            justify-content: flex-end;
+            padding-top: 10px;
+        }
+        footer .options .icon-btn.selected{
+            background-image: linear-gradient(45deg, hwb(120 40% 00%), hwb(170 40% 00%));
+            color: hwb(170 00% 80%);
+            border-color: hwb(120 00% 40%);
+        }
+        footer .options .icon-btn.selected:hover{
+            background-image: linear-gradient(45deg, hwb(120 00% 50%), hwb(170 00% 50%));
+            color: hwb(170 80% 00%);
+            border-color: hwb(120 40% 00%);
+        }
+        footer .dropdown2{
+            height: 2.5rem;
+            display: block;
+            overflow: clip;
+        }
+        footer .dropdown2:has(.active){
+            height: fit-content;
+            display: block;
+        }
+        footer .dropdown-content2 {
+            position: relative;
+        }
+        footer .dropdown:hover {
+            border-radius: 10px;
+        }
+        footer .dropdown2 .dropbtn{
+            font-size: 1.25rem;
+            flex: 1;
+            padding: 5px 10px;
+        }
+        footer .dropdown2 i{
+            font-size: 1.5rem;
+            padding: 0 10px;
+        }
+        footer .dropdown-content2 {
+            margin-top: 0.5rem;
+            overflow: clip;
+            background-color: var(--c1-0-9);
+            border: 1px solid var(--c1-0-4);
+            border-width: 0px;
+            width: 100%;
+            z-index: 20;
+        }
+        footer .dropdown-content2 a {
+            color: var(--c1-6-0);
+            display: block;
+            text-wrap: nowrap;
+            transition: font-size 0.1s;
+            will-change: font-size;
+            transform: translateZ(0);
+        }
+        footer .dropdown-content2 a:last-of-type:hover, footer .dropdown-content2 {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+
+        footer .toggle{
+            padding-top: 10px;
+        }
+        footer .toggle p{
+            font-size: 1.25rem;
+            flex: 1;
+        }
+
+
+        input[type=checkbox]{
+            height: 0;
+            width: 0;
+            visibility: hidden;
+        }
+
+        label {
+            cursor: pointer;
+            width:3rem;
+            height: 1.5rem;
+            background: grey;
+            display: block;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        label:after {
+            content: '';
+            position: absolute;
+            top: 0.125rem;
+            left: 0.125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: #fff;
+            border-radius: 1.25rem;
+            transition: 0.1s;
+        }
+
+        input:checked + label {
+            background: #bada55;
+        }
+
+        input:checked + label:after {
+            left: calc(100% - 0.125rem);
+            transform: translateX(-100%);
+        }
+
+    </style>
+
+
+
+    <style>
+        :root{
+            --middleHR: "";
+            --middleImageHR: "";
+            --middleAddition: "───";
+        }
+
+        .quote{
+            text-align: center;
+            font-size: 1.25rem;
+            font-style: italic;
+            width: clamp(75px, min(500px, 85%), 75ch);
+            margin-top: 10px;
+            padding: 5px;
+        }
+
+        main img{
+            max-width: 375px;
+            max-height: 50vh;
+            width: auto;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid var(--c1-0-6);
+            transition: transform 0.25s;
+        }
+        main img:hover{
+            transform: scale(1.1);
+        }    
+        @media (max-width: 530px) {
+            main img{
+                max-width: 50%;
+                max-height: 50vh;
+            }
+        }
+    </style>
+
+    <style>
+        article .detail:nth-child(1 of .detail) .flex-cc-g .icon-btn:first-child{
+            display: none;
+        }
+        article .detail:nth-last-child(1 of .detail) .flex-cc-g .icon-btn:last-child{
+            display: none;
+        }
+        .detail{
+            margin: 0 10px 10px 10px;
+            background-color: var(--c1-0-8);
+            border-radius: 10px;
+            border: 1px solid var(--c1-0-4);
+            position: relative;
+            padding: 10px 4rem;
+        }
+        .detail .question{
+            width: calc(100% - 10px - 2rem);
+            padding: 5px;
+        }
+        .detail .answer{
+            /* margin-left: 3rem; */
+            padding: 5px;
+            /* width: calc(100% - 10px - 3rem); */
+            flex: 1;
+        }
+        .detail ul{
+            list-style-type: none;
+            width: calc(100% - 2rem);
+            margin-left: calc(5% - 1rem);
+        }
+        .delete{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        .detail .flex-cc-g{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            /* gap: min(20%, 2rem); */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <!-- <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/> -->
+    </nav>
+    <main>
+        <section class="top-info p10">
+            <div class="colors flex-row">
+                <div class="circle" onclick="swapTag('active', this)"></div>
+                <div class="circle" onclick="swapTag('active', this)"></div>
+                <div class="more-colors flex-rc-p-g input">
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                </div>
+            </div>
+            <div class="dropdown input">
+                <button class="dropbtn">Template</button>
+                <div class="down-icon"><i class="fa fas fa-caret-down"></i></div>
+                <div class="dropdown-content">
+                    <a class="p10">Default</a>
+                    <a class="p10">DND</a>
+                    <a class="p10">Blank</a>
+                </div>
+            </div>
+            <input class="title input" type="text" placeholder="Character Name" oninput="updateName(this)">
+        </section>
+        <section class="top-divided flex-rc">
+            <div class="flex-cc-p-g">
+                <h2>Section Decal</h2>
+                <input class="input" type="text" oninput="updateVar(this, '--middleHR')">
+            </div>
+            <div class="flex-cc-p-g">
+                <h2>Answer Decal</h2>
+                <input class="input" type="text">
+            </div>
+            <div class="flex-cc-p-g">
+                <h2>Image Frame Decal</h2>
+                <input class="input" type="text" oninput="updateVar(this, '--middleImageHR')">
+            </div>
+        </section>
+        <div class="section-label flex-cc" id="Name">&#10240;<button class="icon-btn circular" onclick="viewCS()"><i class="fas fa-eye"></i></button></div>
+        <div class="add-btn">
+            <button class="icon-btn middle-add circular" onclick="swapTag('active', this)"><i class="fa fas fa-plus"></i></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled bottom-add"><p>Add</p><p>Section</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled left-add"><p>Add</p><p>Trigger Warnings</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled right-add"><p>Add</p><p>Table of Contents</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled top-add"><p>Add</p><p>Image</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled bottom-left-add"><p>Add</p><p>Detail</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled bottom-right-add"><p>Add</p><p>Plain Text</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled top-left-add"><p>Add</p><p>Detail</p></button>
+            <button onclick="addSomething(this)" class="icon-btn labeled top-right-add"><p>Add</p><p>Plain Text</p></button>
+        </div>
+    </main>
+    <footer class="flex-col">
+        <div class="options flex-c-p input">
+            <h2>Privacy</h2>
+            <div class="btns flex-r-g">
+                <button class="icon-btn labeled" onclick="swapTag('selected', this)" ><p>Everyone</p></button>
+                <button class="icon-btn labeled" onclick="swapTag('selected', this)" ><p>Only Friends</p></button>
+                <button class="icon-btn labeled" onclick="swapTag('selected', this)" ><p>Only Me</p></button>
+            </div>
+            <h2>Post to profiles</h2>
+            <div class="dropdown2 input">
+                <div class="text flex-rc-g" onclick="swapTag('active', this)" >
+                    <p class="dropbtn">Profiles</p>
+                    <i class="fa fas fa-caret-down"></i>
+                </div>
+                <div class="dropdown-content2">
+                    <a class="p10">SFW</a>
+                    <a class="p10">SFW / NSFW</a>
+                    <a class="p10">NSFW</a>
+                </div>
+            </div>
+            <div class="toggle flex-row">
+                <p>Include on global profile</p>
+                <input type="checkbox" id="switch" /><label for="switch"></label>
+            </div>
+            <div class="toggle flex-row">
+                <p>Display in post listings</p>
+                <input type="checkbox" id="switch2" /><label for="switch2"></label>
+            </div>
+            <div class="btns flex-r-g">
+                <button class="icon-btn labeled"><p>Cancel</p></button>
+                <button class="icon-btn labeled"><p>Save Settings</p></button>
+                <button class="icon-btn labeled"><p>Publish</p></button>
+            </div>
+        </div>
+        <div class="btns flex-r-p-g">
+            <button class="icon-btn labeled"><p>Cancel</p></button>
+            <button class="icon-btn labeled"><p>Save</p></button>
+            <button class="icon-btn labeled" onclick="swapTag('active', this)"><p>Publish</p></button>
+        </div>
+    </footer>
+    <!-- <script src="JS/DragDropTouch.js"></script> -->
+</body>
+</html>

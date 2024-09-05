@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+
+    <link rel="stylesheet" href="CSS/PrimaryColors.css">
+    <link rel="stylesheet" href="CSS/Defaults.css">
+    <style>
+        header{
+            display: grid;
+            grid-template-columns: 1fr 6rem 6rem auto;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        header a {
+            font-size: 1.25rem;
+            background-color: var(--c1-0-7-5);
+            border: solid var(--c1-6-0);
+            border-width: 0 0 2px 0;
+            border-radius: 10px;
+            color: var(--c1-6-0);
+            height: 80%;
+            text-align: center;
+            align-content: center;
+            width: 100%;
+            transition: transform 0.1s;
+        }
+
+        header a:hover {
+            transform: scale(1.1, 1.1);
+            cursor: pointer;
+            border-color: var(--c2-7-0);
+            color: var(--c2-7-0);
+        }
+        body{
+            height: calc(100% - 6.8rem);
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+        }
+
+        section {
+            padding: 2em 0;
+            flex: 1;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        h2{
+            font-size: 2rem;
+        }
+        p{
+            font-size: 1.25rem;
+        }
+        #intro {
+            /* background-color: #fff; */
+            text-align: center;
+            padding: 4em 0;
+        }
+
+        #intro h2 {
+            margin-top: 0;
+        }
+
+        .cta-button {
+            background-color: var(--c1-0-7-5);
+            border: solid var(--c1-6-0);
+            border-width: 0 0 2px 0;
+            border-radius: 10px;
+            color: var(--c1-6-0);
+            padding: 0.75em 1.5em;
+            text-decoration: none;
+            margin-top: 1em;
+            display: inline-block;
+        }
+
+        #features .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2em;
+            justify-content: center;
+        }
+
+        #features .feature-item {
+            padding: 1.5em;
+            background: var(--c1-0-8);
+            border-radius: 10px;
+            border: var(--c2-4-0) 2px solid;
+            flex: 1 1 calc(25% - 2em);
+            max-width: calc(25% - 2em);
+            text-align: center;
+        }
+        h3{
+            color: var(--c2-6-0);
+            font-size: 1.25rem;
+        }
+
+        #join {
+            text-align: center;
+            padding: 4em 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+            }
+
+            header nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header nav ul li {
+                margin-left: 0;
+                margin-top: 0.5em;
+            }
+
+            #features .features-grid {
+                flex-direction: column;
+            }
+
+            #features .feature-item {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div></div>
+        <a href="Login.html">Log in</a>
+        <a>Sign up</a>
+        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The white on black PrismaVerse logo" id="logo"/>
+        <!-- <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/> -->
+    </header>
+    <main>
+        <section id="intro">
+            <div class="container">
+                <h2>Welcome to PrismaVerse</h2>
+                <p>Your ultimate platform to connect, create, and share immersive roleplaying experiences with a vibrant community.</p>
+                <a href="#join" class="cta-button">Join Now</a>
+            </div>
+        </section>
+    
+        <section id="features">
+            <div class="container">
+                <h2>Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>Custom Profiles</h3>
+                        <p>Create detailed profiles for your characters and share them with the community.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Interactive Stories</h3>
+                        <p>Engage in interactive storytelling with fellow roleplayers from around the world.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Forums and Groups</h3>
+                        <p>Join forums and groups to discuss, plan, and collaborate on roleplaying adventures.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Events and Contests</h3>
+                        <p>Participate in exclusive events and contests to showcase your roleplaying skills.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section id="join">
+            <div class="container">
+                <h2>Join the Community</h2>
+                <p>Sign up today and start your next adventure with PrismaVerse!</p>
+                <a href="#" class="cta-button">Sign Up</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 PrismaVerse. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
