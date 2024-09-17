@@ -547,6 +547,7 @@
     </script>
 
 <script>
+    // Profile data
     let pageGrid = null;
     let midCol = null;
     let name = null;
@@ -571,6 +572,8 @@
         online: true,
         bio: "|< font-weight: 600 >||< color:#FF00F0 >|Hi!|</>| I'm not pink|</>|\nHello **This is bold** *This is italic*\n *<#insert hex>* text *<#insert hex>*"
     };
+
+    // Links
     let link = [
         {
             icon: "Images/discord-logo.png",
@@ -589,6 +592,8 @@
             username: "jaylex_05"
         }
     ];
+
+    // Wiki Bar Data (Characters, stories)
     let wikiBarData = [
         {
             id: 0,
@@ -599,6 +604,8 @@
             text: "Stories"
         }
     ];
+
+    // Wiki Bar Data Contents (Data for characters and stories)
     let wikiContent = [
         {
             barId: 0,
@@ -649,13 +656,17 @@
             image: ""
         }
     ]
+
+    // Level Requirements
     let levelReqs = [255, 510, 765, 1020, 1275, 1530, 1785, 2040, 2295, 2550];
     
+
     async function fetchFrom(s) {
         const response = await fetch(s);
         const movies = await response.json();
     }
 
+    // Get Profile Data (colors, picture, gradients)
     async function getProfile(a){
         await fetch(`http://localhost:8005/Profile?profileID=${a}`)
         .then(response => {
@@ -673,9 +684,12 @@
             .catch(error => { console.error('There was a problem with the fetch operation:', error);
         });
     }
+
     function kFormatter(num) {
         return Math.abs(num) > 1999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
     }
+
+    // Get Profile data (Level, username, bio, etc.)
     function getProfile2(){
         let levels = 0;
         if(data.totalXP > levelReqs[0]) { levels = 1; }
@@ -734,6 +748,8 @@
                 links.appendChild(linkE);
             }
         }
+
+        // Wiki Bar Data
         if(wikiBarData.length > 0){
             let wiki = midCol.querySelector('.wiki');
             wiki.querySelector('.dropdown').remove();
@@ -762,6 +778,8 @@
             }
         }
     }
+
+    // Startup
     async function starting() {
         pageGrid = document.querySelector('main');
         midCol = document.querySelector('#mid-col');
