@@ -19,6 +19,7 @@
     <script type="text/javascript" src="JS/FakeClasses/LikesAndComments.js"></script>
 
     <script>
+        // Extend button function
         function extendPullout(elem){
             pc = elem.parentElement.querySelector('.pullout-content');
             ei = elem.querySelector('i');
@@ -37,6 +38,8 @@
                 ei.classList.add("fa-caret-left");
             }
         }
+
+        // Like button function
         function like(elem){
             // <button class="icon-btn like-btn"><i class="fa fa-regular fa-heart"></i></button>
             if(elem.children[0].className.includes("fa-regular")){
@@ -51,6 +54,7 @@
             }
             
         }
+
         function OnInput() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + "px";
@@ -263,11 +267,15 @@
     <script>
         let chapterID = 2;
         // let userID = 1;
+
+        // Navigation bar
         let loadNav = (bookInfo, chapterInfo) => {
+            // Create navigation element
             nav = document.createElement("nav");
             nav.className = "flex-row pullout left";
-            nav.innerHTML = `<section class="flex-col pullout-content">
-                     <header class="flex-c-p">
+            // Create section (with title, author, chapters, and expand button)
+            nav.innerHTML = `<section class="flex-col pullout-content">     
+                <header class="flex-c-p">
                          <h1 class="f175" id="nav-title"></h1>
                          <h2 class="f125" id="nav-author"></h2>
                      </header>
@@ -278,10 +286,15 @@
                      </div>
                  </section>
                  <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-bars"></i></button>`;
+
+
+            // Add title/author text
             nav.querySelector("#nav-title").innerText = bookInfo.title;
             nav.querySelector("#nav-author").innerText = userData.find((u) => u.userID === bookInfo.userID).username;
             chapterUL = nav.querySelector("#nav-chapters");
             read = readData.filter((r) => r.userID === userID);
+            
+            // Add each chapter
             chapterData.filter((c) => c.bookID === bookInfo.bookID).forEach(element => {
                 li = document.createElement("li");
                 if(element.chapterID === chapterInfo.chapterID){
@@ -315,6 +328,8 @@
             //     <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-bars"></i></button>
             // </nav>
         }
+
+        // Create Chapter title header
         let loadHeading = (bookInfo, chapterInfo) => {
             header = document.createElement("header");
             header.className = "flex-cc-p";
@@ -344,6 +359,8 @@
             //         </div>
             //     </header>
         }
+
+        // Create chapter contents (paragraph elements)
         let loadContent = (chapterInfo) => {
             content = document.createElement("article");
             content.className = "content p10 f15";
@@ -358,10 +375,14 @@
             //         <p>Lorem</p>
             //     </article>
         }
+
+        // Create chapter navigation button section
         let loadNext = (bookInfo, chapterInfo) => {
             btns = document.createElement("section");
             btns.className = "next-chapter flex-rc-p-g";
             let rtn = false;
+
+            // Creates previous chapter button
             if(chapterInfo.chapterIndex != 1){
                 prev = document.createElement("a");
                 prev.className = "icon-btn";
@@ -372,6 +393,8 @@
                 btns.appendChild(prev);
                 rtn = true;
             }
+
+            // Creates next chapter button
             if(chapterData.find((c) => (c.bookID ===chapterInfo.bookID) && (c.chapterIndex === chapterInfo.chapterIndex + 1)) != null){
                 next = document.createElement("a");
                 next.className = "icon-btn";
@@ -382,6 +405,8 @@
                 btns.appendChild(next);
                 rtn = true;
             }
+
+            // Create div with buttons
             return rtn ? btns : document.createElement("div");
             //     <section class="next-chapter flex-rc-p-g">
             //         <button class="icon-btn"><i class="fa fas fa-caret-left"></i><p>Previous</p></button>
@@ -495,6 +520,7 @@
             //     </footer>
         }
         */
+        // Load contents of entire page
         let loadWriting = (id) => {
             let chapterInfo = chapterData.find((c) => c.chapterID === id);
             let bookInfo = bookData.find((b) => b.bookID === chapterInfo.bookID);
@@ -509,6 +535,8 @@
             document.querySelector("main").appendChild(book);
             book.appendChild(loadFooter(chapterInfo, 2, userID));
         }
+        
+        // Startup
         function starting() {
             loadStyle(userID);
             const tx = document.querySelectorAll("textarea");
