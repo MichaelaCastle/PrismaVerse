@@ -623,6 +623,7 @@
 
     <script>
         
+        // Load CSS
         function loadCS() {
             // if (!supportsLocalStorage()) { return false; }
             // localStorage["cs"] = gGameInProgress;
@@ -675,6 +676,7 @@
             }
         }
 
+        // Startup
         function starting(){
             if(localStorage["cs.viewing"] != null) { loadCS(); }
         }
