@@ -23,6 +23,8 @@
         let hasTOC = false;
         let hasSection = false;
         let addBtns;
+
+        // Swap tags
         function swapTag(tag, elem){
             if(elem.className.includes(` ${tag}`)){
                 elem.classList.remove(tag);
@@ -31,8 +33,10 @@
                 elem.classList.add(tag);
             }
         }
+
         let _el;
 
+        // Insert dragged information in new position
         function dragOver(e) {
             e.preventDefault();
             if (isBefore(_el, e.target))
@@ -41,6 +45,7 @@
                 e.target.parentNode.insertBefore(_el, e.target.nextSibling);
         }
 
+        // Gets information to drag
         function dragStart(e) {
             // e.target.style.cursor = "grabbing !important";
             e.dataTransfer.effectAllowed = "drag";
@@ -49,10 +54,13 @@
             swapTag("dragging", e.target);
             _el = e.target;
         }
+
+        // Swaps the 2 selected dragged objects
         function dragEnd(e) {
             swapTag("dragging", e.target);
         }
 
+        // Check if element is before other element
         function isBefore(el1, el2) {
             if (el2.parentNode === el1.parentNode)
                 for (var cur = el1.previousSibling; cur && cur.nodeType !== 9; cur = cur.previousSibling)
@@ -61,9 +69,12 @@
             return false;
         }
 
+        // Add after
         function insertAfter(newNode, referenceNode) {
             referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
         }
+
+        // Startup
         function starting(){
             let dragables = document.querySelectorAll(".list-item");
             dragables.forEach((d) => {
@@ -74,6 +85,7 @@
                 d.addEventListener("touchmove", e => dragOver(e)); 
                 d.addEventListener("touchend", e => dragEnd(e));
             });
+
             name = document.querySelector("#Name");
             main = document.querySelector("main");
             addBtn = document.querySelector('.add-btn');
@@ -86,16 +98,21 @@
                 addBtn.querySelector('.bottom-left-add')
             ]
         }
+
         window.onload = starting;
 
+        // Updates name
         function updateName(elem){
             name.innerText = elem.value;
             name.innerHTML += '<button class="icon-btn circular" onclick="viewCS()"><i class="fas fa-eye"></i></button>';
         }
+
+        // Updates element value
         function updateVar(elem, style){
             document.documentElement.style.setProperty(style, `'${elem.value}'`);
         }
 
+        // Move Section label up (contents, image, sections, etc,)
         function moveUpBy(elem, number){
             let article = null;
             if(number === 1){article = elem.parentElement;}
@@ -105,6 +122,8 @@
             if(number === 5){article = elem.parentElement.parentElement.parentElement.parentElement.parentElement;}
             article.parentElement.insertBefore(article, article.previousElementSibling);
         }
+
+        // Move Section label down (contents, image, sections, etc,)
         function moveDownBy(elem, number){
             let article = null;
             if(number === 1){article = elem.parentElement;}
@@ -114,6 +133,8 @@
             if(number === 5){article = elem.parentElement.parentElement.parentElement.parentElement.parentElement;}
             article.parentElement.insertBefore(article, article.nextElementSibling.nextElementSibling);
         }
+
+        // What section ot add (twigger warnings, table of contents, etc.)
         function addSomething(elem){
             swapTag("active", elem.parentElement.querySelector(".middle-add"));
             updateAddToggle = false;
@@ -159,26 +180,37 @@
                 updateAdd();
             }
         }
+
+        // Create Section after pressing button (table of contents, details, etc.)
         function addSection(){
             // <div class="section-label"><hr class="decor"><input class="input"><hr class="decor"></div>
+            // Create Article
             let article = document.createElement("article");
             article.style.borderColor = "var(--c2-4-0)"
             article.style.borderStyle = "solid";
             article.style.borderWidth = "0 1px 2px 1px";
             article.className = "section-article";
+            
+            // Create div
             let section = document.createElement("div");
             section.className = "section-label flex-cc";
             section.style.padding = "5px 0";
             section.style.marginTop = "0";
+            
+            // Create hr
             let decor1 = document.createElement("hr");
             decor1.className = "decor";
             decor1.style.margin = "15px 10px";
             section.appendChild(decor1);
+            
+            // Create input
             let input = document.createElement("input");
             input.type = "text";
             input.className = "input";
             input.maxLength = "40";
             section.appendChild(input);
+           
+            // Create hr
             let decor2 = document.createElement("hr");
             decor2.className = "decor";
             decor2.style.margin = "15px 10px";
@@ -188,6 +220,8 @@
             addAddBtns(article);
             return article;
         }
+        
+        // Create Twigger Warnings Button
         function addTW(){
             let tw = document.createElement("div");
             tw.className = "trigger-warnings flex-cc";
@@ -207,6 +241,8 @@
             //     <input typ="text" class="input" placeholder="Type something...">
             // </div>
         }
+        
+        // Add Table of Contents Button
         function addTOC(){
             let section = addSection();
             section.querySelector("input").value = "Contents";
@@ -230,6 +266,8 @@
             // </div>
             // <textarea class="input large-text"></textarea>
         }
+
+        // Add Image Button
         function addImage(){
             let section = document.createElement("div");
             section.className = "flex-cc section-element";
@@ -257,6 +295,8 @@
             //     <hr class="ImageBottom">
             // </div>
         }
+
+        // Add Text
         function addText(){
             let input = document.createElement("textarea");
             input.className = "input large-text section-element";
@@ -265,7 +305,10 @@
             // main.insertBefore(input, addBtn);
             // input.focus();
         }
+
         let details = null;
+
+        // Add Button
         function enableAdd(){
             swapTag("hidden", addBtn);
             if(details != null){
@@ -273,6 +316,8 @@
                 details = null;
             }
         }
+
+        // Add Answers
         function addAnswer(elem){
             let item = document.createElement('li');
             item.className = "flex-r-g added-item";
@@ -286,6 +331,8 @@
             elem.parentElement.querySelector("input").value = "";
             elem.parentElement.querySelector("input").focus();
         }
+
+        // Add Detail
         function addDetail(){
             let detail = document.createElement("div");
             detail.className = "detail flex-cc-p-g section-element"
@@ -316,6 +363,8 @@
             //     </li>
             // </ul>
         }
+
+        // Remove
         function removeBy(elem, number){
             if(number === 1){elem.parentElement.remove();}
             if(number === 2){elem.parentElement.parentElement.remove();}
@@ -323,7 +372,10 @@
             if(number === 4){elem.parentElement.parentElement.parentElement.parentElement.remove();}
             if(number === 5){elem.parentElement.parentElement.parentElement.parentElement.parentElement.remove();}
         }
+
         let label = (btn, text) => addBtns[btn].children[1].innerText = text;
+        
+        // What buttons to add
         function updateAdd(){
             addBtns[0].style.display = "flex";
             addBtns[5].style.display = "none";
@@ -386,6 +438,8 @@
                 label(3, "Plain Text");
             }
         }
+
+        // Creates Add Buttons
         let addAddBtns = (elem) => {
             elem.innerHTML += `<div class="add-btn" style='grid-template-rows: 0px auto 1fr; margin: 10px auto;'>
                 <button class="icon-btn middle-add circular" onclick="swapTag('active', this)"><i class="fa fas fa-plus"></i></button>
