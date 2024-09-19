@@ -70,6 +70,23 @@ h1, h2{
     transform: scale(1.3, 1.3) rotate(45deg);
 }
 
+// Navigation Bar
+#nav-bar{
+    align-items: center;
+    gap: 10px;
+    max-height: 30px; // Logo size
+    padding: 5px;
+
+}
+#nav-bar > .user-image {
+    max-height: 30px;
+    max-width: 30px;
+}
+#nav-bar > button {
+    max-height: 35px;
+    width: auto;
+}
+
 .g10{gap:10px}
 .p10{padding:10px}
 .f1{font-size:1rem}
