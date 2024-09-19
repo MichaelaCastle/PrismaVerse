@@ -1,3 +1,4 @@
+@import url(../CSS/PrimaryColors.css);
 html {
   font-size: 12px;
   font-family: "Gabarito", sans-serif;
@@ -283,6 +284,7 @@ h1, h2 {
 .pullout {
   position: fixed;
   top: 10rem;
+  z-index: 10;
 }
 .pullout .expand {
   height: 5vh;
