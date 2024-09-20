@@ -24,7 +24,7 @@ p, ul, body, header, nav {
 body > header{
     position: fixed;
     top: 0;
-    width: 100vh;
+    width: 100%;
     z-index: 10;
 }
 body > nav{
@@ -74,7 +74,7 @@ h1, h2{
 #nav-bar{
     align-items: center;
     gap: 10px;
-    max-height: 30px; // Logo size
+    max-height: 3rem; // Logo size
     padding: 5px;
 
 }

@@ -772,8 +772,14 @@
 </script> 
 </head>
 <body>
-    <nav aria-label="Site Menu">
-        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The white on black PrismaVerse logo" id="logo"/>
+    <nav>
+        <div id="nav-bar" class="flex-row">
+            <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+            <button class="icon-btn">Home</button>
+            <button class="icon-btn">My Spectrums</button>
+            <button class="icon-btn" onclick="window.location.href='/Chats4.html'">Chats</button>
+            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        </div>
         <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
     </nav>
     <main>

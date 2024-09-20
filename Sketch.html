@@ -11,7 +11,7 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
     <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <link rel="stylesheet" href="CSS/Defaults.css">
     <link rel="stylesheet" href="CSS/SecondaryColors.css">
     <link rel="stylesheet" href="SCSS/Hr.css">
     <link rel="stylesheet" href="SCSS/Sketch1.css">
@@ -683,7 +683,13 @@
 </head>
 <body>
     <nav>
-        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        <div id="nav-bar" class="flex-row">
+            <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+            <button class="icon-btn">Home</button>
+            <button class="icon-btn">My Spectrums</button>
+            <button class="icon-btn" onclick="window.location.href='/Chats4.html'">Chats</button>
+            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+        </div>
         <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
     </nav>
     <main>
