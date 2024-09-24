@@ -307,6 +307,30 @@
                 description: ""
             }
         ];
+
+        // Adds a message to the table of all the message data between users (msgData)
+        // Is not permanently adding it to the table (Update the table in the database with SQL)
+        function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
+            // Create a new message object
+            const newMessage = {
+                userId: userId,
+                content: content,
+                usingCharacter: usingCharacter,
+                characterId: characterId,
+                deleted: deleted,
+                isImage: isImage
+            };
+
+            // Push the new message to msgData array
+            msgData.push(newMessage);
+
+            // Optional: Log or return the new message for debugging purposes
+            console.log("Message sent:", newMessage);
+
+            loadMessages();
+        }
+
+
         function loadMessages(){
             let msg_c = document.querySelector('#chat > section');
             msgData = msgData.reverse();
@@ -511,6 +535,11 @@
             c_info.style.maxHeight = "90vh";
             setTimeout(() => {c_info.style.overflowY = "visible";}, 50);
         }
+
+        function Update(){
+
+        }
+
         async function starting() {
             const tx = document.querySelectorAll("textarea");
             for(let i = 0; i < tx.length; i++){
