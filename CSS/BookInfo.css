@@ -1,0 +1,102 @@
+#book-info.complete header div h1:before{
+    content: 'Complete';
+    display: block;
+    font-size: 1.25rem;
+    background-color: var(--c2-6-0);
+    background-color: var(--c4-6-0);
+    color: var(--c1-0-8);
+    color: var(--c3-0-8);
+    width: fit-content;
+    padding: 0 10px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+#book-info header{
+    border: var(--c2-4-0) solid;
+    border-color: var(--c4-4-0);
+    border-width: 2px 0;
+    background-image: linear-gradient(90deg, transparent, #000000D0 30% 70%, transparent), url("Images/purpleH.jpg");
+    /* background-image: url("Images/book-bg.webp"); */
+    /* background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0.9) 100%), url("Images/book-bg.webp"); */
+    background-size: cover;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center;
+    position: relative;
+}
+#book-info header > img{
+    max-width: 15rem;
+    max-height: 20rem;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+}
+#book-info header .stats{
+    gap: 20px;
+}
+#book-info header .stats i{
+    color: var(--c2-6-0);
+    color: var(--c4-6-0);
+}
+hr{
+    width: 90%;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--c2-4-0), transparent);
+    background: linear-gradient(90deg, transparent, var(--c4-4-0), transparent);
+}
+.summary{
+    font-size: 1.5rem;
+    max-width: 100rem;
+}
+.summary h2{
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--c2-8-0);
+    color: var(--c4-8-0);
+    padding-left: 1.5rem;
+}
+.summary p{
+    text-indent: 1.5rem;
+    padding-top: 10px;
+}
+.summary p:first-child{
+    padding-top: 0;
+}
+.tags{
+    padding: 5px 5px 0 5px;
+    margin: 0 5%;
+    flex-wrap: wrap;
+    font-size: 1.25rem;
+}
+h2.category{
+    font-size: 1.5rem;
+    color: var(--c3-8-0);
+}
+.group{
+    border: var(--c2-4-0) solid;
+    border-color: var(--c4-4-0);
+    border-width: 0 0 0 2px;
+    padding: 0 0 0 10px;
+    flex-wrap: wrap;
+}
+.group:first-child{
+    border-width: 0;
+}
+.tag{
+    color: var(--c4-8-0);
+    border-radius: 10px;
+    background-color: var(--c4-0-6);
+    padding: 5px;
+    text-wrap: nowrap;
+}
+
+
+@media only screen and (max-width: 1300px){
+    .summary{ max-width: 75rem; }
+}
+@media only screen and (max-width: 950px){
+    .summary{ max-width: 60rem; }
+}
+@media only screen and (max-width: 800px){
+    .summary{ padding: 0 10px; }
+}

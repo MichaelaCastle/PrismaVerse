@@ -128,90 +128,8 @@
     <link rel="stylesheet" href="CSS/Defaults.css">
     <link rel="stylesheet" href="SCSS/Conversations.css">
 
-    <script>
-        let inSub = false;
-        function openSubmenu(menu) {
-            // Hide all elements with class="tabcontent" by default */
-            let tabcontent = document.querySelectorAll("#options .body .section");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-
-            // Show the specific tab content
-            document.querySelector(`#${menu}`).style.display = "block";
-
-            inSub = true;
-        }
-        function backOptions() {
-            if(inSub){
-                let tabcontent = document.querySelectorAll("#options .body .section");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                document.querySelector(`#o_chat`).style.display = "block";
-                document.querySelector(`#o_appearance`).style.display = "block";
-                document.querySelector(`#o_application`).style.display = "block";
-            }
-        }
-
-        
-    </script>
+    <script src="JS/ChatListing.js"></script>
     <style>
-
-        :root{
-            /* --color1: 150; */
-            /* --color2: 200; */
-        }
-        
-
-
-        /* .listing p.name, .listing:hover p.name{
-            color: var(--c1-7-0);
-        }
-        .listing{
-            margin: 0.3rem;
-            padding: 0.3rem;
-            display: grid;
-            grid-template-columns: 5rem 1fr;
-            grid-template-rows: min-content 1fr;
-            gap: 5px;
-        }
-        .listing p{
-            margin-bottom: 0.3rem;
-        }
-        .listing .heading{
-            grid-row: 1 / 2;
-            grid-column: 2 / 3;
-        }
-        .listing .heading .name{
-            font-size: 1.75rem;
-            flex: 1;
-            transition: font-size 0.15s;
-        }
-        .listing .msg{
-            text-wrap: wrap;
-            font-size: 1.25rem;
-        }
-        .listing .time{
-            text-align: right;
-            font-size: 1.25rem;
-        }
-        .listing:hover{
-            border-radius: 0.6rem;
-        }
-        .listing:hover .heading .name{
-            font-size: 1.85rem;
-        }
-        .listing .user-image{
-            grid-row: 1 / 3;
-            justify-self: center;
-        } */
-
-
-      
-
-
-
         main{
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
@@ -251,37 +169,6 @@
     </style>
 
     <style>
-        /* .left-panel{
-            margin-top: 2rem;
-            align-items: center;
-            gap: 2rem;
-        }
-        .progress{
-            width: 75%;
-            height: 3rem;
-            background-color: var(--c2-4-0);
-            border-radius: 1.5rem;
-        }
-        .store{
-            gap: 10px;
-        }
-        .store .heading{
-            border-width: 0px 0px 2px 0px;
-            border-color: var(--c1-4-0);
-            border-style: solid;
-        }
-        .store .heading img{
-            height: 4rem;
-        }
-        .store .heading h2{
-            font-size: 2rem;
-            padding: 0 2rem;
-            font-weight: 600;
-        }
-        .store h2{
-            font-size: 1.5rem;
-        } */
-
         footer{
             position: fixed;
             bottom: 0;
@@ -365,48 +252,6 @@
             border-color: hsl(0 0% 50%);
         }
     </style>
-    <script>
-        let currColorPick = null;
-        function openColors(){
-            document.querySelector('.colors').style.display = "flex";
-        }
-        function openMoreColors(col){
-            document.querySelector('.more-colors').style.display = "flex";
-            currColorPick = col;
-            document.querySelector(`.colors .c${col}`).style.borderWidth = "5px";
-            document.querySelector(`.colors .c${col}`).style.filter = "saturate(60%) brightness(200%)";
-            document.querySelector(`.colors .c${col === 1 ? 2 : 1}`).style.borderWidth = "2px";
-            document.querySelector(`.colors .c${col === 1 ? 2 : 1}`).style.filter = "none";
-        }
-        function setCol(col){
-            if(col < 390){
-                document.documentElement.style.setProperty(`--color${currColorPick}`, col);
-                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "normal");
-                let col2 = parseInt(getComputedStyle(document.body).getPropertyValue(`--color${currColorPick === 1 ? 2 : 1}`));
-                console.log(col);
-                console.log(col2);
-                console.log(col + col2);
-                document.documentElement.style.setProperty("--color5", (Math.abs(col - col2) <= 180) ? ((col + col2) / 2) : (((col + col2) / 2) + 180));
-                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = `hwb(var(--color${currColorPick}) 0% 60%)`;
-                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = `hwb(var(--color${currColorPick}) 0% 0%)`;
-            }
-            else if(col === 400){
-                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "black");
-                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 30%)";
-                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 0%)";
-            }
-            else if(col === 500){
-                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "dark");
-                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 80%)";
-                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 50%)";
-            }
-            else{
-                document.documentElement.setAttribute(`data-theme-${currColorPick}`, "light");
-                document.querySelector(`.colors .c${currColorPick}`).style.borderColor = "hsl(0 0% 80%)";
-                document.querySelector(`.colors .c${currColorPick}`).style.backgroundColor = "hsl(0 0% 50%)";
-            }
-        }
-    </script>
 </head>
 <body>
     <nav aria-label="Site Menu">
@@ -415,31 +260,6 @@
     </nav>
     <main>
         <section class="flex-col left-panel">
-            <!-- <div class="progress"></div>
-            <div class="store flex-col">
-                <div class="heading flex-row flex-center">
-                    <h2>Store</h2>
-                    <img src="Images/store-icon.png">
-                </div>
-                <h2>Bubbles</h2>
-                <div class="flex-row">
-                    <img src="Images/pfp.jpg" class="user-image">
-                    <img src="Images/pfp2.jpg" class="user-image">
-                    <img src="Images/pfpGreen.png" class="user-image">
-                    <img src="Images/pfpGreen2.webp" class="user-image">
-                    <img src="Images/pfp2.jpg" class="user-image">
-                    <img src="Images/pfpGreen.png" class="user-image">
-                </div>
-                <h2>Frames</h2>
-                <div class="flex-row">
-                    <img src="Images/pfp.jpg" class="user-image">
-                    <img src="Images/pfp2.jpg" class="user-image">
-                    <img src="Images/pfpGreen.png" class="user-image">
-                    <img src="Images/pfpGreen2.webp" class="user-image">
-                    <img src="Images/pfp2.jpg" class="user-image">
-                    <img src="Images/pfpGreen.png" class="user-image">
-                </div>
-            </div> -->
         </section>
         <section id="conversations">
             <div id="convoMenu" class="flex-row flex-center">
