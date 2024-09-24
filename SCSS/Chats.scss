@@ -4,6 +4,7 @@
 #chat{
     background-image: linear-gradient(#000000F0/*, #000000A0*/, #00000050), url("../Images/purpleH.jpg");
     background-size: cover;
+    background-attachment: fixed;
 }
 #chat header, #chat footer{
     background-color: rgba(0, 0, 0, 0.5);
