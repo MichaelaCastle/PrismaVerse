@@ -193,27 +193,36 @@
 #character-info section h2:not(:first-child) {
   padding-top: 10px;
 }
-#character-info section textarea {
-  mix-blend-mode: luminosity;
-  width: calc(100% - 20px);
-  background-color: transparent;
-  border: var(--c2-6-0) solid;
-  border-width: 0 0 0 3px;
-  white-space: pre-wrap;
-  padding-left: 10px;
-}
-#character-info section textarea:disabled {
-  background-color: var(--c1-0-7-5);
-}
-#character-info section textarea.notes {
-  max-height: 15vh;
-}
-#character-info section textarea.description {
-  max-height: 30vh;
-}
 #character-info footer {
   justify-content: flex-end;
   padding: 0 10px 10px 10px;
+}
+
+textarea, .text-input {
+  mix-blend-mode: luminosity;
+  width: calc(50% - 20px);
+  background-color: transparent;
+  border: var(--c2-6-0) solid;
+  border-width: 0 0 2px 0;
+  white-space: pre-wrap;
+  padding-left: 10px;
+}
+
+textarea {
+  width: calc(100% - 20px);
+  border-width: 0 0 0 3px;
+}
+
+textarea:disabled {
+  background-color: var(--c1-0-7-5);
+}
+
+textarea.notes {
+  max-height: 15vh;
+}
+
+textarea.description {
+  max-height: 30vh;
 }
 
 .lower {

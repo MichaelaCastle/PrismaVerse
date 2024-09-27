@@ -6,6 +6,18 @@ let c_info = null;
 let cv = null;
 let cv_expand = null;
 let cv_open = false;
+
+function addRole(){
+    document.querySelector('.add').classList.remove("hidden");
+}
+function manageRoles(){
+    document.querySelector('.manage').classList.remove("hidden");
+}
+function closePanel(panel){
+    panel.parentElement.classList.add("hidden");
+}
+
+
 function OnInput() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + "px";

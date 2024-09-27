@@ -19,10 +19,77 @@
 </head>
 <body>
     <nav>
-        <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
-        <img src="Images/GearIcon_Temp.png" alt="Settings gear" id="Settings"/>
+        <div id="nav-bar" class="flex-row">
+            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+            <a class="icon-btn">Home</a>
+            <a class="icon-btn">My Spectrums</a>
+            <a class="icon-btn" href="/Chats4.html">Chats</a>
+            <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+        </div>
     </nav>
     <main>
+        <section class="manage flex-cc hidden">
+            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
+            <h2>Roles</h2>
+            <hr>
+            <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
+                <div class="user-grid">
+                    <div class="user-image new"></div>
+                    <h1 class="name">New Role</h1>
+                    <p class="text">Click the plus to get started</p>
+                </div>
+                <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
+            </div>
+            <div class="role-element flex-row" style="--role-color: rgb(55, 30, 10); --role-color-2: rgb(35, 15, 0)">
+                <div class="user-grid">
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <h1 class="name">Adam Zondervan</h1>
+                    <p class="text">Dutch Boi</p>
+                </div>
+                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
+            </div>
+            <div class="role-element flex-row" style="--role-color: rgb(30, 70, 16); --role-color-2: rgb(0, 50, 0)">
+                <div class="user-grid">
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <h1 class="name">Elliot</h1>
+                    <p class="text">Doggo</p>
+                </div>
+                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
+            </div>
+            <div class="role-element flex-row" style="--role-color: rgb(0, 0, 70); --role-color-2: rgb(0, 0, 50)">
+                <div class="user-grid">
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <h1 class="name">Why is my name so long</h1>
+                    <p class="text">And why is my subtext so long too</p>
+                </div>
+                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
+            </div>
+            <div class="role-element flex-row" style="--role-color: rgb(9, 70, 16); --role-color-2: rgb(35, 15, 0)">
+                <div class="user-grid">
+                    <img class="user-image" src="Images/pfp.jpg" />
+                    <h1 class="name">Faolan</h1>
+                    <p class="text">Trickster</p>
+                </div>
+                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
+            </div>
+        </section>
+        <section class="add flex-cc-p-g hidden">
+            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
+            <h2>Roles</h2>
+            <hr>
+            <div class="role-head flex-rc-p-g">
+                <button class="icon-btn circular"><i class="fa fas fa-upload"></i></button>
+                <img class="user-image" src="Images/Pfps/GraAnonPFP.png">
+                <button class="icon-btn circular"><i class="fa fas fa-palette"></i></button>
+            </div>
+            <input class="text-input" type="text" placeholder="Name"/>
+            <input class="text-input" type="text" placeholder="Subtext"/>
+            <p>Notes</p>
+            <textarea class="notes"></textarea>
+            <p>Description</p>
+            <textarea class="description"></textarea>
+            <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
+        </section>
         <aside id="members" class="flex-row pullout left">
             <section class="members flex-col pullout-content">
                 <h1>Chat Info</h1>
@@ -144,8 +211,8 @@
             <section class="characters flex-col pullout-content">
                 <h1>Roles</h1>
                 <div class="btns flex-r-g">
-                    <button class="icon-btn"><i class="fa fas fa-plus"></i><p>New</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-bars"></i><p>Manage</p></button>
+                    <button class="icon-btn" onclick="addRole()"><i class="fa fas fa-plus"></i><p>New</p></button>
+                    <button class="icon-btn" onclick="manageRoles()"><i class="fa fas fa-bars"></i><p>Manage</p></button>
                 </div>
                 <div class="flex-rc-p-g roles">
                 </div>
