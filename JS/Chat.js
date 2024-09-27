@@ -303,71 +303,89 @@ function sendMessage(userId, content, usingCharacter = false, characterId = 0, i
          // Push the new message to msgData array
          msgData.push(newMessage);
 
-        // Optional: Log or return the new message for debugging purposes
-        console.log("Message sent:", newMessage);
-
-        // Reloads all the messages and causes them to load twice (We just want to add the one message)
-        //loadMessages();
-
-        //Either create a function to add this one new message or create a function to reset all the messages and call loadMessages again 
-        // Probably the first one
-        //addMessage();
+        // Call addMessage function to add this new message
+        addMessage();
 }
 
-// function addMessage(){
-//     let msg_c = document.querySelector('#chat > section');
-//     msgData = msgData.reverse();
-//         if(msgData[m].deleted){
-//             let message = document.createElement("div");
-//             message.className = "message deleted flex-row p10";
-//             let name = document.createElement("p");
-//             name.className = "f125";
-//             name.innerText = `${p.name} has deleted this message`;
-//             message.appendChild(name);
-//             msg_c.appendChild(message);
-//         }
-//         //vars
-//         let uc = msgData[m].usingCharacter;
-//         let c = uc ? characterData.find((u) => u.id == msgData[m].characterId) : null;
-//         let color = uc ? c.color : p.color;
-//         //main message div
-//         let message = document.createElement("div");
-//         message.className = "message user-grid top p10";
-//         if(msgData[m].userId === userId) { message.classList.add("flip"); }
-//         // if(uc) { message.classList.add("character-msg"); }
-//         //pfp
-//         let icon = document.createElement("img");
-//         icon.src = !uc ? p.pfp : c.pfp;
-//         icon.classList.add("user-image");
-//         if(uc) icon.style.borderColor = color;
-//         if(uc) icon.style.backgroundColor = color;
-//         if(uc) icon.style.borderWidth = "3px";
-//         if(!uc) icon.addEventListener("click", () =>
-//         {
-//             localStorage.setItem("id", p.id);
-//             window.location.href = "Profile2.html";
-//         });
-//         if(uc) icon.addEventListener("click", () => { openCharacter(c.id - 1); });
-//         message.appendChild(icon);
-//         //name
-//         let name = document.createElement("h2");
-//         name.className = "name";
-//         name.innerText = !uc ? p.name : c.name;
-//         name.style.backgroundColor = color;
-//         message.appendChild(name);
-//         //content
-//         let text = !msgData[m].isImage ? document.createElement('p') : document.createElement('img');
-//         text.className = "text p10";
-//         if(!msgData[m].isImage)
-//         {
-//             text.innerHTML = styleText(msgData[m].content);//msgData[m].content;
-//         }
-//         else {text.src = msgData[m].content; }
-//         text.style.backgroundColor = color;
-//         //combine
-//         message.appendChild(text);
-//         msg_c.appendChild(message);
-// }
+// Display the newly sent message
+function addMessage(){
+    // Gets the section
+    let msg_c = document.querySelector('#chat > section');
+
+    // Reverses the order of the message data
+    msgData = msgData.reverse();
+
+
+    // Data in first array is newly added data
+    if(msgData[0].deleted){
+
+        // Create message deleted div (This is serperate from a normal message div)
+        let message = document.createElement("div");
+        message.className = "message deleted flex-row p10";
+        let name = document.createElement("p");
+        name.className = "f125";
+        name.innerText = `${p.name} has deleted this message`;
+        message.prepend(name);
+        msg_c.prepend(message);
+    }
+
+    //vars
+    let uc = msgData[0].usingCharacter;
+    let c = uc ? characterData.find((u) => u.id == msgData[0].characterId) : null;
+    let color = uc ? c.color : p.color;
+
+    //Create the main message div
+    let message = document.createElement("div");
+    message.className = "message user-grid top p10";
+
+
+    if(msgData[0].userId === userId) { message.classList.add("flip"); }
+    // if(uc) { message.classList.add("character-msg"); }
+    //pfp
+
+    // Create profile picture image element
+    let icon = document.createElement("img");
+    icon.src = !uc ? p.pfp : c.pfp;
+    icon.classList.add("user-image");
+    if(uc) icon.style.borderColor = color;
+    if(uc) icon.style.backgroundColor = color;
+    if(uc) icon.style.borderWidth = "3px";
+
+    // If profile picture is clicked and is not using a character, go to users profile
+    if(!uc) icon.addEventListener("click", () =>
+    {
+        localStorage.setItem("id", p.id);
+        window.location.href = "Profile3.html";
+    });
+
+    // If profile picture is clicked and is a character, open character info
+    if(uc) icon.addEventListener("click", () => { openCharacter(c.id - 1); });
+    message.appendChild(icon);
+
+    //name
+    let name = document.createElement("h2");
+    name.className = "name";
+    name.innerText = !uc ? p.name : c.name;
+    name.style.backgroundColor = color;
+    message.appendChild(name);
+    //content
+
+    let text = !msgData[0].isImage ? document.createElement('p') : document.createElement('img');
+    text.className = "text p10";
+    if(!msgData[0].isImage)
+    {
+        text.innerHTML = styleText(msgData[0].content);//msgData[m].content;
+    }
+    else {text.src = msgData[0].content; }
+    text.style.backgroundColor = color;
+
+    //combine
+    message.prepend(text);
+    msg_c.prepend(message);
+
+    // Reverses message data back to correct order
+    msgData = msgData.reverse();
+}
 
 function loadMessages(){
     // Gets the section
@@ -449,6 +467,9 @@ function loadMessages(){
         message.appendChild(text);
         msg_c.appendChild(message);
     }
+
+    // Reverses message data back to correct order
+    msgData = msgData.reverse();
 }
 function loadCharacters(){
     let role_c = document.querySelector('.roles');
@@ -592,10 +613,6 @@ function openCharacter(c){
     c_info_desc.disabled = characterData[c].userid != userId;
     c_info.style.maxHeight = "90vh";
     setTimeout(() => {c_info.style.overflowY = "visible";}, 50);
-}
-
-function Update(){
-
 }
 
 async function starting() {
