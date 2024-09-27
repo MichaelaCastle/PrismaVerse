@@ -45,7 +45,7 @@
 
     --statusCol: hwb(120 0% 30%); /*   hsl(120 var(--sm) clamp(50, var(--lm) + 50, 70));*/
     --pfpBorderCol: hsl(var(--h2) var(--sm) calc(var(--lm) + 40));
-    --headerGradient: linear-gradient(90deg, var(--c1-0-9), var(--c2-0-9));
+    --headerGradient: linear-gradient(90deg, var(--c1-0-8), var(--c2-0-8));
     --pfpBorderCol: var(--c2-0-0);
     --defaultColor: var(--c1-8-0);
 }
