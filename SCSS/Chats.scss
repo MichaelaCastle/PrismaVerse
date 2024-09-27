@@ -205,28 +205,50 @@
     & section h2:not(:first-child){
         padding-top: 10px;
     }
-    & section textarea{
-        mix-blend-mode: luminosity;
-        width: calc(100% - 20px);
-        background-color: transparent;
-        border: var(--c2-6-0) solid;
-        border-width: 0 0 0 3px;
-        white-space: pre-wrap;
-        padding-left: 10px;
-    }
-    & section textarea:disabled{
-        background-color: var(--c1-0-7-5);
-    }
-    & section textarea.notes{
-        max-height: 15vh;
-    }
-    & section textarea.description{
-        max-height: 30vh;
-    }
+    // & section textarea{
+    //     mix-blend-mode: luminosity;
+    //     width: calc(100% - 20px);
+    //     background-color: transparent;
+    //     border: var(--c2-6-0) solid;
+    //     border-width: 0 0 0 3px;
+    //     white-space: pre-wrap;
+    //     padding-left: 10px;
+    // }
+    // & section textarea:disabled{
+    //     background-color: var(--c1-0-7-5);
+    // }
+    // & section textarea.notes{
+    //     max-height: 15vh;
+    // }
+    // & section textarea.description{
+    //     max-height: 30vh;
+    // }
     & footer{
         justify-content: flex-end;
         padding: 0 10px 10px 10px;
     }
+}
+textarea, .text-input{
+    mix-blend-mode: luminosity;
+    width: calc(50% - 20px);
+    background-color: transparent;
+    border: var(--c2-6-0) solid;
+    border-width: 0 0 2px 0;
+    white-space: pre-wrap;
+    padding-left: 10px;
+}
+textarea{
+    width: calc(100% - 20px);
+    border-width: 0 0 0 3px;
+}
+textarea:disabled{
+    background-color: var(--c1-0-7-5);
+}
+textarea.notes{
+    max-height: 15vh;
+}
+textarea.description{
+    max-height: 30vh;
 }
 
 .lower{
