@@ -337,8 +337,8 @@ function addMessage(){
         let name = document.createElement("p");
         name.className = "f125";
         name.innerText = `${p.name} has deleted this message`;
-        message.prepend(name);
-        msg_c.prepend(message);
+        message.appendChild(name);
+        msg_c.appendChild(message);
     }
 
     //vars
@@ -392,11 +392,15 @@ function addMessage(){
     text.style.backgroundColor = color;
 
     //combine
-    message.prepend(text);
+    message.appendChild(text);
     msg_c.prepend(message);
 
     // Reverses message data back to correct order
     msgData = msgData.reverse();
+
+    //let msg_c = document.querySelector('#chat > section');
+    //msg_c.innerHTML = "";
+    //loadMessages();
 }
 
 function loadMessages(){
@@ -482,6 +486,8 @@ function loadMessages(){
 
     // Reverses message data back to correct order
     msgData = msgData.reverse();
+
+    
 }
 function loadCharacters(){
     let role_c = document.querySelector('.roles');
