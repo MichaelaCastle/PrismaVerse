@@ -299,6 +299,38 @@ let characterData = [
     }
 ];
 
+// Temporary filled variable that keeps track of the current character id the user has selected
+const currentCharacterId = 0
+
+// Gets the data in the textarea needed for a message 
+function getMessage(){
+    //console.log("Button clicked! getMessage is triggered.");
+    
+    const messageInput = document.getElementById('input');
+    // Get textarea text
+    const content = messageInput.value;
+
+    //console.log("Content typed: ", content);
+
+    // Sets parameters needed to construct message
+    const userId = 2;  
+    const usingCharacter = false; 
+    const characterId = currentCharacterId; 
+    const isImage = false;
+    const deleted = false;  
+
+    if(content){
+    // Now call the sendMessage function with these parameters
+    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
+    //clear the textarea after sending the message
+    messageInput.value = '';
+    }
+    else{
+        console.log("nothing in the textarea");
+    }
+
+}
+
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
 function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
@@ -326,6 +358,8 @@ function addMessage(){
 
     // Reverses the order of the message data
     msgData = msgData.reverse();
+
+    let p = participants.find((u) => u.id == msgData[0].userId);
 
 
     // Data in first array is newly added data
