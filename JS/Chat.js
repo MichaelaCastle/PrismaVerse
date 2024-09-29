@@ -304,13 +304,9 @@ const currentCharacterId = 0
 
 // Gets the data in the textarea needed for a message 
 function getMessage(){
-    //console.log("Button clicked! getMessage is triggered.");
-    
     const messageInput = document.getElementById('input');
     // Get textarea text
     const content = messageInput.value;
-
-    //console.log("Content typed: ", content);
 
     // Sets parameters needed to construct message
     const userId = 2;  
@@ -319,15 +315,15 @@ function getMessage(){
     const isImage = false;
     const deleted = false;  
 
+    // Send message if a message was typed
     if(content){
-    // Now call the sendMessage function with these parameters
     sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
-    //clear the textarea after sending the message
+    // Reset textarea
     messageInput.value = '';
     }
-    else{
-        console.log("nothing in the textarea");
-    }
+    // else{
+    //     console.log("nothing in the textarea");
+    // }
 
 }
 
@@ -523,6 +519,23 @@ function loadMessages(){
 
     
 }
+
+function roleInfoSave(){
+    //console.log("button clicked");
+
+    // Gets text in notes textarea
+    let roleNotes = document.querySelector('.f125.notes');
+    const roleNotesContent = roleNotes.value;
+    //console.log("Notes: " + roleNotesContent);
+
+    // Gets text in description textarea
+    let roleDescription = document.querySelector('.f125.description');
+    const roleDescriptionContent = roleDescription.value;
+    //console.log("Description: " + roleDescriptionContent);
+
+    // Save the data
+}
+
 function loadCharacters(){
     let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
