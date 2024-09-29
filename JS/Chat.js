@@ -300,8 +300,8 @@ let characterData = [
 ];
 
 // Temporary filled variable that keeps track of the current character id the user has selected
-const currentCharacterId = 0
-const currentUserId = 0
+let currentCharacterId = 0
+let currentUserId = 2
 
 // Gets the data in the textarea needed for a message 
 function getMessage(){
@@ -538,14 +538,24 @@ function roleInfoSave(){
     //
 }
 
+// Resets character id so no role is currently selected
+function unselectRole(){
+    currentCharacterId = 0; 
+    console.log('User ID:', currentUserId);
+    console.log('Character ID:', currentCharacterId);  
+}
+
 function roleSelect(){
     console.log("hi");
 
     const selectedUserId = this.getAttribute('user-id');
     const selectedCharacterId = this.getAttribute('character-id');
 
-    console.log('User ID:', selectedUserId);
-    console.log('Character ID:', selectedCharacterId);
+    currentUserId = selectedUserId
+    currentCharacterId = selectedCharacterId
+
+    console.log('User ID:', currentUserId);
+    console.log('Character ID:', currentCharacterId);
 }
 
 function loadCharacters(){
