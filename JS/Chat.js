@@ -310,7 +310,7 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = 2;  
+    const userId = currentUserId;  
     const usingCharacter = false; 
     const characterId = currentCharacterId; 
     const isImage = false;
@@ -546,7 +546,7 @@ function unselectRole(){
 }
 
 function roleSelect(){
-    console.log("hi");
+    //console.log("hi");
 
     const selectedUserId = this.getAttribute('user-id');
     const selectedCharacterId = this.getAttribute('character-id');
@@ -584,9 +584,9 @@ function loadCharacters(){
             // Add reference to id and userid to the button
             roleP.setAttribute('user-id', characterData[c].userid);
             roleP.setAttribute('character-id', characterData[c].id);
-            console.log("button");
-            console.log(characterData[c].userid);
-            console.log(characterData[c].id);
+            //console.log("button");
+            //console.log(characterData[c].userid);
+            //console.log(characterData[c].id);
 
             roleP.style.setProperty('--c-col', characterData[c].color);
             let nameP = document.createElement("p");
