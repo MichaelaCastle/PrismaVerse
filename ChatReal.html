@@ -181,7 +181,7 @@
             </section>
             <footer class="flex-c-p-g">
                 <div class="character-select flex-r-g hidden">
-                    <button class="icon-btn labeled"><p>None</p></button>
+                    <button class="icon-btn labeled" id="noRole" onclick="roleSelect()"><p>None</p></button>
                 </div>
                 <div class="flex-r-g message-line">
                     <button class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/Pfps/Jacob512.png"><p>Roles</p></button>
@@ -233,7 +233,7 @@
                 <h2 class="f15">Notes</h2>
                 <textarea class="f125 notes"></textarea>
                 <h2 class="f15">Description</h2>
-                <textarea class="f125 description" onclick="roleInfoSave()"></textarea>
+                <textarea class="f125 description"></textarea>
             </section>
             <footer class="flex-r-g">
                 <button class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>

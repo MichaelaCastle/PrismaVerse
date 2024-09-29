@@ -301,6 +301,7 @@ let characterData = [
 
 // Temporary filled variable that keeps track of the current character id the user has selected
 const currentCharacterId = 0
+const currentUserId = 0
 
 // Gets the data in the textarea needed for a message 
 function getMessage(){
@@ -526,14 +527,25 @@ function roleInfoSave(){
     // Gets text in notes textarea
     let roleNotes = document.querySelector('.f125.notes');
     const roleNotesContent = roleNotes.value;
-    //console.log("Notes: " + roleNotesContent);
+    console.log("Notes: " + roleNotesContent);
 
     // Gets text in description textarea
     let roleDescription = document.querySelector('.f125.description');
     const roleDescriptionContent = roleDescription.value;
-    //console.log("Description: " + roleDescriptionContent);
+    console.log("Description: " + roleDescriptionContent);
 
     // Save the data
+    //
+}
+
+function roleSelect(){
+    console.log("hi");
+
+    const selectedUserId = this.getAttribute('user-id');
+    const selectedCharacterId = this.getAttribute('character-id');
+
+    console.log('User ID:', selectedUserId);
+    console.log('Character ID:', selectedCharacterId);
 }
 
 function loadCharacters(){
@@ -554,14 +566,26 @@ function loadCharacters(){
         //combine
         role_c.appendChild(role);
 
+        // Role Selection (Bottom Left)
         if(characterData[c].userid === userId){
             let roleP = document.createElement("button");
             roleP.className = "icon-btn labeled";
+
+            // Add reference to id and userid to the button
+            roleP.setAttribute('user-id', characterData[c].userid);
+            roleP.setAttribute('character-id', characterData[c].id);
+            console.log("button");
+            console.log(characterData[c].userid);
+            console.log(characterData[c].id);
+
             roleP.style.setProperty('--c-col', characterData[c].color);
             let nameP = document.createElement("p");
             nameP.innerText = characterData[c].name;
             roleP.appendChild(nameP);
             cs.appendChild(roleP);
+
+            // Adds the roleSelect function to button onclick
+            roleP.addEventListener('click', roleSelect);
         }
     }
 
