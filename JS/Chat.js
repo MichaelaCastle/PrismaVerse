@@ -302,6 +302,7 @@ let characterData = [
 // Temporary filled variable that keeps track of the current character id the user has selected
 let currentCharacterId = 0
 let currentUserId = 2
+let currentEditCharacterId = 1;
 
 // Gets the data in the textarea needed for a message 
 function getMessage(){
@@ -521,6 +522,11 @@ function loadMessages(){
     
 }
 
+// Gets the characterid of current character being viewed/edited
+function getEditCharacterId(){
+
+}
+
 function roleInfoSave(){
     //console.log("button clicked");
 
@@ -545,6 +551,7 @@ function unselectRole(){
     console.log('Character ID:', currentCharacterId);  
 }
 
+// Gets the userId and characterId of role selected
 function roleSelect(){
     //console.log("hi");
 
@@ -565,6 +572,11 @@ function loadCharacters(){
         let role = document.createElement("div");
         role.className = "role flex-cc";
         role.style.setProperty('--role-color', characterData[c].color);
+
+        // Add reference to id and userid to the button
+        role.setAttribute('user-id', characterData[c].userid);
+        role.setAttribute('character-id', characterData[c].id);
+
         //pfp
         let icon = document.createElement("img");
         icon.src = characterData[c].pfp;
