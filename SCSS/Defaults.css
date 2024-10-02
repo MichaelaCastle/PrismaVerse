@@ -256,6 +256,8 @@ h1, h2 {
   max-height: 2.5rem;
   width: auto;
   height: auto;
+  border-radius: 2.5rem;
+  border: inherit;
 }
 
 .icon-btn:hover {

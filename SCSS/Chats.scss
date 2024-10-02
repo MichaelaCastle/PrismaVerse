@@ -100,27 +100,20 @@
     background-color: var(--c2-6-0);
     color: var(--c2-0-6);
 }
+#characters{
+    max-height: 70%;
+    overflow-y: hidden;
+    // box-sizing: content-box;
+}
 #characters .characters{
     background-color: var(--c2-0-8);
     border-color: var(--c2-6-0);
     --c-width: 70vw;
+    max-width: var(--c-width);
+    height: fit-content;
 }
-.characters .roles{
-    width: var(--c-width);
-}
-.characters .btns{
-    position: absolute;
-    top: 7px;
-    right: 7px;
-}
-.characters .btns .icon-btn{
-    min-width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 1.25rem;
-    font-size: 1.25rem;
-}
-.characters .roles{
-    flex-wrap: wrap;
+.role-element .user-grid:hover, .expand:hover, .role p:hover, .role img:hover{
+    cursor: pointer;
 }
 .role{
     --role-color: rgb(9, 70, 16);
@@ -153,9 +146,6 @@
 }
 .role img:hover, .role:has(p:hover) img{
     transform: scale(1.25, 1.25);
-}
-.role p:hover, .role img:hover, .expand:hover{
-    cursor: pointer;
 }
 
 
