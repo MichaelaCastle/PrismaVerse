@@ -303,6 +303,7 @@ let characterData = [
 let currentCharacterId = 0
 let currentUserId = 2
 let currentEditCharacterId = 1;
+let currentEditUserId = 1
 
 // Gets the data in the textarea needed for a message 
 function getMessage(){
@@ -524,9 +525,19 @@ function loadMessages(){
 
 // Gets the characterid of current character being viewed/edited
 function getEditCharacterId(){
+    //console.log("hi");
+    const selectedEditUserId = this.getAttribute('user-id');
+    const selectedEditCharacterId = this.getAttribute('character-id');
 
+    currentEditUserId = selectedEditUserId;
+    currentEditUserId = selectedEditCharacterId;
+
+    console.log(selectedEditUserId);
+    console.log(selectedEditCharacterId);
+    //console.log(currentEditCharacterId);
+    //console.log(currentEditUserId);
 }
-
+// Getes the current role being viewed/edit
 function roleInfoSave(){
     //console.log("button clicked");
 
@@ -569,6 +580,7 @@ function loadCharacters(){
     let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
     for(let c = 0; c < characterData.length; c++){
+        // Character 
         let role = document.createElement("div");
         role.className = "role flex-cc";
         role.style.setProperty('--role-color', characterData[c].color);
@@ -587,6 +599,8 @@ function loadCharacters(){
         role.appendChild(name);
         //combine
         role_c.appendChild(role);
+
+        role.addEventListener('click', getEditCharacterId);
 
         // Role Selection (Bottom Left)
         if(characterData[c].userid === userId){
