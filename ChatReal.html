@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="SCSS/Defaults.css">
     <link rel="stylesheet" href="SCSS/Chats.css">
     <link rel="stylesheet" href="SCSS/Conversations.css">
-    <link rel="stylesheet" href="CSS/Chatting.css">
     <script src="JS/Chat.js"></script>
 </head>
 <body>
@@ -28,51 +27,6 @@
         </div>
     </nav>
     <main>
-        <section class="manage flex-cc hidden">
-            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
-            <h2>Roles</h2>
-            <hr>
-            <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
-                <div class="user-grid">
-                    <div class="user-image new"></div>
-                    <h1 class="name">New Role</h1>
-                    <p class="text">Click the plus to get started</p>
-                </div>
-                <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
-            </div>
-            <div class="role-element flex-row" style="--role-color: rgb(55, 30, 10); --role-color-2: rgb(35, 15, 0)">
-                <div class="user-grid">
-                    <img class="user-image" src="Images/pfp.jpg" />
-                    <h1 class="name">Adam Zondervan</h1>
-                    <p class="text">Dutch Boi</p>
-                </div>
-                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
-            </div>
-            <div class="role-element flex-row" style="--role-color: rgb(30, 70, 16); --role-color-2: rgb(0, 50, 0)">
-                <div class="user-grid">
-                    <img class="user-image" src="Images/pfp.jpg" />
-                    <h1 class="name">Elliot</h1>
-                    <p class="text">Doggo</p>
-                </div>
-                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
-            </div>
-            <div class="role-element flex-row" style="--role-color: rgb(0, 0, 70); --role-color-2: rgb(0, 0, 50)">
-                <div class="user-grid">
-                    <img class="user-image" src="Images/pfp.jpg" />
-                    <h1 class="name">Why is my name so long</h1>
-                    <p class="text">And why is my subtext so long too</p>
-                </div>
-                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
-            </div>
-            <div class="role-element flex-row" style="--role-color: rgb(9, 70, 16); --role-color-2: rgb(35, 15, 0)">
-                <div class="user-grid">
-                    <img class="user-image" src="Images/pfp.jpg" />
-                    <h1 class="name">Faolan</h1>
-                    <p class="text">Trickster</p>
-                </div>
-                <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
-            </div>
-        </section>
         <section class="add flex-cc-p-g hidden">
             <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
             <h2>Roles</h2>
@@ -184,7 +138,7 @@
                     <button class="icon-btn labeled" id="noRole" onclick="unselectRole()"><p>None</p></button>
                 </div>
                 <div class="flex-r-g message-line">
-                    <button class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/Pfps/Jacob512.png"><p>Roles</p></button>
+                    <button id="role-btn" class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/pfp2.jpg"><p>Roles</p></button>
                     <textarea placeholder="Type something..." rows="1" id="input"></textarea>
                     <!-- Add sendMessage onclick -->
                     <button class="icon-btn" onclick="getMessage()"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
@@ -207,14 +161,21 @@
         </section>
         <aside id="characters" class="flex-row pullout right">
             
+            
             <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
             <section class="characters flex-col pullout-content">
-                <h1>Roles</h1>
-                <div class="btns flex-r-g">
-                    <button class="icon-btn" onclick="addRole()"><i class="fa fas fa-plus"></i><p>New</p></button>
-                    <button class="icon-btn" onclick="manageRoles()"><i class="fa fas fa-bars"></i><p>Manage</p></button>
+                <h2>Roles</h2>
+                <hr>
+                <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
+                    <div class="user-grid">
+                        <div class="user-image new"></div>
+                        <h1 class="name">New Role</h1>
+                        <p class="text">Click the plus to get started</p>
+                    </div>
+                    <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
                 </div>
-                <div class="flex-rc-p-g roles">
+                <div class="flex-rc-p pagination hidden">
+                    <button class="icon-btn circular small"></button>
                 </div>
             </section>
             <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>

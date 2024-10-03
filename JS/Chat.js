@@ -10,9 +10,6 @@ let cv_open = false;
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
 }
-function manageRoles(){
-    document.querySelector('.manage').classList.remove("hidden");
-}
 function closePanel(panel){
     panel.parentElement.classList.add("hidden");
 }
@@ -579,36 +576,60 @@ function roleSelect(){
     const selectedUserId = this.getAttribute('user-id');
     const selectedCharacterId = this.getAttribute('character-id');
 
-    currentUserId = selectedUserId
-    currentCharacterId = selectedCharacterId
+    currentUserId = selectedUserId;
+    currentCharacterId = selectedCharacterId;
+    let roleBtn = document.querySelector('#role-btn');
+    let img = roleBtn.querySelector("img");
+    img.src = "Images/pfp2.jpg";
+    let character = characterData.find((x) => x.id === parseInt(currentCharacterId));
+    img.src = character.pfp;
 
     // console.log('User ID:', currentUserId);
     // console.log('Character ID:', currentCharacterId);
 }
 
 function loadCharacters(){
-    let role_c = document.querySelector('.roles');
+    // let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
+    let role_c = document.querySelector('.characters');
+    let pagination = document.querySelector('.pagination');
     for(let c = 0; c < characterData.length; c++){
         // Character 
         let role = document.createElement("div");
-        role.className = "role flex-cc";
+        role.className = "role-element flex-row";
         role.style.setProperty('--role-color', characterData[c].color);
 
         // Add reference to id and userid to the button
         role.setAttribute('user-id', characterData[c].userid);
         role.setAttribute('character-id', characterData[c].id);
 
+        let userGrid = document.createElement("div");
+        userGrid.className = "user-grid";
+        userGrid.addEventListener('click', () => {openCharacter(c);});
+
         //pfp
         let icon = document.createElement("img");
+        icon.className = "user-image";
         icon.src = characterData[c].pfp;
-        role.appendChild(icon);
+        userGrid.appendChild(icon);
         //name
-        let name = document.createElement("p");
+        let name = document.createElement("h1");
+        name.classList.add("name");
         name.innerText = characterData[c].name;
-        role.appendChild(name);
+        userGrid.appendChild(name);
+        //nickname
+        let nickname = document.createElement("p");
+        nickname.classList.add("text");
+        nickname.innerText = characterData[c].nickname;
+        userGrid.appendChild(nickname);
+        //edit button
+        let edit = document.createElement("button");
+        edit.className = "icon-btn circular";
+        edit.innerHTML = `<i class="fa fas fa-pencil"></i>`;
         //combine
-        role_c.appendChild(role);
+        role.appendChild(userGrid);
+        role.appendChild(edit);
+        role_c.insertBefore(role, pagination);
 
         role.addEventListener('click', getEditCharacterId);
 
@@ -620,9 +641,6 @@ function loadCharacters(){
             // Add reference to id and userid to the button
             roleP.setAttribute('user-id', characterData[c].userid);
             roleP.setAttribute('character-id', characterData[c].id);
-            //console.log("button");
-            //console.log(characterData[c].userid);
-            //console.log(characterData[c].id);
 
             roleP.style.setProperty('--c-col', characterData[c].color);
             let nameP = document.createElement("p");
@@ -640,6 +658,15 @@ function loadCharacters(){
     // <div class="role flex-col flex-center">
     //     <img src="Images/pfp.jpg"/>
     //     <p>Jay Star</p>
+    // </div>
+
+    // <div class="role-element flex-row" style="--role-color: rgb(9, 70, 16); --role-color-2: rgb(35, 15, 0)">
+    //     <div class="user-grid">
+    //         <img class="user-image" src="Images/pfp.jpg" />
+    //         <h1 class="name">Faolan</h1>
+    //         <p class="text">Trickster</p>
+    //     </div>
+    //     <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
     // </div>
 }
 

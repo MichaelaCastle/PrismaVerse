@@ -264,6 +264,8 @@ h1, h2{
     max-height: 2.5rem;
     width: auto;
     height: auto;
+    border-radius: 2.5rem;
+    border: inherit;
 }
 .icon-btn:hover{
     background-image: linear-gradient(45deg, var(--c2-0-6), var(--c1-0-6));
