@@ -530,7 +530,7 @@ function getEditCharacterId(){
     const selectedEditCharacterId = this.getAttribute('character-id');
 
     currentEditUserId = selectedEditUserId;
-    currentEditUserId = selectedEditCharacterId;
+    currentEditCharacterId = selectedEditCharacterId;
 
     console.log(selectedEditUserId);
     console.log(selectedEditCharacterId);
@@ -551,8 +551,18 @@ function roleInfoSave(){
     const roleDescriptionContent = roleDescription.value;
     console.log("Description: " + roleDescriptionContent);
 
-    // Save the data
-    //
+
+    //console.log(characterData.length);
+
+    // Finds the correct item in msgData and saves the values
+     for(let i = 0; i < characterData.length; i++) {
+        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
+            // characterData[i].notes = roleNotesContent;
+            // characterData[i].description = roleDescriptionContent;
+            //console.log("hi");
+            break;
+        }
+     }
 }
 
 // Resets character id so no role is currently selected
@@ -572,8 +582,8 @@ function roleSelect(){
     currentUserId = selectedUserId
     currentCharacterId = selectedCharacterId
 
-    console.log('User ID:', currentUserId);
-    console.log('Character ID:', currentCharacterId);
+    // console.log('User ID:', currentUserId);
+    // console.log('Character ID:', currentCharacterId);
 }
 
 function loadCharacters(){
