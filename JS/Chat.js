@@ -599,13 +599,13 @@ function loadCharacters(){
         role.className = "role-element flex-row";
         role.style.setProperty('--role-color', characterData[c].color);
 
-        // Add reference to id and userid to the button
-        role.setAttribute('user-id', characterData[c].userid);
-        role.setAttribute('character-id', characterData[c].id);
-
         let userGrid = document.createElement("div");
         userGrid.className = "user-grid";
+        // Add reference to id and userid to the button
+        userGrid.setAttribute('user-id', characterData[c].userid);
+        userGrid.setAttribute('character-id', characterData[c].id);
         userGrid.addEventListener('click', () => {openCharacter(c);});
+        userGrid.addEventListener('click', getEditCharacterId);
 
         //pfp
         let icon = document.createElement("img");
@@ -631,7 +631,7 @@ function loadCharacters(){
         role.appendChild(edit);
         role_c.insertBefore(role, pagination);
 
-        role.addEventListener('click', getEditCharacterId);
+        //role.addEventListener('click', getEditCharacterId);
 
         // Role Selection (Bottom Left)
         if(characterData[c].userid === userId){
