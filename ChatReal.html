@@ -36,13 +36,13 @@
                 <img class="user-image" src="Images/Pfps/GraAnonPFP.png">
                 <button class="icon-btn circular"><i class="fa fas fa-palette"></i></button>
             </div>
-            <input class="text-input" type="text" placeholder="Name"/>
-            <input class="text-input" type="text" placeholder="Subtext"/>
+            <input class="name-input" type="text" placeholder="Name"/>
+            <input class="subtext-input" type="text" placeholder="Subtext"/>
             <p>Notes</p>
             <textarea class="notes"></textarea>
             <p>Description</p>
             <textarea class="description"></textarea>
-            <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
+            <button class="icon-btn" onclick="createNewRole()">Save<i class="fa fas fa-floppy-disk"></i></button>
         </section>
         <aside id="members" class="flex-row pullout left">
             <section class="members flex-col pullout-content">
@@ -197,7 +197,8 @@
                 <textarea class="f125 description"></textarea>
             </section>
             <footer class="flex-r-g">
-                <button class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
+                <button class="icon-btn" onclick="relinquishRole()"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
+                <button class="icon-btn" onclick="claimRole()"><i class="fa fas fa-ban"></i><p>Join Role</p></button>
                 <button class="icon-btn" onclick="roleInfoSave()"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
             </footer>
         </article>

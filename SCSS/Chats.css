@@ -185,7 +185,7 @@
   padding: 0 10px 10px 10px;
 }
 
-textarea, .text-input {
+textarea, .name-input, .subtext-input {
   mix-blend-mode: luminosity;
   width: calc(50% - 20px);
   background-color: transparent;
@@ -491,7 +491,7 @@ textarea.description {
   align-self: flex-start;
 }
 
-.text-input {
+.name-input, .subtext-input {
   text-align: center;
 }
 

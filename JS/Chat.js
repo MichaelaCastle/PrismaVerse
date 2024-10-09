@@ -10,6 +10,7 @@ let cv_open = false;
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
 }
+
 function closePanel(panel){
     panel.parentElement.classList.add("hidden");
 }
@@ -242,7 +243,8 @@ let characterData = [
         color: "hsl(200 100% 15%)",
         pfp: "Images/Pfps/Jay512.png",
         notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
-        description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html"
+        description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html",
+        relinquised: false
     },
     {
         id: 2,
@@ -252,7 +254,8 @@ let characterData = [
         color: "hsl(0 100% 15%)",
         pfp: "Images/Pfps/Jacob512.png",
         notes: "",
-        description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html"
+        description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html",
+        relinquised: false
     },
     {
         id: 3,
@@ -262,7 +265,8 @@ let characterData = [
         color: "hsl(75 100% 15%)",
         pfp: "Images/Pfps/Elliot512.png",
         notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
-        description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html"
+        description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html",
+        relinquised: false
     },
     {
         id: 4,
@@ -272,7 +276,8 @@ let characterData = [
         color: "hsl(120 100% 15%)",
         pfp: "Images/Pfps/Sam512.png",
         notes: "",
-        description: ""
+        description: "",
+        relinquised: false
     },
     {
         id: 5,
@@ -282,7 +287,8 @@ let characterData = [
         color: "hsl(270 100% 15%)",
         pfp: "Images/Pfps/Rene512.png",
         notes: "",
-        description: ""
+        description: "",
+        relinquised: false
     },
     {
         id: 6,
@@ -292,7 +298,8 @@ let characterData = [
         color: "hsl(30 100% 15%)",
         pfp: "Images/Pfps/Adam512.png",
         notes: "",
-        description: ""
+        description: "",
+        relinquised: false
     }
 ];
 
@@ -554,12 +561,40 @@ function roleInfoSave(){
     // Finds the correct item in msgData and saves the values
      for(let i = 0; i < characterData.length; i++) {
         if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
-            // characterData[i].notes = roleNotesContent;
-            // characterData[i].description = roleDescriptionContent;
+            characterData[i].notes = roleNotesContent;
+            characterData[i].description = roleDescriptionContent;
             //console.log("hi");
             break;
         }
      }
+}
+
+// User relinquishes role
+function relinquishRole(){
+    //console.log("hi");
+
+    // Finds role current role with corresponding id and userid
+    for(let i = 0; i < characterData.length; i++){
+        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
+            // Updates relinquished status
+            characterData[i].relinquised = false;
+            console.log(characterData[i].relinquised);
+        }
+    }
+    //set relinquished to true
+}
+
+// User claims role
+function claimRole(){
+
+    // Finds role current role with corresponding id and userid
+    for(let i = 0; i < characterData.length; i++){
+        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
+            // Updates relinquished status
+            characterData[i].relinquised = true;
+            console.log(characterData[i].relinquised);
+        }
+    }
 }
 
 // Resets character id so no role is currently selected
@@ -567,6 +602,105 @@ function unselectRole(){
     currentCharacterId = 0; 
     console.log('User ID:', currentUserId);
     console.log('Character ID:', currentCharacterId);  
+}
+
+// Create new role
+function createNewRole(){
+    //console.log("hiwo");
+
+    // Gets text in name textarea
+    let roleName = document.querySelector('.name-input');
+    const roleNameContent = roleName.value;
+    console.log("Name: " + roleNameContent);
+
+    // Gets text in subtext textarea
+    let roleSubtext = document.querySelector('.subtext-input');
+    const roleSubtextContent = roleSubtext.value;
+    console.log("Subtext: " + roleSubtextContent);
+
+    // Gets text in notes textarea
+    let roleNotes = document.querySelector('.notes');
+    const roleNotesContent = roleNotes.value;
+    console.log("Notes: " + roleNotesContent);
+
+    // Gets text in description textarea
+    let roleDescription = document.querySelector('.description');
+    const roleDescriptionContent = roleDescription.value;
+    console.log("Description: " + roleDescriptionContent);
+
+    // Closes panel
+    document.querySelector('.add').classList.add("hidden");
+
+    // Add role to existing roles
+    addNewRole(roleNameContent, roleSubtextContent, "hsl(0 100% 15%)", "Images/Pfps/Jay512.png", roleNotesContent, roleDescriptionContent, false);
+}
+
+// Add role to existing roles
+function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
+
+    // Create new role and add to characterData
+    characterData.push({id: characterData.length + 1, userid: currentUserId, name: name, nickname: nickname,
+         color: color, pfp: pfp, notes: notes, description: description, relinquised: relinquised});
+
+    // Update role selection (if applicable)
+    if(characterData[characterData.length-1].userid === userId){
+        let cs = document.querySelector('.character-select');
+        let roleP = document.createElement("button");
+        roleP.className = "icon-btn labeled";
+
+        // Add reference to id and userid to the button
+        roleP.setAttribute('user-id', characterData[characterData.length-1].userid);
+        roleP.setAttribute('character-id', characterData[characterData.length-1].id);
+
+        roleP.style.setProperty('--c-col', characterData[characterData.length-1].color);
+        let nameP = document.createElement("p");
+        nameP.innerText = characterData[characterData.length-1].name;
+        roleP.appendChild(nameP);
+        cs.appendChild(roleP);
+
+        // Adds the roleSelect function to button onclick
+        roleP.addEventListener('click', roleSelect);           
+    }
+
+    // Update role display
+    let role_c = document.querySelector('.characters');
+    let pagination = document.querySelector('.pagination');
+    // Character 
+    let role = document.createElement("div");
+    role.className = "role-element flex-row";
+    role.style.setProperty('--role-color', characterData[characterData.length-1].color);
+
+    let userGrid = document.createElement("div");
+    userGrid.className = "user-grid";
+    // Add reference to id and userid to the button
+    userGrid.setAttribute('user-id', characterData[characterData.length-1].userid);
+    userGrid.setAttribute('character-id', characterData[characterData.length-1].id);
+    userGrid.addEventListener('click', () => {openCharacter(characterData.length-1);});
+    userGrid.addEventListener('click', getEditCharacterId);
+
+    //pfp
+    let icon = document.createElement("img");
+    icon.className = "user-image";
+    icon.src = characterData[characterData.length-1].pfp;
+    userGrid.appendChild(icon);
+    //name
+    let c_name = document.createElement("h1");
+    c_name.classList.add("name");
+    c_name.innerText = characterData[characterData.length-1].c_name;
+    userGrid.appendChild(c_name);
+    //nickname
+    let c_nickname = document.createElement("p");
+    c_nickname.classList.add("text");
+    c_nickname.innerText = characterData[characterData.length-1].c_nickname;
+    userGrid.appendChild(c_nickname);
+    //edit button
+    let edit = document.createElement("button");
+    edit.className = "icon-btn circular";
+    edit.innerHTML = `<i class="fa fas fa-pencil"></i>`;
+    //combine
+    role.appendChild(userGrid);
+    role.appendChild(edit);
+    role_c.insertBefore(role, pagination);
 }
 
 // Gets the userId and characterId of role selected
@@ -587,6 +721,12 @@ function roleSelect(){
     // console.log('User ID:', currentUserId);
     // console.log('Character ID:', currentCharacterId);
 }
+// Determines what button is displayed for the user to either claim or relinquish a role
+// roleStatusButton()
+// for(let c = 0; c < characterData.length; c++){
+// if characterData[c].userId = currentuserid{
+// create relinqquish button -> relinquishRole
+// else create join button -> joinRole
 
 function loadCharacters(){
     // let role_c = document.querySelector('.roles');
@@ -649,7 +789,7 @@ function loadCharacters(){
             cs.appendChild(roleP);
 
             // Adds the roleSelect function to button onclick
-            roleP.addEventListener('click', roleSelect);
+            roleP.addEventListener('click', roleSelect);           
         }
     }
 
