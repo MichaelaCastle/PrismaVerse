@@ -37,7 +37,7 @@
             border-radius: 10px 10px 0px 0px;
             border: var(--c2-0-4) solid;
             border-width: 2px 2px 0 2px;
-            letter-spacing: 0.1666666667em;
+            letter-spacing: 0.1rem;
             background: linear-gradient(45deg, var(--c2-6-0), var(--c1-6-0));
             color: var(--c1-0-8);
             font-weight: 600;
@@ -57,18 +57,22 @@
         input[type='radio'] + label::after{
             content: "";
             height: 3px;
-            border-radius: 3px;
+            /* border-radius: 3px; */
             width: 100%;
             max-width: 0%;
-            background-color: var(--c1-6-0);
+            background-color: var(--c1-4-0);
             position: absolute;
             bottom: 0px;
             left: 0px;
             z-index: 10;
-            transition: all 0.15s;
+            transition: max-width 0.25s;
+        }
+        #tab-acct + label::after{
+            left: auto;
+            right: 0px;
         }
         #tab-pref + label::after{
-            background-color: var(--c2-6-0);
+            background-color: var(--c2-4-0);
         }
 
         input[type='radio']:checked + label::after{
@@ -78,8 +82,8 @@
         .content .item {
             display: none;
         }
-        #tab-acct:checked ~ section #content-acct,
-        #tab-pref:checked ~ section #content-pref {
+        #tab-acct:checked ~ .content #content-acct,
+        #tab-pref:checked ~ .content #content-pref {
             display: flex;
         }
 
