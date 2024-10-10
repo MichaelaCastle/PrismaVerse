@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-selected-theme="normal">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prismoria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Merriweather+Sans:wght@400;500;600;700;800&family=Spectral:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <script src="https://kit.fontawesome.com/ad096bdfd9.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="SCSS/Defaults.css">
+    <style>
+        .title {
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 2rem;
+        }
+
+        .tab-container {
+            width: 90%;
+            margin: auto;
+        }
+        input[type='radio'] {
+            opacity: 0;
+            margin: auto;
+        }
+        input[type='radio'] + label{
+            margin: 0px -5px;
+            transition: all 0.3s;
+            display: inline-flex;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            border-radius: 10px 10px 0px 0px;
+            border: var(--c2-0-4) solid;
+            border-width: 2px 2px 0 2px;
+            letter-spacing: 0.1666666667em;
+            background: linear-gradient(45deg, var(--c2-6-0), var(--c1-6-0));
+            color: var(--c1-0-8);
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+        }
+        input[type='radio']:hover + label,
+        input[type='radio']:checked + label{
+            background: linear-gradient(45deg, var(--c2-0-6), var(--c1-0-6));
+            color: var(--c1-8-0);
+            border-color: var(--c2-4-0);
+        }
+        #tab-pref:hover + label,
+        #tab-pref:checked + label{
+            color: var(--c2-8-0);
+        }
+        input[type='radio'] + label::after{
+            content: "";
+            height: 3px;
+            border-radius: 3px;
+            width: 100%;
+            max-width: 0%;
+            background-color: var(--c1-6-0);
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            z-index: 10;
+            transition: all 0.15s;
+        }
+        #tab-pref + label::after{
+            background-color: var(--c2-6-0);
+        }
+
+        input[type='radio']:checked + label::after{
+            max-width: 100%;
+        }
+
+        .content .item {
+            display: none;
+        }
+        #tab-acct:checked ~ section #content-acct,
+        #tab-pref:checked ~ section #content-pref {
+            display: flex;
+        }
+
+        .content {
+            border-radius: 10px;
+            border: var(--c2-4-0) solid 2px;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <div id="nav-bar" class="flex-row">
+            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
+            <a class="icon-btn">Home</a>
+            <a class="icon-btn">My Spectrums</a>
+            <a class="icon-btn" href="/Chats4.html">Chats</a>
+            <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+        </div>
+    </nav>
+    <main>
+  
+        
+        <h1 class="title">Settings</h1>
+        <div class="tab-container">
+            <input id="tab-acct" type="radio" class="tab" checked="checked" name="tab" />
+            <label for="tab-acct">Account</label>
+            <input id="tab-pref" type="radio" class="tab" name="tab" />
+            <label for="tab-pref">Preferences</label>
+            <section class="content">
+                <div class="item flex-c-p" id="content-acct">
+                    <input type="checkbox" id="horns" name="horns" class="not-tab" />
+                    <label for="horns">Horns</label>
+                </div>
+                <div class="item" id="content-pref">
+                
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
