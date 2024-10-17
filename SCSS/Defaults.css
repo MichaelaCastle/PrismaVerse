@@ -85,6 +85,8 @@ h1, h2 {
   gap: 10px;
   max-height: 3rem;
   padding: 5px;
+  border: var(--c1-6-0) solid;
+  border-width: 0px 0px 2px 0px;
 }
 
 #nav-bar > .user-image, #nav-bar > .user-image-bottom {

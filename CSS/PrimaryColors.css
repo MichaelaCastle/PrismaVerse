@@ -14,6 +14,12 @@
     --color1: 150;
     --color2: 270;
     --color5: 210;
+
+    --color1: 0;
+    --color2: 300;
+    --color5: 330;
+
+
     --c5-0-8: hwb(var(--color5) 00% 80%);
     --c1-0-0: hwb(var(--color1) 00% 00%);
     --c1-0-4: hwb(var(--color1) 00% 40%);
