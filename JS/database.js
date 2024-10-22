@@ -56,8 +56,11 @@ const config = {
   },
 };
 
+console.log("hi");
 // Get files from folder 
 app.use(express.static(path.join(__dirname, 'public')));
+
+console.log("hi2");
 
 // Get data from database and parses to json
 app.get('/api/messages', async (req, res) => {
