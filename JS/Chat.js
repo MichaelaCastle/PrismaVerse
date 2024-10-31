@@ -792,5 +792,6 @@ async function starting() {
     document.body.addEventListener("blur", () => {
         document.body.classList.remove("keyboard");
     }, true); 
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 window.onload = starting;
