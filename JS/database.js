@@ -4,7 +4,7 @@ const sql = require('mssql');
 const path = require('path')
 
 const app = express();
-const PORT = 4000;
+const PORT = 3000;
 
 const config = {
   user: 'jaylex05@prismoria',
