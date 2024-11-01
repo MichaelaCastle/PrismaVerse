@@ -47,6 +47,6 @@ app.get('/api/messages', async (req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
 });
