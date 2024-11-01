@@ -27,6 +27,14 @@ app.get('/test', (req, res) => {
   res.send('Test route working!');
 });
 
+console.time('DB Connection');
+const pool = await sql.connect(config);
+console.timeEnd('DB Connection');
+
+console.time('Query Execution');
+const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');
+console.timeEnd('Query Execution');
+
 
 // Get data from database and parses to json
 app.get('/api/messages', async (req, res) => {
