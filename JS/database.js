@@ -23,8 +23,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 console.log("hi2");
 
+app.get('/test', (req, res) => {
+  res.send('Test route working!');
+});
+
+
 // Get data from database and parses to json
 app.get('/api/messages', async (req, res) => {
+  console.log("api?");
   try {
     const pool = await sql.connect(config);
     console.log('Connected to the database!');
@@ -41,6 +47,6 @@ app.get('/api/messages', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
 });
