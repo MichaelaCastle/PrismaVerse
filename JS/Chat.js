@@ -1,4 +1,4 @@
-import { getMessages } from './database.js';
+//import { getMessages } from './database.js';
 
 let characters = null;
 let c_expand = null;
@@ -9,26 +9,26 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-getMessages();
+// getMessages();
 
-async function fetchMessages() {
-    console.log("je");
-    try{
-        console.log("getting")
-        const messages = await getMessages(); // Call the imported GetMessages function
-        console.log(messages); // Handle the received data
-        console.log("got");
-    }
-    catch (error){
-        console.error('Error fetching messages:', error);
-  }
-}
+// async function fetchMessages() {
+//     console.log("je");
+//     try{
+//         console.log("getting")
+//         const messages = await getMessages(); // Call the imported GetMessages function
+//         console.log(messages); // Handle the received data
+//         console.log("got");
+//     }
+//     catch (error){
+//         console.error('Error fetching messages:', error);
+//   }
+// }
 
 // Make fetchMessages globally accessible if needed
 //window.fetchMessages = fetchMessages; // This line makes it accessible from the console
 
 
-fetchMessages();
+// fetchMessages();
 
 // Call this function when a button is pressed
 //document.getElementById('fetchMessagesButton').addEventListener('click', fetchMessages); // Replace 'fetchMessagesButton' with your button ID
