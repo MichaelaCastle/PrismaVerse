@@ -7,7 +7,7 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-const { getMessages } = require('./database.js'); // Adjust the path as necessary
+const { getMessages } = require('./database'); // Adjust the path as necessary
 
 async function fetchMessages() {
     try{
