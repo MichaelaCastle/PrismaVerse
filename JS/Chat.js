@@ -7,6 +7,36 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
+// Function to fetch messages from the API
+const fetchMessages = async () => {
+    try{
+        const response = await fetch('http://prismaverse.csh.rit.edu/api/messages'); // Update with your API URL
+        if (!response.ok){
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log(data); // Use this data in your chat app as needed
+
+        // Example: Update the UI with the messages
+        const messagesContainer = document.getElementById('messages'); // Make sure to have an element with this ID
+        messagesContainer.innerHTML = ''; // Clear existing messages
+        data.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message.content; // Assuming your message object has a 'content' field
+            messagesContainer.appendChild(messageElement);
+        });
+    } 
+    catch (error){
+        console.error('Fetch error:', error);
+    }
+};
+
+fetchMessages();
+
+// Call this function when a button is pressed
+//document.getElementById('fetchMessagesButton').addEventListener('click', fetchMessages); // Replace 'fetchMessagesButton' with your button ID
+
+
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
 }
