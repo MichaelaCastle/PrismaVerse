@@ -9,10 +9,15 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
+getMessages();
+
 async function fetchMessages() {
+    console.log("je");
     try{
+        console.log("getting")
         const messages = await getMessages(); // Call the imported GetMessages function
         console.log(messages); // Handle the received data
+        console.log("got");
     }
     catch (error){
         console.error('Error fetching messages:', error);

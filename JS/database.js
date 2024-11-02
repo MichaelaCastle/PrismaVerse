@@ -48,6 +48,7 @@ async function getMessages() {
   // return result.recordset;
 
   try{
+    console.log("hi");
     const pool = await sql.connect(config);
     const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');
     pool.close();
