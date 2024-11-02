@@ -1,3 +1,5 @@
+import { GetMessages } from './database.js';
+
 let characters = null;
 let c_expand = null;
 let c_expand_class = null;
@@ -6,8 +8,6 @@ let c_info = null;
 let cv = null;
 let cv_expand = null;
 let cv_open = false;
-
-const { getMessages } = require('./database'); // Adjust the path as necessary
 
 async function fetchMessages() {
     try{
