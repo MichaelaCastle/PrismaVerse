@@ -7,22 +7,21 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-// Function to fetch messages from the API
-function fetchMessages() {
-fetch('http://prismaverse.csh.rit.edu:3000/api/messages')
-    .then(response => {
-    if (!response.ok){
-        throw new Error('Network response was not ok');
+const { GetMessages } = require('./database.js'); // Adjust the path as necessary
+
+async function fetchMessages() {
+    try{
+        const messages = await GetMessages(); // Call the imported GetMessages function
+        console.log(messages); // Handle the received data
     }
-    return response.json();
-    })
-    .then(data => {
-    console.log(data);
-    })
-    .catch(error => {
-    console.error('There has been a problem with your fetch operation:', error);
-    });
+    catch (error){
+        console.error('Error fetching messages:', error);
+  }
 }
+
+// Make fetchMessages globally accessible if needed
+window.fetchMessages = fetchMessages; // This line makes it accessible from the console
+
 
 fetchMessages();
 
