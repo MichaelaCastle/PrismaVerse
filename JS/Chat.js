@@ -7,11 +7,11 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-const { GetMessages } = require('./database.js'); // Adjust the path as necessary
+const { getMessages } = require('./database.js'); // Adjust the path as necessary
 
 async function fetchMessages() {
     try{
-        const messages = await GetMessages(); // Call the imported GetMessages function
+        const messages = await getMessages(); // Call the imported GetMessages function
         console.log(messages); // Handle the received data
     }
     catch (error){

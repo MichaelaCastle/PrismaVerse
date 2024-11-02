@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 console.log("hi2");
 
 // Function to get messages from the database
-async function GetMessages() {
+async function getMessages() {
   try{
     const pool = await sql.connect(config);
     console.log('Connected to the database!');
@@ -60,4 +60,4 @@ async function GetMessages() {
   console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
 });
 
-module.exports = {GetMessages};
+module.exports = {getMessages};
