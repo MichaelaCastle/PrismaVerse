@@ -1,4 +1,4 @@
-import { GetMessages } from './database.js';
+import { getMessages } from './database.js';
 
 let characters = null;
 let c_expand = null;
@@ -20,7 +20,7 @@ async function fetchMessages() {
 }
 
 // Make fetchMessages globally accessible if needed
-window.fetchMessages = fetchMessages; // This line makes it accessible from the console
+//window.fetchMessages = fetchMessages; // This line makes it accessible from the console
 
 
 fetchMessages();

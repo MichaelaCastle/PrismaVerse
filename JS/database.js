@@ -28,19 +28,34 @@ console.log("hi2");
 
 // Function to get messages from the database
 async function getMessages() {
+  // try{
+  //   const pool = await sql.connect(config);
+  //   console.log('Connected to the database!');
+    
+  //   const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');    
+  //   return result.recordset;
+  // } 
+  // catch (err){
+  //   console.error('Database query error:', err);
+  //   throw new Error('Error querying the database.');
+  // }
+  // finally{
+  //   await pool.close(); // Close the pool
+  // }
+
+  // const pool = await sql.connect(config);
+  // const result = await pool.request().query('c');
+  // return result.recordset;
+
   try{
     const pool = await sql.connect(config);
-    console.log('Connected to the database!');
-    
-    const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');    
+    const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');
+    pool.close();
     return result.recordset;
   } 
   catch (err){
     console.error('Database query error:', err);
     throw new Error('Error querying the database.');
-  }
-  finally{
-    await pool.close(); // Close the pool
   }
 };
 
