@@ -24,44 +24,43 @@ console.log("hi");
 // Get files from folder 
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log("hi2");
+//console.log("hi2");
 
 // Function to get messages from the database
 async function getMessages() {
-  // try{
-  //   const pool = await sql.connect(config);
-  //   console.log('Connected to the database!');
-    
-  //   const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');    
-  //   return result.recordset;
-  // } 
-  // catch (err){
-  //   console.error('Database query error:', err);
-  //   throw new Error('Error querying the database.');
-  // }
-  // finally{
-  //   await pool.close(); // Close the pool
-  // }
-
-  // const pool = await sql.connect(config);
-  // const result = await pool.request().query('c');
-  // return result.recordset;
-
   try{
-    console.log("hi");
+    console.log("attempting connection");
     const pool = await sql.connect(config);
-    const result = await pool.request().query('SELECT TOP 5 * FROM dbo.Messagess');
+    console.log("connected");
+
+    const result = await pool.request().query('SELECT * FROM dbo.Messagess');
     pool.close();
+    
+    console.log("messages retrieved:", result.recordset);
     return result.recordset;
   } 
   catch (err){
     console.error('Database query error:', err);
     throw new Error('Error querying the database.');
   }
+  // finally{
+  //   await sql.close();
+  // }
 };
 
+// When script starts
+// (async () => {
+//   try {
+//     const messages = await getMessages();
+//     console.log('Messages on startup:', messages);
+//   } catch (err) {
+//     console.error('Error during startup message fetch:', err);
+//   }
+// })();
+
   // API endpoint to get messages
-  app.get('/api/messages', async (req, res) => {
+  
+app.get('/api/messages', async (req, res) => {
   try{
     const messages = await getMessages();
     res.json(messages);
@@ -76,4 +75,7 @@ async function getMessages() {
   console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
 });
 
+//getMessages();
+
+//export {getMessages};
 module.exports = {getMessages};

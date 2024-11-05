@@ -9,30 +9,46 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-// getMessages();
-
 // async function fetchMessages() {
-//     console.log("je");
-//     try{
-//         console.log("getting")
-//         const messages = await getMessages(); // Call the imported GetMessages function
-//         console.log(messages); // Handle the received data
-//         console.log("got");
+//     try {
+//         const response = await fetch('http://localhost:3000/api/messages'); // Adjust to your server's address if needed
+//         if (!response.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//         const messages = await response.json();
+//         console.log("Fetched messages:", messages);
+//       } catch (error) {
+//         console.error("Error fetching messages:", error);
+//       }
 //     }
-//     catch (error){
-//         console.error('Error fetching messages:', error);
-//   }
-// }
-
-// Make fetchMessages globally accessible if needed
-//window.fetchMessages = fetchMessages; // This line makes it accessible from the console
 
 
-// fetchMessages();
+    
+//fetchMessages();
 
-// Call this function when a button is pressed
-//document.getElementById('fetchMessagesButton').addEventListener('click', fetchMessages); // Replace 'fetchMessagesButton' with your button ID
-
+async function fetchMessages() {
+    try {
+      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages'); // Use the appropriate URL
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const messages = await response.json();
+      
+      console.log(messages); // Print the fetched messages in the console
+  
+      // Optional: If you want to see a formatted version of the messages
+      messages.forEach(msg => {
+        console.log(`Message: ${JSON.stringify(msg)}`);
+      });
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+  
+  // Call fetchMessages when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchMessages(); // Automatically fetch messages on page load
+  });
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
