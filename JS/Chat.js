@@ -45,11 +45,9 @@ async function fetchMessages() {
     }
   }
   
-  // Call fetchMessages when the page loads
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log("on page load");
-    fetchMessages(); // Automatically fetch messages on page load
-  });
+
+fetchMessages(); // Automatically fetch messages on page load
+
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
