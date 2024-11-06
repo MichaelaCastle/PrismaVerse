@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use(cors({ origin: 'http://prismaverse.csh.rit.edu' }));
 
 const config = {
   user: 'jaylex05@prismoria',
