@@ -18,7 +18,10 @@ const config = {
     encrypt: true,
     enableArithAbort: true,
   },
+  requestTimeout: 60000,
 };
+
+
 
 console.log("hi");
 // Get files from folder 
