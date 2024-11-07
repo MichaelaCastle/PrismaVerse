@@ -9,23 +9,6 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-// async function fetchMessages() {
-//     try {
-//         const response = await fetch('http://localhost:3000/api/messages'); // Adjust to your server's address if needed
-//         if (!response.ok) {
-//           throw new Error('Network response was not ok');
-//         }
-//         const messages = await response.json();
-//         console.log("Fetched messages:", messages);
-//       } catch (error) {
-//         console.error("Error fetching messages:", error);
-//       }
-//     }
-
-
-    
-//fetchMessages();
-
 async function fetchMessages() {
     try {
       const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages'); // Use the appropriate URL
@@ -43,11 +26,9 @@ async function fetchMessages() {
     } catch (error) {
       console.error('Error fetching messages:', error);
     }
-  }
+}
   
-
 fetchMessages(); // Automatically fetch messages on page load
-
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");

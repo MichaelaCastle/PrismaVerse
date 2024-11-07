@@ -7,7 +7,11 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-app.use(cors({ origin: 'http://prismaverse.csh.rit.edu' }));
+app.use(cors({
+  origin: ['http://prismaverse.csh.rit.edu', 'http://localhost:5500'],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const config = {
   user: 'jaylex05@prismoria',
