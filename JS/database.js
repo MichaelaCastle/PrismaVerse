@@ -11,8 +11,16 @@ const PORT = 3000;
 app.use(cors({
   origin: ['http://prismaverse.csh.rit.edu', 'http://localhost:5500'],
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+  credentials: true,
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://prismaverse.csh.rit.edu");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 // Configuration
 const config = {
@@ -55,8 +63,10 @@ async function getMessages() {
 
 // The API url endpoint to get the messages
 app.get('/api/messages', async (req, res) => {
+  console.log("request");
   try {
     const messages = await getMessages();
+    console.log("sending");
     res.json(messages);
   } catch (err) {
     console.error('Error in API endpoint:', err);
