@@ -39,17 +39,24 @@ let poolPromise = sql.connect(config)
 
 // Function to get messages from the database using the pool
 async function getMessages() {
-  try {
-    console.log("Attempting to query messages...");
-    const pool = await poolPromise;
-    const result = await pool.request().query('SELECT * FROM dbo.Messagess');
-    console.log("Messages retrieved:", result.recordset);
-    return result.recordset;
-  } catch (err) {
-    console.error('Database query error:', err);
-    throw new Error('Error querying the database.');
+  let retries = 3;
+  while (retries) {
+    try {
+      console.log("Attempting to connect...");
+      const pool = await sql.connect(config);
+      const result = await pool.request().query('SELECT * FROM dbo.Messagess');
+      pool.close();
+      console.log("Messages retrieved:", result.recordset);
+      return result.recordset;
+    } catch (err) {
+      retries -= 1;
+      console.log(`Database connection failed. Retries left: ${retries}`);
+      if (!retries) throw err; // Throw error if retries exhausted
+      await new Promise(res => setTimeout(res, 2000)); // Wait 2 seconds before retry
+    }
   }
 }
+
 
 // API endpoint to get messages
 app.get('/api/messages', async (req, res) => {
