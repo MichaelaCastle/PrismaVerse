@@ -7,12 +7,14 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+// Cors policy
 app.use(cors({
   origin: ['http://prismaverse.csh.rit.edu', 'http://localhost:5500'],
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+// Configuration
 const config = {
   user: 'jaylex05@prismoria',
   password: 'Pris@m1n',
@@ -37,28 +39,21 @@ let poolPromise = sql.connect(config)
     throw err;
   });
 
-// Function to get messages from the database using the pool
+// Connect to database and execute query
 async function getMessages() {
-  let retries = 3;
-  while (retries) {
-    try {
-      console.log("Attempting to connect...");
-      const pool = await sql.connect(config);
-      const result = await pool.request().query('SELECT * FROM dbo.Messagess');
-      pool.close();
-      console.log("Messages retrieved:", result.recordset);
-      return result.recordset;
-    } catch (err) {
-      retries -= 1;
-      console.log(`Database connection failed. Retries left: ${retries}`);
-      if (!retries) throw err; // Throw error if retries exhausted
-      await new Promise(res => setTimeout(res, 2000)); // Wait 2 seconds before retry
-    }
+  try {
+    console.log("Attempting to query messages...");
+    const pool = await poolPromise;
+    const result = await pool.request().query('SELECT * FROM dbo.Messagess');
+    console.log("Messages retrieved:", result.recordset);
+    return result.recordset;
+  } catch (err) {
+    console.error('Database query error:', err);
+    throw new Error('Error querying the database.');
   }
 }
 
-
-// API endpoint to get messages
+// The API url endpoint to get the messages
 app.get('/api/messages', async (req, res) => {
   try {
     const messages = await getMessages();
@@ -69,10 +64,10 @@ app.get('/api/messages', async (req, res) => {
   }
 });
 
-// Serve static files from the public directory
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Start the server
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
 });
