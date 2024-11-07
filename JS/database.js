@@ -65,7 +65,7 @@ app.get('/api/messages', async (req, res) => {
 });
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'JS')));
 
 // Start server
 app.listen(PORT, () => {
