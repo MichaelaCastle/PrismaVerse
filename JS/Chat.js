@@ -11,6 +11,8 @@ let cv_open = false;
 
 //window.addEventListener("load", fetchMessages);
 
+console.log("chat.js called");
+
 window.fetchMessages = async function fetchMessages() {
     try {
       const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages'); // Use the appropriate URL
