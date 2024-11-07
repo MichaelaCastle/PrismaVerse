@@ -9,9 +9,9 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-window.addEventListener("load", fetchMessages);
+//window.addEventListener("load", fetchMessages);
 
-async function fetchMessages() {
+window.fetchMessages = async function fetchMessages() {
     try {
       const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages'); // Use the appropriate URL
       if (!response.ok) {
@@ -30,7 +30,7 @@ async function fetchMessages() {
     }
 }
   
-//fetchMessages(); // Automatically fetch messages on page load
+fetchMessages(); // Automatically fetch messages on page load
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
