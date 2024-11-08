@@ -8,19 +8,31 @@ const app = express();
 const PORT = 3000;
 
 // Cors policy
+// app.use(cors({
+//   origin: ['http://prismaverse.csh.rit.edu', 'http://localhost:5500', 'http://127.0.0.1:5503'],
+//   methods: ['GET', 'POST', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+// }));
 app.use(cors({
-  origin: ['http://prismaverse.csh.rit.edu', 'http://localhost:5500'],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://prismaverse.csh.rit.edu',  // your live server URL
+      'http://localhost:5500',           // local dev server URL
+      'http://127.0.0.1:5503',           // VS Code Live Server URL
+    ];
+
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);  // Allow the origin
+    } else {
+      callback(new Error('Not allowed by CORS'));  // Reject the origin
+    }
+  },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://prismaverse.csh.rit.edu");
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
 
 // Configuration
 const config = {
