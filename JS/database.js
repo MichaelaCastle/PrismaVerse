@@ -84,23 +84,6 @@ app.get('/api/messages', async (req, res) => {
   }
 });
 
-// app.get('/api/tables', async (req, res) => {
-//   try {
-//     const pool = await poolPromise;
-//     const result = await pool.request().query(`
-//       SELECT TABLE_SCHEMA + '.' + TABLE_NAME AS table_name
-//       FROM INFORMATION_SCHEMA.TABLES
-//       WHERE TABLE_TYPE = 'BASE TABLE'
-//     `);
-//     res.json(result.recordset);
-//   } catch (err) {
-//     console.error('Error fetching tables:', err);
-//     res.status(500).send('Error fetching tables.');
-//   }
-//   console.log("Tables fetched");
-// });
-
-
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));
 

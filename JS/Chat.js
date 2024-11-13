@@ -9,34 +9,7 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-//window.addEventListener("load", fetchMessages);
-
 console.log("chat.js called");
-
-// Gets and parses messages from database
-window.fetchMessages = async function fetchMessages() {
-    // URL for the api and messages
-    try {
-      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // Parse information
-      const messages = await response.json();
-      // Array contains parsed information
-      msgData = messages;
-      //console.log(messages);
-      console.log("msgData: ", msgData);
-    //   messages.forEach(msg => {
-    //     console.log(`Message: ${JSON.stringify(msg)}`);
-    //   });
-    } 
-    catch (error) {
-      console.error('Error fetching messages:', error);
-    }
-}
-  
-//fetchMessages(); // Automatically fetch messages on page load
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
@@ -151,111 +124,111 @@ let participants = [
     }
 ];
 let msgData = [
-// {
-//     userId: 1,
-//     content: "Hello, this is a test message",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Hi, how are you?",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "mulitple from one person",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "just need more messages",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Good. We need a longer message,aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk aw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: true,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "***BOLD ITALIC*** *_*UNDERLINED and ** BOLD and *<#FFFF00>*COLORS*</>* ** yeah! *_* Also * ITALIC * *-*and STRIKETHROUGH yeah yeah yeah*-*\n*<#FFFF00>*IT EXTENDS\nLINES*</>*\nJust please don't keyboard spam...",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// }
-// ,
-// {
-//     userId: 2,
-//     content: "That message is really just this but with * instead of |:\n|||BOLD ITALIC||| |_|UNDERLINED and || BOLD and |<#FFFF00>|COLORS|</>| || yeah! |_| Also | ITALIC | |-|and STRIKETHROUGH yeah yeah yeah|-|\n|<#FFFF00>|IT EXTENDS\nLINES|</>|\nJust please don't keyboard spam...",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "this is a *<#FF0000>*character*</>* message",
-//     usingCharacter: true,
-//     characterId: 1,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Images/pfp.jpg",
-//     usingCharacter: true,
-//     characterId: 2,
-//     deleted: false,
-//     isImage: true
-// }
+{
+    userId: 1,
+    content: "Hello, this is a test message",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 2,
+    content: "Hi, how are you?",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "mulitple from one person",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 2,
+    content: "just need more messages",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 2,
+    content: "Good. We need a longer message,aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 2,
+    content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk aw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: true,
+    isImage: false
+},
+{
+    userId: 2,
+    content: "***BOLD ITALIC*** *_*UNDERLINED and ** BOLD and *<#FFFF00>*COLORS*</>* ** yeah! *_* Also * ITALIC * *-*and STRIKETHROUGH yeah yeah yeah*-*\n*<#FFFF00>*IT EXTENDS\nLINES*</>*\nJust please don't keyboard spam...",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+}
+,
+{
+    userId: 2,
+    content: "That message is really just this but with * instead of |:\n|||BOLD ITALIC||| |_|UNDERLINED and || BOLD and |<#FFFF00>|COLORS|</>| || yeah! |_| Also | ITALIC | |-|and STRIKETHROUGH yeah yeah yeah|-|\n|<#FFFF00>|IT EXTENDS\nLINES|</>|\nJust please don't keyboard spam...",
+    usingCharacter: false,
+    characterId: 0,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "this is a *<#FF0000>*character*</>* message",
+    usingCharacter: true,
+    characterId: 1,
+    deleted: false,
+    isImage: false
+},
+{
+    userId: 1,
+    content: "Images/pfp.jpg",
+    usingCharacter: true,
+    characterId: 2,
+    deleted: false,
+    isImage: true
+}
 ];
 
 // {
@@ -439,6 +412,31 @@ let currentUserId = 2
 let currentEditCharacterId = 1;
 let currentEditUserId = 1
 
+// Gets and parses messages from database
+async function fetchMessages() {
+    // URL for the api and messages
+    try {
+      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Parse information
+      const messages = await response.json();
+      // Array contains parsed information
+      msgData = messages;
+      //console.log(messages);
+      
+      console.log("msgData: ", msgData);
+      console.log("msgData length: ", msgData.length);
+    //   messages.forEach(msg => {
+    //     console.log(`Message: ${JSON.stringify(msg)}`);
+    //   });
+    } 
+    catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+}
+
 // Gets the data in the textarea needed for a message 
 function getMessage(){
     const messageInput = document.getElementById('input');
@@ -571,17 +569,25 @@ function addMessage(){
 }
 
 function loadMessages(){
+    console.log("loading messages");
+
     // Gets the section
     let msg_c = document.querySelector('#chat > section');
+    console.log("getting section");
 
     // Reverses the order of the message data
     msgData = msgData.reverse();
+    console.log("reversing data");
 
     // <div class="message deleted flex-row p10">
     //     <p class="f125">X has deleted this message</p>
     // </div>
-    // For every message 
+
+    // msgData resetting after fetchMessages
+    console.log(msgData.length);
+    // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
+        console.log("Message", msgData[m]);
         let p = participants.find((u) => u.id == msgData[m].userId);
 
         // If message is deleted
@@ -1064,7 +1070,8 @@ async function starting() {
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
-    fetchMessages();
+    await fetchMessages(); // Wait for messages to be fetched
+    //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
     loadUsers();
