@@ -1070,6 +1070,8 @@ async function starting() {
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
+    
+    
     await fetchMessages(); // Wait for messages to be fetched
     //console.log("before loadmessages is called", msgData);
     loadMessages();
