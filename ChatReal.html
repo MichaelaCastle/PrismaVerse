@@ -28,7 +28,7 @@
     </nav>
     <main>
         <section class="add flex-cc-p-g hidden">
-            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
+            <button id="exit-panel" class="icon-btn circular exitPanel"><i class="fa fas fa-xmark"></i></button>
             <h2>Roles</h2>
             <hr>
             <div class="role-head flex-rc-p-g">
@@ -42,7 +42,7 @@
             <textarea class="notes"></textarea>
             <p>Description</p>
             <textarea class="description"></textarea>
-            <button class="icon-btn" onclick="createNewRole()">Save<i class="fa fas fa-floppy-disk"></i></button>
+            <button id="new-role" class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
         </section>
         <aside id="members" class="flex-row pullout left">
             <section class="members flex-col pullout-content">
@@ -72,7 +72,7 @@
                 <button class="icon-btn labeled"><i class="fa fas fa-plus"></i><p>Add Users</p></button>
                 <button class="icon-btn labeled"><i class="fa fas fa-door-closed"></i><p>Leave</p></button>
             </section>
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+            <button class="expand"><i class="fa fas fa-caret-right"></i></button>
         </aside>
         <aside id="convos" class="flex-row pullout left secondary">
             <section class="convos flex-col pullout-content">
@@ -115,7 +115,7 @@
                     <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d.</p>
                 </div>
             </section>
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+            <button class="expand"><i class="fa fas fa-caret-right"></i></button>
         </aside>
         <section id="chat" class="flex-col">
             <header class="p10 user-grid">
@@ -135,20 +135,20 @@
             </section>
             <footer class="flex-c-p-g">
                 <div class="character-select flex-r-g hidden">
-                    <button class="icon-btn labeled" id="noRole" onclick="unselectRole()"><p>None</p></button>
+                    <button class="icon-btn labeled" id="noRole"><p>None</p></button>
                 </div>
                 <div class="flex-r-g message-line">
-                    <button id="role-btn" class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/pfp2.jpg"><p>Roles</p></button>
+                    <button id="role-btn" class="icon-btn"><!--<i class="fa fas fa-user"></i>--><img src="Images/pfp2.jpg"><p>Roles</p></button>
                     <textarea placeholder="Type something..." rows="1" id="input"></textarea>
                     <!-- Add sendMessage onclick -->
-                    <button class="icon-btn" onclick="getMessage()"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
+                    <button class="icon-btn" id="send"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
                 </div>
                 <div class="flex-rc-g buttons">
                     <button class="icon-btn"><i class="fa fas fa-microphone"></i><p>Voice Message</p></button>
                     <button class="icon-btn"><i class="fa fas fa-image"></i><p>Image</p></button>
                     <button class="icon-btn"><i class="fa fas fa-gamepad"></i><p>Game</p></button>
                     <button class="icon-btn"><i class="fa fas fa-face-laugh-beam"></i><p>Sticker</p></button>
-                    <button class="icon-btn" onclick="showHide('.dice-options')"><i class="fa fas fa-dice-three"></i><p>Dice</p></button>
+                    <button id="dice-btn" class="icon-btn"><i class="fa fas fa-dice-three"></i><p>Dice</p></button>
                 </div>
                 <div class="dice-options flex-rc-g hidden">
                     <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>4</p></button>
@@ -160,8 +160,6 @@
             </footer>
         </section>
         <aside id="characters" class="flex-row pullout right">
-            
-            
             <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
             <section class="characters flex-col pullout-content">
                 <h2>Roles</h2>
@@ -172,16 +170,16 @@
                         <h1 class="name">New Role</h1>
                         <p class="text">Click the plus to get started</p>
                     </div>
-                    <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
+                    <button id="add-role" class="icon-btn circular"><i class="fa fas fa-plus"></i></button>
                 </div>
                 <div class="flex-rc-p pagination hidden">
                     <button class="icon-btn circular small"></button>
                 </div>
             </section>
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>
+            <button class="expand"><i class="fa fas fa-caret-left"></i></button>
         </aside>
         <article id="character-info">
-            <h1 class="f2" onclick="closeCharacter()">Role Info</h1>
+            <h1 id="close-character" class="f2">Role Info</h1>
             <i class="lower fa fas fa-caret-down"></i>
             <hr>
             <header class="flex-cc-p">
@@ -197,9 +195,9 @@
                 <textarea class="f125 description"></textarea>
             </section>
             <footer class="flex-r-g">
-                <button class="icon-btn" onclick="relinquishRole()"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
-                <button class="icon-btn" onclick="claimRole()"><i class="fa fas fa-ban"></i><p>Join Role</p></button>
-                <button class="icon-btn" onclick="roleInfoSave()"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
+                <button id="relinquish" class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
+                <button id="claim" class="icon-btn"><i class="fa fas fa-ban"></i><p>Join Role</p></button>
+                <button id="save" class="icon-btn"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
             </footer>
         </article>
     </main>

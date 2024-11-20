@@ -1,5 +1,3 @@
-//import { getMessages } from './database.js';
-
 let characters = null;
 let c_expand = null;
 let c_expand_class = null;
@@ -9,7 +7,7 @@ let cv = null;
 let cv_expand = null;
 let cv_open = false;
 
-console.log("chat.js called");
+//console.log("chat.js called");
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
@@ -59,10 +57,19 @@ function openConvos(){
     cv_open = !cv_open;
 }
 function extendPullout(elem){
-    pu = elem.parentElement;
-    pc = pu.querySelector('.pullout-content');
+
+    // console.log("Element passed to extendPullout:", elem);
+
+     const pu = elem.parentElement;
+    // if (!pu) {
+    //     console.error("Parent element not found for:", elem);
+    //     return;
+    // }
+
+    //pu = elem.parentElement;
+    const pc = pu.querySelector('.pullout-content');
     let other_pc = document.querySelectorAll(`.pullout${pu.className.includes(" left") ? ".left" : ".right"}`);
-    ei = elem.querySelector('i');
+    const ei = elem.querySelector('i');
     if(pc.className.includes(" extended")){
         pc.classList.remove("extended");
         other_pc.forEach(element => {
@@ -93,15 +100,18 @@ function closeCharacter(){
     c_info.style.maxHeight = "0px";
     c_info.style.overflowY = "hidden";
 }
+
 function showHide(elemName){
+    console.log("showHide called");
     let elem = document.querySelector(elemName);
-    if(elem.className.includes(" hidden")){
+    if(elem.className.includes("hidden")){
         elem.classList.remove("hidden");
     }
     else{
         elem.classList.add("hidden");
     }
 }
+
 let userId = 2;
 let participants = [
     {
@@ -231,112 +241,6 @@ let msgData = [
 // }
 ];
 
-// {
-//     userId: 1,
-//     content: "Hello, this is a test message",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Hi, how are you?",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "mulitple from one person",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "just need more messages",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk ahgiwhreugi huesg hushg usngjks guih 98tu89w f8j8 jf8wjfi8vhs87egh 8ewg yeas hf87qwhf 98qehf  89q rf809qh efh 7dfh w87qfh 87waehf 87awhf 8ahf98  aw8f 8w7ah 89aw h87awht8 hwa8t7 haw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Good. We need a longer message,aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "Good. We need a longer message, so... kjjfa jk akjfdjkajfkaj fkasjfk aw87efh sfy 8aw hgds hg9s jg9esj g 9ijse og es9g8 es80rg es8gh eshg 9seh g9esh g 9h eg hserg",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: true,
-//     isImage: false
-// },
-// {
-//     userId: 2,
-//     content: "***BOLD ITALIC*** *_*UNDERLINED and ** BOLD and *<#FFFF00>*COLORS*</>* ** yeah! *_* Also * ITALIC * *-*and STRIKETHROUGH yeah yeah yeah*-*\n*<#FFFF00>*IT EXTENDS\nLINES*</>*\nJust please don't keyboard spam...",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// }
-// ,
-// {
-//     userId: 2,
-//     content: "That message is really just this but with * instead of |:\n|||BOLD ITALIC||| |_|UNDERLINED and || BOLD and |<#FFFF00>|COLORS|</>| || yeah! |_| Also | ITALIC | |-|and STRIKETHROUGH yeah yeah yeah|-|\n|<#FFFF00>|IT EXTENDS\nLINES|</>|\nJust please don't keyboard spam...",
-//     usingCharacter: false,
-//     characterId: 0,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "this is a *<#FF0000>*character*</>* message",
-//     usingCharacter: true,
-//     characterId: 1,
-//     deleted: false,
-//     isImage: false
-// },
-// {
-//     userId: 1,
-//     content: "Images/pfp.jpg",
-//     usingCharacter: true,
-//     characterId: 2,
-//     deleted: false,
-//     isImage: true
-// }
-
 let characterData = [
     {
         id: 1,
@@ -426,8 +330,8 @@ async function fetchMessages() {
       msgData = messages;
       //console.log(messages);
       
-      console.log("msgData: ", msgData);
-      console.log("msgData length: ", msgData.length);
+      //console.log("msgData: ", msgData);
+      //console.log("msgData length: ", msgData.length);
     //   messages.forEach(msg => {
     //     console.log(`Message: ${JSON.stringify(msg)}`);
     //   });
@@ -440,6 +344,7 @@ async function fetchMessages() {
 // Gets the data in the textarea needed for a message 
 function getMessage(){
     const messageInput = document.getElementById('input');
+    
     // Get textarea text
     const content = messageInput.value;
 
@@ -456,30 +361,53 @@ function getMessage(){
     // Reset textarea
     messageInput.value = '';
     }
-    // else{
-    //     console.log("nothing in the textarea");
-    // }
-
 }
 
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
-function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
+async function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
     // Create a new message object
     const newMessage = {
-        userId: userId,
-        content: content,
-        usingCharacter: usingCharacter,
-        characterId: characterId,
-        deleted: deleted,
-        isImage: isImage
-        };
+      userId: userId,
+      content: content,
+      usingCharacter: usingCharacter,
+      characterId: characterId,
+      isImage: isImage,
+      deleted: deleted,
+    };
+    try {
+      // Send the message to the back-end API
+      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Ensure that the Content-Type is set to application/json
+        },
+        body: JSON.stringify(newMessage),
+      });
+      
+                                //response it not ok
+      if (!response.ok) {
+        //console.log("hi");
+        const errorText = await response.text();  // Read the response body as text
+        console.error(`Error: ${response.status} - ${errorText}`);
+        throw new Error('Failed to send the message to the server.');
+      }
+      // Get the response data (the saved message)
+      const savedMessage = await response.json();
 
-         // Push the new message to msgData array
-         msgData.push(newMessage);
+      // Add the saved message to the local msgData array
+      msgData.push(savedMessage);
 
-        // Call addMessage function to add this new message
-        addMessage();
+      // Optional: Log the response for debugging
+      console.log('Message successfully sent and saved:', savedMessage);
+
+      // Optional: Update the UI if needed (e.g., refresh the message list or display the new message)
+      addMessage(); // Ensure this function is correctly defined elsewhere in your code
+    } 
+    
+    catch (error) {
+      console.error('Error sending message:', error);
+    }
 }
 
 // Display the newly sent message
@@ -569,25 +497,25 @@ function addMessage(){
 }
 
 function loadMessages(){
-    console.log("loading messages");
+    //console.log("loading messages");
 
     // Gets the section
     let msg_c = document.querySelector('#chat > section');
-    console.log("getting section");
+    //console.log("getting section");
 
     // Reverses the order of the message data
     msgData = msgData.reverse();
-    console.log("reversing data");
+    //console.log("reversing data");
 
     // <div class="message deleted flex-row p10">
     //     <p class="f125">X has deleted this message</p>
     // </div>
 
     // msgData resetting after fetchMessages
-    console.log(msgData.length);
+    //console.log(msgData.length);
     // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
-        console.log("Message", msgData[m]);
+        //console.log("Message", msgData[m]);
         let p = participants.find((u) => u.id == msgData[m].userId);
 
         // If message is deleted
@@ -606,7 +534,7 @@ function loadMessages(){
         //vars
         let uc = msgData[m].usingCharacter;
         let c = uc ? characterData.find((u) => u.id == msgData[m].characterId) : null;
-        console.log(uc);
+        //console.log(uc);
         let color = uc ? c.color : p.color;
 
         //Create the main message div
@@ -1070,7 +998,36 @@ async function starting() {
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
+    const expandButtons = document.querySelectorAll('.expand');
+    expandButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            //console.log("Button clicked:", this);
+            extendPullout(this);
+        });
+    });
+
+    document.getElementById('dice-btn').addEventListener('click', function () {
+        showHide('.dice-options');
+    });
     
+    document.getElementById('role-btn').addEventListener('click', function () {
+        showHide('.character-select');
+    });
+
+    const closePanelE = document.getElementById('exit-panel');
+    closePanelE.addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
+
+    // Add button press events
+    document.getElementById('send').addEventListener('click', getMessage);
+    document.getElementById('noRole').addEventListener('click', unselectRole);
+    document.getElementById('add-role').addEventListener('click', addRole);
+    document.getElementById('new-role').addEventListener('click', createNewRole);   
+    document.getElementById('close-character').addEventListener('click', closeCharacter);
+    document.getElementById('claim').addEventListener('click', claimRole);   
+    document.getElementById('relinquish').addEventListener('click', relinquishRole);    
+    document.getElementById('save').addEventListener('click', roleInfoSave);    
     
     await fetchMessages(); // Wait for messages to be fetched
     //console.log("before loadmessages is called", msgData);

@@ -27,8 +27,10 @@ app.use(cors({
   credentials: true,
 }));
 
+// Middleware to parse JSON request body
+app.use(express.json());  // This line is critical to parse JSON body in POST requests
 
-// Configuration
+// Configuration for database connection
 const config = {
   user: 'jaylex05@prismoria',
   password: 'Pris@m1n',
@@ -53,29 +55,54 @@ let poolPromise = sql.connect(config)
     throw err;
   });
 
-// Connect to database and execute query
+// Connect to database and execute query to get messages
 async function getMessages() {
   try {
-    //console.log("Attempting to query messages...");
     const pool = await poolPromise;
-    // Execute query (Retrieve all messages from dbo.Messagess)
     const result = await pool.request().query('SELECT * FROM ChatDM');
-    //console.log("Messages retrieved:", result.recordset);
     return result.recordset;
   } 
   catch (err) {
-    //console.error('Database query error:', err);
     throw new Error('Error querying the database.');
+  }
+}
+
+// Connect to database and execute query to add a message
+async function addMessage({ userId, content, usingCharacter, characterId, isImage, deleted }) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('userId', sql.Int, userId)
+      .input('content', sql.NVarChar, content)
+      .input('usingCharacter', sql.Bit, usingCharacter)
+      .input('characterId', sql.Int, characterId || 0)
+      .input('isImage', sql.Bit, isImage)
+      .input('deleted', sql.Bit, deleted)
+      .query(`
+        INSERT INTO ChatDM (UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted)
+        VALUES (@userId, @content, @usingCharacter, @characterId, @isImage, @deleted);
+        SELECT SCOPE_IDENTITY() AS MessageId;
+      `);
+
+    return {
+      messageId: result.recordset[0].MessageId,
+      userId,
+      content,
+      usingCharacter,
+      characterId,
+      isImage,
+      deleted,
+    };
+  } catch (err) {
+    console.error('Error inserting message into database:', err);
+    throw new Error('Failed to insert message.');
   }
 }
 
 // The API URL to get the messages
 app.get('/api/messages', async (req, res) => {
-  //console.log("request");
   try {
-    // Call getMessages
     const messages = await getMessages();
-    //console.log("sending");
     res.json(messages);
   } 
   catch (err) {
@@ -84,12 +111,41 @@ app.get('/api/messages', async (req, res) => {
   }
 });
 
+// API URL to add a message
+app.post('/api/messages', async (req, res) => {
+  console.log("hi");
+  const { userId, content, usingCharacter, characterId, isImage, deleted } = req.body;
+
+  // Make sure userId and content are provided
+  if (!userId || !content) {
+    return res.status(400).send('userId and content are required.');
+  }
+
+  try {
+    // Call addMessage
+    const newMessage = await addMessage({
+      userId,
+      content,
+      usingCharacter: usingCharacter || false,
+      characterId: characterId || 0,
+      isImage: isImage || false,
+      deleted: deleted || false,
+    });
+
+    res.status(201).json(newMessage);
+  } catch (err) {
+    console.error('Error in POST /api/messages:', err);
+    res.status(500).send('Failed to insert message.');
+  }
+});
+
+
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running at http://prismaverse.csh.rit.edu:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 // Export functions
