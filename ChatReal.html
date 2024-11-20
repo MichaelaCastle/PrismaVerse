@@ -19,11 +19,11 @@
 <body>
     <nav>
         <div id="nav-bar" class="flex-row">
-            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
-            <a class="icon-btn">Home</a>
-            <a class="icon-btn">My Spectrums</a>
-            <a class="icon-btn" href="/Chats4.html">Chats</a>
+            <!-- <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/> -->
             <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+            <!-- <a class="icon-btn" href="/Home.html">Home</a> -->
+            <!-- <a class="icon-btn">My Spectrums</a> -->
+            <!-- <a class="icon-btn" href="/Chats4.html">Chats</a> -->
         </div>
     </nav>
     <main>
@@ -42,7 +42,11 @@
             <textarea class="notes"></textarea>
             <p>Description</p>
             <textarea class="description"></textarea>
+<<<<<<< Updated upstream
             <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
+=======
+            <!-- <button class="icon-btn" onclick="createNewRole()">Save<i class="fa fas fa-floppy-disk"></i></button> -->
+>>>>>>> Stashed changes
         </section>
         <aside id="members" class="flex-row pullout left">
             <section class="members flex-col pullout-content">
@@ -72,7 +76,7 @@
                 <button class="icon-btn labeled"><i class="fa fas fa-plus"></i><p>Add Users</p></button>
                 <button class="icon-btn labeled"><i class="fa fas fa-door-closed"></i><p>Leave</p></button>
             </section>
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button> -->
         </aside>
         <aside id="convos" class="flex-row pullout left secondary">
             <section class="convos flex-col pullout-content">
@@ -115,7 +119,7 @@
                     <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d.</p>
                 </div>
             </section>
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button>
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button> -->
         </aside>
         <section id="chat" class="flex-col">
             <header class="p10 user-grid">
@@ -159,11 +163,12 @@
                 </div>
             </footer>
         </section>
-        <aside id="characters" class="flex-row pullout right">
+        <!-- class="flex-row pullout right" Took out of aside below -->
+        <aside id="characters">  
             
             
             <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
-            <section class="characters flex-col pullout-content">
+            <!-- <section class="characters flex-col pullout-content">
                 <h2>Roles</h2>
                 <hr>
                 <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
@@ -177,7 +182,8 @@
                 <div class="flex-rc-p pagination hidden">
                     <button class="icon-btn circular small"></button>
                 </div>
-            </section>
+            </section> -->
+            <!-- This is the button for roles but it also shuts down the whole chats page? -->
             <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>
         </aside>
         <article id="character-info">
