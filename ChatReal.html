@@ -20,10 +20,45 @@
     <nav>
         <div id="nav-bar" class="flex-row">
             <!-- <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/> -->
+            <a class="icon-btn" href="/Home.html">Home</a>
             <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
+<<<<<<< Updated upstream
+           
+            <aside id="characters" class="flex-row pullout bottom">  
+                <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
+                <section class="characters flex-col pullout-content">
+=======
+            <aside id="characters" class="flex-row pullout right">
+                <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button>
+                <section class="characters flex-col pullout-content"> 
+>>>>>>> Stashed changes
+                    <h2>Roles</h2>
+                    <hr>
+                    <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
+                        <div class="user-grid">
+                            <div class="user-image new"></div>
+                            <h1 class="name">New Role</h1>
+                            <p class="text">Click the plus to get started</p>
+                        </div>
+                        <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
+                    </div>
+                    <div class="flex-rc-p pagination hidden">
+                        <button class="icon-btn circular small"></button>
+                    </div>
+                </section>
+<<<<<<< Updated upstream
+                <!-- This is the button for roles but it also shuts down the whole chats page? -->
+                <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>
+            </aside>
+
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button> -->
+=======
+                <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button> -->
             <!-- <a class="icon-btn" href="/Home.html">Home</a> -->
+>>>>>>> Stashed changes
             <!-- <a class="icon-btn">My Spectrums</a> -->
             <!-- <a class="icon-btn" href="/Chats4.html">Chats</a> -->
+            </aside>
         </div>
     </nav>
     <main>
@@ -42,11 +77,7 @@
             <textarea class="notes"></textarea>
             <p>Description</p>
             <textarea class="description"></textarea>
-<<<<<<< Updated upstream
             <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
-=======
-            <!-- <button class="icon-btn" onclick="createNewRole()">Save<i class="fa fas fa-floppy-disk"></i></button> -->
->>>>>>> Stashed changes
         </section>
         <aside id="members" class="flex-row pullout left">
             <section class="members flex-col pullout-content">
@@ -164,11 +195,11 @@
             </footer>
         </section>
         <!-- class="flex-row pullout right" Took out of aside below -->
-        <aside id="characters">  
+        <!-- <aside id="characters" >   -->
             
             
-            <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
-            <!-- <section class="characters flex-col pullout-content">
+            <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button>
+            <section class="characters flex-col pullout-content"> 
                 <h2>Roles</h2>
                 <hr>
                 <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
@@ -184,8 +215,8 @@
                 </div>
             </section> -->
             <!-- This is the button for roles but it also shuts down the whole chats page? -->
-            <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button>
-        </aside>
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-left"></i></button> -->
+        <!-- </aside> -->
         <article id="character-info">
             <h1 class="f2" onclick="closeCharacter()">Role Info</h1>
             <i class="lower fa fas fa-caret-down"></i>

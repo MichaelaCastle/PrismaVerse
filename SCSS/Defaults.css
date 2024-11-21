@@ -369,6 +369,21 @@ h1, h2 {
   border-width: 2px 0 2px 2px;
 }
 
+.pullout.bottom {
+  top: 0;
+  right: 0;
+}
+
+.pullout.bottom .pullout-content {
+  border-bottom-left-radius: 20px;
+  height: 0;
+  width: 0;
+}
+
+.pullout.bottom .pullout-content.extended {
+  width: 100%;
+}
+
 @media (max-width: 600px) {
   .icon-btn:not(.labeled) p {
     display: none;
