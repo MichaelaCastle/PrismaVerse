@@ -14,6 +14,7 @@ app.use(cors({
       'http://prismaverse.csh.rit.edu',
       'http://localhost:5500',
       'http://127.0.0.1:5503',
+      'http://localhost:3000',
     ];
 
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {

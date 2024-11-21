@@ -320,7 +320,7 @@ let currentEditUserId = 1
 async function fetchMessages() {
     // URL for the api and messages
     try {
-      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages');
+      const response = await fetch('/api/messages');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -377,7 +377,7 @@ async function sendMessage(userId, content, usingCharacter = false, characterId 
     };
     try {
       // Send the message to the back-end API
-      const response = await fetch('http://prismaverse.csh.rit.edu:3000/api/messages', {
+      const response = await fetch('/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Ensure that the Content-Type is set to application/json
