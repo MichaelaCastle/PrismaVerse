@@ -18,6 +18,96 @@
 </head>
 <body>
     <main>
+        <section class="add flex-cc-p-g hidden">
+            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
+            <h2>Roles</h2>
+            <hr>
+            <div class="role-head flex-rc-p-g">
+                <button class="icon-btn circular"><i class="fa fas fa-upload"></i></button>
+                <img class="user-image" src="Images/Pfps/GraAnonPFP.png">
+                <button class="icon-btn circular"><i class="fa fas fa-palette"></i></button>
+            </div>
+            <input class="text-input" type="text" placeholder="Name"/>
+            <input class="text-input" type="text" placeholder="Subtext"/>
+            <p>Notes</p>
+            <textarea class="notes"></textarea>
+            <p>Description</p>
+            <textarea class="description"></textarea>
+            <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
+        </section>
+        <aside id="members" class="flex-row pullout left">
+            <section class="members flex-col pullout-content">
+                <h1>Chat Info</h1>
+                <div class="users flex-rc-p-g">
+                </div>
+                <div class="progress progress-moved">
+                    <div class="progress-bar">
+                    </div>
+                </div>
+                <div class="searched flex-rc-p">
+                    <button class="flex-cc-p"><i class="fa fas fa-image"></i><p>Search</p></button>
+                    <button class="flex-cc-p"><i class="fa fas fa-message"></i><p>Search</p></button>
+                    <button class="flex-cc-p"><i class="fa fas fa-link"></i><p>Search</p></button>
+                </div>
+                <hr>
+                <div class="backgrounds flex-rc-p">
+                    <div class="card flex-cc-p">
+                        <img src="Images/purpleVert.jpg">
+                        <p>Vertical</p>
+                    </div>
+                    <div class="card flex-cc-p">
+                        <img src="Images/purpleH.jpg">
+                        <p>Horizontal</p>
+                    </div>
+                </div>
+                <button class="icon-btn labeled"><i class="fa fas fa-plus"></i><p>Add Users</p></button>
+                <button class="icon-btn labeled"><i class="fa fas fa-door-closed"></i><p>Leave</p></button>
+            </section>
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button> -->
+        </aside>
+        <aside id="convos" class="flex-row pullout left secondary">
+            <section class="convos flex-col pullout-content">
+                <div id="convoMenu" class="flex-rc">
+                    <button id="privC" class="bottom_border">Private</button>
+                    <button id="pubC" class="bottom_border">Public</button>
+                    <button id="inviC" class="bottom_border">Invites</button>
+                    <button id="addC" class="bottom_border">+</button>
+                </div>
+                <div class="base-listing unread bottom_border user-grid p10">
+                    <img src="Images/pfp.jpg" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Starlight</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree that we should</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfp2.jpg" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Jaylex, Starlight, Nix, Levi</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey!</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfpGreen.png" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Unread</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">short sorry))</p>
+                </div>
+                <div class="base-listing bottom_border user-grid p10">
+                    <img src="Images/pfpGreen2.webp" class="user-image">
+                    <div class="heading flex-r-g name">
+                        <p class="title f15">Unread</p>
+                        <p class="time">1m</p>
+                    </div>
+                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d.</p>
+                </div>
+            </section>
+            <!-- <button class="expand" onclick="extendPullout(this)"><i class="fa fas fa-caret-right"></i></button> -->
+        </aside>
         <section id="chat" class="flex-col">
             <header class="p10 user-grid">
                 <img class="user-image" src="Images/pfp.jpg" />
