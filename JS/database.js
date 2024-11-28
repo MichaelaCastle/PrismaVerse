@@ -68,6 +68,18 @@ async function getMessages() {
   }
 }
 
+// Connect to database and execute query to get roles
+async function getRoles() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query('SELECT * FROM Roles');
+    return result.recordset;
+  } 
+  catch (err) {
+    throw new Error('Error querying the database.');
+  }
+}
+
 // Connect to database and execute query to add a message
 async function addMessage({ userId, content, usingCharacter, characterId, isImage, deleted }) {
   try {
@@ -97,6 +109,41 @@ async function addMessage({ userId, content, usingCharacter, characterId, isImag
   } catch (err) {
     console.error('Error inserting message into database:', err);
     throw new Error('Failed to insert message.');
+  }
+}
+
+async function addRole({userid, name, nickname, color, pfp, notes, description, relinquished}) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('userid', sql.Int, userid)
+      .input('name', sql.NVarChar, name)
+      .input('nickname', sql.NVarChar, nickname)
+      .input('color', sql.Int, color)
+      .input('pfp', sql.Bit, pfp)
+      .input('notes', sql.NVarChar, notes)
+      .input('description', sql.NVarChar, description)
+      .input('relinquished', sql.Bit, relinquished)
+      .query(`
+        INSERT INTO Roles (UserId, Name, Nickname, Color, Pfp, Notes, Description, Relinquished)
+        VALUES (@id, @userid, @name, @nickname, @color, @pfp, @notes, @description, @relinquished);
+        SELECT SCOPE_IDENTITY() AS RoleId;
+      `);
+
+    return {
+      RoleId: result.recordset[0].RoleId,
+      userid,
+      name,
+      nickname,
+      color,
+      pfp,
+      notes,
+      description,
+      relinquished
+    };
+  } catch (err) {
+    console.error('Error inserting message into database:', err);
+    throw new Error('Failed to insert role.');
   }
 }
 
@@ -140,6 +187,46 @@ app.post('/api/messages', async (req, res) => {
   }
 });
 
+// API URL to get roles
+app.get('/api/roles', async (req, res) => {
+  try {
+    const messages = await getMessages();
+    res.json(messages);
+  } 
+  catch (err) {
+    console.error('Error in API endpoint:', err);
+    res.status(500).send('Error querying the database.');
+  }
+});
+
+
+// API URL to add roles
+app.post('/api/roles', async (req, res) => {
+  console.log("hi");
+  const { userId, content, usingCharacter, characterId, isImage, deleted } = req.body;
+
+  // Make sure userId and content are provided
+  if (!userId || !content) {
+    return res.status(400).send('userId and content are required.');
+  }
+
+  try {
+    // Call addMessage
+    const newMessage = await addMessage({
+      userId,
+      content,
+      usingCharacter: usingCharacter || false,
+      characterId: characterId || 0,
+      isImage: isImage || false,
+      deleted: deleted || false,
+    });
+
+    res.status(201).json(newMessage);
+  } catch (err) {
+    console.error('Error in POST /api/messages:', err);
+    res.status(500).send('Failed to insert message.');
+  }
+});
 
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));
