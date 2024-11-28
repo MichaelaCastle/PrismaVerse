@@ -609,6 +609,9 @@ function loadCharacters(){
         //combine
         role.appendChild(userGrid);
         role.appendChild(edit);
+        //Testing
+        console.log("role = ", role);
+        console.log("pagnation = ", pagination);
         role_c.insertBefore(role, pagination);
 
         // Role Selection (Bottom Left)
