@@ -764,7 +764,7 @@ async function starting() {
 
     characters = document.querySelector('.characters');
     c_expand = document.querySelector('#characters .expand i');
-    c_expand_class = c_expand.classList;
+    // c_expand_class = c_expand.classList; // I don't think we need this, moving expand class to a new page for now for feature addition (11/27/2024)
     c_info = document.querySelector('#character-info');
     c_info_notes = c_info.querySelector('.notes');
     c_info_desc = c_info.querySelector('.description');

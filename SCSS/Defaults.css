@@ -39,10 +39,6 @@ body > nav {
   z-index: 10;
 }
 
-main {
-  margin-top: 3rem;
-}
-
 body {
   background-attachment: fixed;
   background-size: cover;
@@ -206,6 +202,32 @@ h1, h2 {
 .user-grid.flip .name, .user-grid.flip .text {
   justify-self: end;
   grid-column: 1;
+}
+
+.message-header-grid {
+  display: flex;
+  align-content: flex-end;
+}
+
+.message-header-grid .back-button {
+  margin: auto 10px;
+}
+
+.message-header-grid .user-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-header-grid .message-name {
+  margin: auto 10px;
+}
+
+.message-header-grid .text {
+  margin: auto 10px;
+}
+
+.message-header-grid i {
+  justify-self: flex-end;
 }
 
 .icon-btn {
