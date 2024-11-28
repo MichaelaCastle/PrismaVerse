@@ -430,6 +430,8 @@ function addMessage(){
     //let msg_c = document.querySelector('#chat > section');
     //msg_c.innerHTML = "";
     //loadMessages();
+
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 function loadMessages(){
