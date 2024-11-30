@@ -23,7 +23,7 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
@@ -142,7 +142,7 @@ async function addRole({userid, name, nickname, color, pfp, notes, description, 
       relinquished
     };
   } catch (err) {
-    console.error('Error inserting message into database:', err);
+    console.error('Error inserting role into database:', err);
     throw new Error('Failed to insert role.');
   }
 }
@@ -190,8 +190,8 @@ app.post('/api/messages', async (req, res) => {
 // API URL to get roles
 app.get('/api/roles', async (req, res) => {
   try {
-    const messages = await getMessages();
-    res.json(messages);
+    const roles = await getRoles();
+    res.json(roles);
   } 
   catch (err) {
     console.error('Error in API endpoint:', err);
@@ -203,30 +203,56 @@ app.get('/api/roles', async (req, res) => {
 // API URL to add roles
 app.post('/api/roles', async (req, res) => {
   console.log("hi");
-  const { userId, content, usingCharacter, characterId, isImage, deleted } = req.body;
+  const { userid, name, nickname, color, pfp, notes, description, relinquished } = req.body;
 
   // Make sure userId and content are provided
-  if (!userId || !content) {
-    return res.status(400).send('userId and content are required.');
+  if (!userid || !name) {
+    return res.status(400).send('userid and name are required.');
   }
 
   try {
-    // Call addMessage
-    const newMessage = await addMessage({
-      userId,
-      content,
-      usingCharacter: usingCharacter || false,
-      characterId: characterId || 0,
-      isImage: isImage || false,
-      deleted: deleted || false,
+    // Call addRole
+    const newRole = await addRole({
+      userid,
+      name, 
+      nickname, 
+      color: color || 0,
+      pfp: pfp || false,
+      notes, 
+      description, 
+      relinquished: relinquished || false,
     });
 
-    res.status(201).json(newMessage);
+    res.status(201).json(newRole);
   } catch (err) {
-    console.error('Error in POST /api/messages:', err);
-    res.status(500).send('Failed to insert message.');
+    console.error('Error in POST /api/roles:', err);
+    res.status(500).send('Failed to insert role.');
   }
 });
+
+//API URL to update roles
+app.patch('/api/roles/:id', async (req, res) => {
+  const { id } = req.params;
+  const { relinquished } = req.body;
+
+  if (relinquished === undefined) {
+      return res.status(400).send('Relinquished status is required.');
+  }
+
+  try {
+      const pool = await poolPromise;
+      await pool.request()
+          .input('id', sql.Int, id)
+          .input('relinquished', sql.Bit, relinquished)
+          .query('UPDATE Roles SET Relinquished = @relinquished WHERE Id = @id');
+
+      res.status(200).json({ id, relinquished });
+  } catch (error) {
+      console.error('Error updating role:', error);
+      res.status(500).send('Failed to update role.');
+  }
+});
+
 
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));
@@ -237,4 +263,4 @@ app.listen(PORT, () => {
 });
 
 // Export functions
-module.exports = { getMessages };
+module.exports = { getMessages, getRoles };

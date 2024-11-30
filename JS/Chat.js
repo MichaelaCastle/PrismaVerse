@@ -17,7 +17,6 @@ function closePanel(panel){
     panel.parentElement.classList.add("hidden");
 }
 
-
 function OnInput() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + "px";
@@ -39,6 +38,7 @@ function openCharacters(){
     }
     c_open = !c_open;
 }
+
 function openConvos(){
     if(!cv_open){
         cv.classList.add("extended");
@@ -56,6 +56,7 @@ function openConvos(){
     }
     cv_open = !cv_open;
 }
+
 function extendPullout(elem){
 
     // console.log("Element passed to extendPullout:", elem);
@@ -133,6 +134,7 @@ let participants = [
         color: "hsl(120 100% 20%)"
     }
 ];
+
 let msgData = [
 // {
 //     userId: 1,
@@ -318,7 +320,7 @@ let currentEditUserId = 1
 
 // Gets and parses messages from database
 async function fetchMessages() {
-    // URL for the api and messages
+    // URL for the messages API
     try {
       const response = await fetch('/api/messages');
       if (!response.ok) {
@@ -338,6 +340,26 @@ async function fetchMessages() {
     } 
     catch (error) {
       console.error('Error fetching messages:', error);
+    }
+}
+
+async function fetchCharacters() {
+    
+    // URL for the roles API
+    try {
+        const response = await fetch('/api/roles');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse information
+        const roles = await response.json();
+        
+        // Array contains parsed information
+        characterData = roles;
+    } 
+    catch (error) {
+        console.error('Error fetching roles:', error);
     }
 }
 
@@ -606,59 +628,132 @@ function getEditCharacterId(){
     //console.log(currentEditCharacterId);
     //console.log(currentEditUserId);
 }
+
 // Getes the current role being viewed/edit
-function roleInfoSave(){
-    //console.log("button clicked");
+async function roleInfoSave() {
+    try {
+        // Gets text in notes textarea
+        let roleNotes = document.querySelector('.f125.notes');
+        const roleNotesContent = roleNotes.value;
+        console.log("Notes: " + roleNotesContent);
 
-    // Gets text in notes textarea
-    let roleNotes = document.querySelector('.f125.notes');
-    const roleNotesContent = roleNotes.value;
-    console.log("Notes: " + roleNotesContent);
+        // Gets text in description textarea
+        let roleDescription = document.querySelector('.f125.description');
+        const roleDescriptionContent = roleDescription.value;
+        console.log("Description: " + roleDescriptionContent);
 
-    // Gets text in description textarea
-    let roleDescription = document.querySelector('.f125.description');
-    const roleDescriptionContent = roleDescription.value;
-    console.log("Description: " + roleDescriptionContent);
+        let roleToEdit = null;
 
-
-    //console.log(characterData.length);
-
-    // Finds the correct item in msgData and saves the values
-     for(let i = 0; i < characterData.length; i++) {
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
-            characterData[i].notes = roleNotesContent;
-            characterData[i].description = roleDescriptionContent;
-            //console.log("hi");
-            break;
+        // Find role in characterData
+        for (let i = 0; i < characterData.length; i++) {
+            if (
+                characterData[i].userId == currentEditUserId &&
+                characterData[i].characterId == currentEditCharacterId
+            ) {
+                // The role in characterData to edit
+                roleToEdit = characterData[i];
+                break;
+            }
         }
-     }
+
+        if (!roleToEdit) {
+            console.error('No matching role found to update.');
+            return;
+        }
+
+        // PATCH request to update database
+        const response = await fetch(`/api/roles/${roleToEdit.characterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                notes: roleNotesContent,
+                description: roleDescriptionContent,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update role in the database.');
+        }
+
+        console.log('Role successfully updated in the database.');
+
+        // Update the matching role in characterData
+        roleToEdit.notes = roleNotesContent;
+        roleToEdit.description = roleDescriptionContent;
+    } catch (error) {
+        console.error('Error saving role info:', error);
+    }
 }
 
 // User relinquishes role
-function relinquishRole(){
-    //console.log("hi");
-
-    // Finds role current role with corresponding id and userid
-    for(let i = 0; i < characterData.length; i++){
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
-            // Updates relinquished status
-            characterData[i].relinquised = false;
-            console.log(characterData[i].relinquised);
+async function relinquishRole() {
+    try {
+        // Role is selected
+        if (!currentEditUserId || !currentEditCharacterId) {
+            console.error("No role selected");
+            return;
         }
+
+        // Update the relinquished status
+        const response = await fetch(`/api/roles/${currentEditCharacterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ relinquished: false }) // Set relinquished to false
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update role: ${response.statusText}`);
+        }
+
+        // Update characterData
+        const updatedRole = await response.json();
+        const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
+        if (roleIndex !== -1) {
+            characterData[roleIndex].relinquished = updatedRole.relinquished;
+        }
+
+        console.log("Role relinquished:", updatedRole);
+    } catch (error) {
+        console.error("Error relinquishing role:", error);
     }
-    //set relinquished to true
 }
 
 // User claims role
-function claimRole(){
-
-    // Finds role current role with corresponding id and userid
-    for(let i = 0; i < characterData.length; i++){
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
-            // Updates relinquished status
-            characterData[i].relinquised = true;
-            console.log(characterData[i].relinquised);
+async function claimRole() {
+    try {
+        // Role is selected
+        if (!currentEditUserId || !currentEditCharacterId) {
+            console.error("No role selected");
+            return;
         }
+
+        // Update relinquished
+        const response = await fetch(`/api/roles/${currentEditCharacterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ relinquished: true }) // Set relinquished to true
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update role: ${response.statusText}`);
+        }
+
+        // Update characterData
+        const updatedRole = await response.json();
+        const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
+        if (roleIndex !== -1) {
+            characterData[roleIndex].relinquished = updatedRole.relinquished;
+        }
+
+        console.log("Role claimed:", updatedRole);
+    } catch (error) {
+        console.error("Error claiming role:", error);
     }
 }
 
@@ -667,6 +762,9 @@ function unselectRole(){
     currentCharacterId = 0; 
     console.log('User ID:', currentUserId);
     console.log('Character ID:', currentCharacterId);  
+    let roleBtn = document.querySelector('#role-btn');
+    let img = roleBtn.querySelector("img");
+    img.src = "Images/pfp2.jpg";
 }
 
 // Create new role
@@ -698,33 +796,53 @@ function createNewRole(){
 
     // Add role to existing roles
     addNewRole(roleNameContent, roleSubtextContent, "hsl(0 100% 15%)", "Images/Pfps/Jay512.png", roleNotesContent, roleDescriptionContent, false);
+
+    roleName.value = '';
+    roleSubtext.value = '';
+    roleNotes.value = '';
+    roleDescription.value = '';
 }
 
 // Add role to existing roles
-function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
+async function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
 
-    // Create new role and add to characterData
-    characterData.push({id: characterData.length + 1, userid: currentUserId, name: name, nickname: nickname,
-         color: color, pfp: pfp, notes: notes, description: description, relinquised: relinquised});
+    try {
+        // Create new role object
+        const newRoleData = {
+            userId: currentUserId, // Assuming you have a currentUserId available
+            characterId: generateUniqueCharacterId(), // Generate or leave as null if the backend assigns it
+            name: name,
+            subtext: subtext,
+            color: color,
+            image: image,
+            notes: notes,
+            description: description,
+            isAssigned: isAssigned,
+        };
 
-    // Update role selection (if applicable)
-    if(characterData[characterData.length-1].userid === userId){
-        let cs = document.querySelector('.character-select');
-        let roleP = document.createElement("button");
-        roleP.className = "icon-btn labeled";
+        // Add new role to database
+        const response = await fetch('/api/roles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newRoleData),
+        });
 
-        // Add reference to id and userid to the button
-        roleP.setAttribute('user-id', characterData[characterData.length-1].userid);
-        roleP.setAttribute('character-id', characterData[characterData.length-1].id);
+        if (!response.ok) {
+            throw new Error('Failed to add new role to the database.');
+        }
 
-        roleP.style.setProperty('--c-col', characterData[characterData.length-1].color);
-        let nameP = document.createElement("p");
-        nameP.innerText = characterData[characterData.length-1].name;
-        roleP.appendChild(nameP);
-        cs.appendChild(roleP);
+        // Get the created role data from server
+        const createdRole = await response.json();
+        console.log('New role added to database:', createdRole);
 
-        // Adds the roleSelect function to button onclick
-        roleP.addEventListener('click', roleSelect);           
+        // Add the new role to characterData 
+        characterData.push(createdRole);
+        console.log('New role added to characterData:', createdRole);
+
+    } catch (error) {
+        console.error('Error adding new role:', error);
     }
 
     // Update role display
@@ -786,6 +904,7 @@ function roleSelect(){
     // console.log('User ID:', currentUserId);
     // console.log('Character ID:', currentCharacterId);
 }
+
 // Determines what button is displayed for the user to either claim or relinquish a role
 // roleStatusButton()
 // for(let c = 0; c < characterData.length; c++){
@@ -874,7 +993,6 @@ function loadCharacters(){
     //     <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
     // </div>
 }
-
 
 function loadUsers(){
     let role_c = document.querySelector('.users');
@@ -967,6 +1085,7 @@ let styleSubtext = (s, splitter, style) => {
 }
 let c_info_notes = null;
 let c_info_desc = null;
+
 function openCharacter(c){
     c_info.style.setProperty('--character-color', characterData[c].color);
     c_info.querySelector('header h2').innerText = characterData[c].name;
@@ -1030,6 +1149,7 @@ async function starting() {
     document.getElementById('save').addEventListener('click', roleInfoSave);    
     
     await fetchMessages(); // Wait for messages to be fetched
+    await fetchCharacters(); // Wait for characters to be fetched
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
@@ -1056,4 +1176,5 @@ async function starting() {
     }, true); 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
+
 window.onload = starting;
