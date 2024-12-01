@@ -534,11 +534,13 @@ function loadMessages(){
     // </div>
 
     // msgData resetting after fetchMessages
-    //console.log(msgData.length);
+    //console.log(msgData);
     // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
-        //console.log("Message", msgData[m]);
+        console.log(`Message #${m}`, msgData[m]);
         let p = participants.find((u) => u.id == msgData[m].userId);
+        //console.log("Participants:", participants);
+        //console.log("User found for message:", p);
 
         // If message is deleted
         if(msgData[m].deleted){
@@ -555,27 +557,40 @@ function loadMessages(){
         }
         //vars
         let uc = msgData[m].usingCharacter;
-        let c = uc ? characterData.find((u) => u.id == msgData[m].characterId) : null;
+        let c = null;
+        let color = p.color;
         //console.log(uc);
-        let color = uc ? c.color : p.color;
+        console.log(msgData);
+        console.log(characterData);
+        // If using a character gets color
+        if (uc) {
+            c = characterData.find((u) => u.id == msgData[m].characterId);
+            if (c) {
+                color = c.color;
+                console.log("color:", color);
+            }
+        }
 
         //Create the main message div
         let message = document.createElement("div");
         message.className = "message user-grid top p10";
 
 
-        if(msgData[m].userId === userId) { message.classList.add("flip"); }
+        if(msgData[m].userId === userId){
+             message.classList.add("flip"); 
+        }
         // if(uc) { message.classList.add("character-msg"); }
         //pfp
 
         // Create profile picture image element
         let icon = document.createElement("img");
-        icon.src = !uc ? p.pfp : c.pfp;
+        icon.src = !uc ? p.pfp : (c ? c.pfp : p.pfp);
         icon.classList.add("user-image");
-        if(uc) icon.style.borderColor = color;
-        if(uc) icon.style.backgroundColor = color;
-        if(uc) icon.style.borderWidth = "3px";
-
+        if(uc && c) {
+            icon.style.borderColor = color;
+            icon.style.backgroundColor = color;
+            icon.style.borderWidth = "3px";
+        }
         // If profile picture is clicked and is not using a character, go to users profile
         if(!uc) icon.addEventListener("click", () =>
         {
@@ -591,7 +606,7 @@ function loadMessages(){
         //name
         let name = document.createElement("h2");
         name.className = "name";
-        name.innerText = !uc ? p.name : c.name;
+        name.innerText = !uc ? p.name : (c ? c.name : p.name);
         name.style.backgroundColor = color;
         message.appendChild(name);
         //content
@@ -609,9 +624,7 @@ function loadMessages(){
     }
 
     // Reverses message data back to correct order
-    msgData = msgData.reverse();
-
-    
+    msgData = msgData.reverse();  
 }
 
 // Gets the characterid of current character being viewed/edited
@@ -632,6 +645,7 @@ function getEditCharacterId(){
 // Getes the current role being viewed/edit
 async function roleInfoSave() {
     try {
+        console.log("roleInfoSave called");
         // Gets text in notes textarea
         let roleNotes = document.querySelector('.f125.notes');
         const roleNotesContent = roleNotes.value;
@@ -652,9 +666,12 @@ async function roleInfoSave() {
             ) {
                 // The role in characterData to edit
                 roleToEdit = characterData[i];
+                console.log('Role to edit:', roleToEdit);
                 break;
             }
         }
+
+        
 
         if (!roleToEdit) {
             console.error('No matching role found to update.');
@@ -769,7 +786,7 @@ function unselectRole(){
 
 // Create new role
 function createNewRole(){
-    //console.log("hiwo");
+    console.log("createNewRole called");
 
     // Gets text in name textarea
     let roleName = document.querySelector('.name-input');
@@ -809,15 +826,14 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
     try {
         // Create new role object
         const newRoleData = {
-            userId: currentUserId, // Assuming you have a currentUserId available
-            characterId: generateUniqueCharacterId(), // Generate or leave as null if the backend assigns it
+            userId: currentUserId,
             name: name,
-            subtext: subtext,
+            nickname: nickname,
             color: color,
-            image: image,
+            pfp: pfp,
             notes: notes,
             description: description,
-            isAssigned: isAssigned,
+            relinquised: relinquised,
         };
 
         // Add new role to database
@@ -837,9 +853,21 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
         const createdRole = await response.json();
         console.log('New role added to database:', createdRole);
 
-        // Add the new role to characterData 
-        characterData.push(createdRole);
-        console.log('New role added to characterData:', createdRole);
+        // Add the role to characterData (with id)
+        const newRoleWithId = {
+            id: characterData.length + 1,
+            userId: currentUserId,
+            name: name,
+            nickname: nickname,
+            color: color,
+            pfp: pfp,
+            notes: notes,
+            description: description,
+            relinquished: relinquished,
+        };
+
+        characterData.push(newRoleWithId); // Push the object to the array
+        console.log('New role added to characterData:', newRoleWithId);
 
     } catch (error) {
         console.error('Error adding new role:', error);
