@@ -31,6 +31,12 @@ app.use(cors({
 // Middleware to parse JSON request body
 app.use(express.json());  // This line is critical to parse JSON body in POST requests
 
+app.use((req, res, next) => {
+  console.log(`Received ${req.method} request for ${req.url}`);
+  next();  // Pass the request to the next middleware or route handler
+});
+
+
 // Configuration for database connection
 const config = {
   user: 'jaylex05@prismoria',
@@ -112,21 +118,21 @@ async function addMessage({ userId, content, usingCharacter, characterId, isImag
   }
 }
 
-async function addRole({userid, name, nickname, color, pfp, notes, description, relinquished}) {
+async function addRole({userid, name, nickname, color, pfp, notes, description, relinquised}) {
   try {
     const pool = await poolPromise;
     const result = await pool.request()
-      .input('userid', sql.Int, userid)
+      .input('userid', sql.Int, userid || 2)
       .input('name', sql.NVarChar, name)
       .input('nickname', sql.NVarChar, nickname)
-      .input('color', sql.Int, color)
-      .input('pfp', sql.Bit, pfp)
+      .input('color', sql.NVarChar, color)
+      .input('pfp', sql.NVarChar, pfp)
       .input('notes', sql.NVarChar, notes)
       .input('description', sql.NVarChar, description)
-      .input('relinquished', sql.Bit, relinquished)
+      .input('relinquised', sql.Bit, relinquised)
       .query(`
-        INSERT INTO Roles (UserId, Name, Nickname, Color, Pfp, Notes, Description, Relinquished)
-        VALUES (@id, @userid, @name, @nickname, @color, @pfp, @notes, @description, @relinquished);
+        INSERT INTO Roles (UserId, Name, Nickname, Color, Pfp, Notes, Description, Relinquised)
+        VALUES (@userid, @name, @nickname, @color, @pfp, @notes, @description, @relinquised);
         SELECT SCOPE_IDENTITY() AS RoleId;
       `);
 
@@ -139,7 +145,7 @@ async function addRole({userid, name, nickname, color, pfp, notes, description, 
       pfp,
       notes,
       description,
-      relinquished
+      relinquised
     };
   } catch (err) {
     console.error('Error inserting role into database:', err);
@@ -202,15 +208,17 @@ app.get('/api/roles', async (req, res) => {
 
 // API URL to add roles
 app.post('/api/roles', async (req, res) => {
-  console.log("hi");
-  const { userid, name, nickname, color, pfp, notes, description, relinquished } = req.body;
+  console.log("POST /api/messages called");
+  console.log("Request body:", req.body);
+  const { userid, name, nickname, color, pfp, notes, description, relinquised } = req.body;
 
   // Make sure userId and content are provided
-  if (!userid || !name) {
+  if (!name) {
     return res.status(400).send('userid and name are required.');
   }
 
   try {
+    console.log("Adding role to database");
     // Call addRole
     const newRole = await addRole({
       userid,
@@ -220,9 +228,9 @@ app.post('/api/roles', async (req, res) => {
       pfp: pfp || false,
       notes, 
       description, 
-      relinquished: relinquished || false,
+      relinquised: relinquised || false,
     });
-
+    console.log("Role added to database");
     res.status(201).json(newRole);
   } catch (err) {
     console.error('Error in POST /api/roles:', err);
@@ -233,20 +241,20 @@ app.post('/api/roles', async (req, res) => {
 //API URL to update roles
 app.patch('/api/roles/:id', async (req, res) => {
   const { id } = req.params;
-  const { relinquished } = req.body;
+  const { relinquised } = req.body;
 
-  if (relinquished === undefined) {
-      return res.status(400).send('Relinquished status is required.');
+  if (relinquised === undefined) {
+      return res.status(400).send('Relinquised status is required.');
   }
 
   try {
       const pool = await poolPromise;
       await pool.request()
           .input('id', sql.Int, id)
-          .input('relinquished', sql.Bit, relinquished)
-          .query('UPDATE Roles SET Relinquished = @relinquished WHERE Id = @id');
+          .input('relinquised', sql.Bit, relinquised)
+          .query('UPDATE Roles SET Relinquised = @relinquised WHERE Id = @id');
 
-      res.status(200).json({ id, relinquished });
+      res.status(200).json({ id, relinquised });
   } catch (error) {
       console.error('Error updating role:', error);
       res.status(500).send('Failed to update role.');

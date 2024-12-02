@@ -244,72 +244,72 @@ let msgData = [
 ];
 
 let characterData = [
-    {
-        id: 1,
-        userid: 1,
-        name: "Jay Star",
-        nickname: "Magic boi",
-        color: "hsl(200 100% 15%)",
-        pfp: "Images/Pfps/Jay512.png",
-        notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
-        description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html",
-        relinquised: false
-    },
-    {
-        id: 2,
-        userid: 2,
-        name: "Jacob",
-        nickname: "Ray of sunshine",
-        color: "hsl(0 100% 15%)",
-        pfp: "Images/Pfps/Jacob512.png",
-        notes: "",
-        description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html",
-        relinquised: false
-    },
-    {
-        id: 3,
-        userid: 2,
-        name: "Elliot",
-        nickname: "Doggo",
-        color: "hsl(75 100% 15%)",
-        pfp: "Images/Pfps/Elliot512.png",
-        notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
-        description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html",
-        relinquised: false
-    },
-    {
-        id: 4,
-        userid: 1,
-        name: "Sam",
-        nickname: "NERD",
-        color: "hsl(120 100% 15%)",
-        pfp: "Images/Pfps/Sam512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    },
-    {
-        id: 5,
-        userid: 2,
-        name: "Rene",
-        nickname: "Computer boi",
-        color: "hsl(270 100% 15%)",
-        pfp: "Images/Pfps/Rene512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    },
-    {
-        id: 6,
-        userid: 1,
-        name: "Adam",
-        nickname: " ",
-        color: "hsl(30 100% 15%)",
-        pfp: "Images/Pfps/Adam512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    }
+    // {
+    //     id: 1,
+    //     userid: 1,
+    //     name: "Jay Star",
+    //     nickname: "Magic boi",
+    //     color: "hsl(200 100% 15%)",
+    //     pfp: "Images/Pfps/Jay512.png",
+    //     notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
+    //     description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 2,
+    //     userid: 2,
+    //     name: "Jacob",
+    //     nickname: "Ray of sunshine",
+    //     color: "hsl(0 100% 15%)",
+    //     pfp: "Images/Pfps/Jacob512.png",
+    //     notes: "",
+    //     description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 3,
+    //     userid: 2,
+    //     name: "Elliot",
+    //     nickname: "Doggo",
+    //     color: "hsl(75 100% 15%)",
+    //     pfp: "Images/Pfps/Elliot512.png",
+    //     notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
+    //     description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 4,
+    //     userid: 1,
+    //     name: "Sam",
+    //     nickname: "NERD",
+    //     color: "hsl(120 100% 15%)",
+    //     pfp: "Images/Pfps/Sam512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 5,
+    //     userid: 2,
+    //     name: "Rene",
+    //     nickname: "Computer boi",
+    //     color: "hsl(270 100% 15%)",
+    //     pfp: "Images/Pfps/Rene512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 6,
+    //     userid: 1,
+    //     name: "Adam",
+    //     nickname: " ",
+    //     color: "hsl(30 100% 15%)",
+    //     pfp: "Images/Pfps/Adam512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // }
 ];
 
 // Temporary filled variable that keeps track of the current character id the user has selected
@@ -537,7 +537,7 @@ function loadMessages(){
     //console.log(msgData);
     // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
-        console.log(`Message #${m}`, msgData[m]);
+        //console.log(`Message #${m}`, msgData[m]);
         let p = participants.find((u) => u.id == msgData[m].userId);
         //console.log("Participants:", participants);
         //console.log("User found for message:", p);
@@ -560,14 +560,14 @@ function loadMessages(){
         let c = null;
         let color = p.color;
         //console.log(uc);
-        console.log(msgData);
-        console.log(characterData);
+        //console.log(msgData);
+        //console.log(characterData);
         // If using a character gets color
         if (uc) {
             c = characterData.find((u) => u.id == msgData[m].characterId);
             if (c) {
                 color = c.color;
-                console.log("color:", color);
+                //console.log("color:", color);
             }
         }
 
@@ -627,6 +627,7 @@ function loadMessages(){
     msgData = msgData.reverse();  
 }
 
+//Works
 // Gets the characterid of current character being viewed/edited
 function getEditCharacterId(){
     //console.log("hi");
@@ -642,7 +643,7 @@ function getEditCharacterId(){
     //console.log(currentEditUserId);
 }
 
-// Getes the current role being viewed/edit
+// Update current role being viewed/edit
 async function roleInfoSave() {
     try {
         console.log("roleInfoSave called");
@@ -659,19 +660,17 @@ async function roleInfoSave() {
         let roleToEdit = null;
 
         // Find role in characterData
+        //console.log('Character Data:', characterData);
         for (let i = 0; i < characterData.length; i++) {
-            if (
-                characterData[i].userId == currentEditUserId &&
-                characterData[i].characterId == currentEditCharacterId
-            ) {
+            console.log('User ID:', characterData[i].userid);
+            console.log('Character ID:', characterData[i].id);
+            if (characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
                 // The role in characterData to edit
                 roleToEdit = characterData[i];
                 console.log('Role to edit:', roleToEdit);
                 break;
             }
-        }
-
-        
+        }  
 
         if (!roleToEdit) {
             console.error('No matching role found to update.');
@@ -699,7 +698,8 @@ async function roleInfoSave() {
         // Update the matching role in characterData
         roleToEdit.notes = roleNotesContent;
         roleToEdit.description = roleDescriptionContent;
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Error saving role info:', error);
     }
 }
@@ -719,7 +719,7 @@ async function relinquishRole() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ relinquished: false }) // Set relinquished to false
+            body: JSON.stringify({ relinquised: false }) // Set relinquished to false
         });
 
         if (!response.ok) {
@@ -730,7 +730,7 @@ async function relinquishRole() {
         const updatedRole = await response.json();
         const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
         if (roleIndex !== -1) {
-            characterData[roleIndex].relinquished = updatedRole.relinquished;
+            characterData[roleIndex].relinquised = updatedRole.relinquised;
         }
 
         console.log("Role relinquished:", updatedRole);
@@ -754,7 +754,7 @@ async function claimRole() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ relinquished: true }) // Set relinquished to true
+            body: JSON.stringify({ relinquised: true }) // Set relinquished to true
         });
 
         if (!response.ok) {
@@ -765,7 +765,7 @@ async function claimRole() {
         const updatedRole = await response.json();
         const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
         if (roleIndex !== -1) {
-            characterData[roleIndex].relinquished = updatedRole.relinquished;
+            characterData[roleIndex].relinquised = updatedRole.relinquised;
         }
 
         console.log("Role claimed:", updatedRole);
@@ -774,6 +774,7 @@ async function claimRole() {
     }
 }
 
+// Works
 // Resets character id so no role is currently selected
 function unselectRole(){
     currentCharacterId = 0; 
@@ -835,6 +836,7 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
             description: description,
             relinquised: relinquised,
         };
+        //console.log(newRoleData);
 
         // Add new role to database
         const response = await fetch('/api/roles', {
@@ -863,7 +865,7 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
             pfp: pfp,
             notes: notes,
             description: description,
-            relinquished: relinquished,
+            relinquised: relinquised,
         };
 
         characterData.push(newRoleWithId); // Push the object to the array
@@ -914,6 +916,7 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
     role_c.insertBefore(role, pagination);
 }
 
+//Works
 // Gets the userId and characterId of role selected
 function roleSelect(){
     //console.log("hi");
@@ -933,6 +936,7 @@ function roleSelect(){
     // console.log('Character ID:', currentCharacterId);
 }
 
+//Works
 // Determines what button is displayed for the user to either claim or relinquish a role
 // roleStatusButton()
 // for(let c = 0; c < characterData.length; c++){
@@ -940,6 +944,8 @@ function roleSelect(){
 // create relinqquish button -> relinquishRole
 // else create join button -> joinRole
 
+
+// Works 
 function loadCharacters(){
     // let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
