@@ -372,7 +372,7 @@ function getMessage(){
 
     // Sets parameters needed to construct message
     const userId = currentUserId;  
-    const usingCharacter = false; 
+    const usingCharacter = currentCharacterId !== 0 && currentCharacterId !== null;
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
@@ -387,7 +387,7 @@ function getMessage(){
 
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
-async function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
+async function sendMessage(userId, content, usingCharacter, characterId = 0, isImage = false, deleted = false) {
     // Create a new message object
     const newMessage = {
       userId: userId,
@@ -420,10 +420,8 @@ async function sendMessage(userId, content, usingCharacter = false, characterId 
       // Add the saved message to the local msgData array
       msgData.push(savedMessage);
 
-      // Optional: Log the response for debugging
       console.log('Message successfully sent and saved:', savedMessage);
 
-      // Optional: Update the UI if needed (e.g., refresh the message list or display the new message)
       addMessage(); // Ensure this function is correctly defined elsewhere in your code
     } 
     
@@ -518,6 +516,7 @@ function addMessage(){
     //loadMessages();
 }
 
+// Load all messages
 function loadMessages(){
     //console.log("loading messages");
 
