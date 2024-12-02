@@ -371,8 +371,9 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = currentUserId;  
-    const usingCharacter = currentCharacterId !== 0 && currentCharacterId !== null;
+    const userId = currentCharacterId 
+    ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
+    const usingCharacter = !!currentCharacterId;
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
@@ -521,87 +522,6 @@ function addMessage(){
     //msg_c.innerHTML = "";
     //loadMessages();
 }
-
-// function addMessage(){
-//     // Gets the section
-//     let msg_c = document.querySelector('#chat > section');
-
-//     // Reverses the order of the message data
-//     msgData = msgData.reverse();
-
-//     let latestMessage = msgData[0];
-//     let p = participants.find((u) => u.id == latestMessage.userId);
-
-//     // Data in first array is newly added data
-//     if(latestMessage.deleted){
-
-//         // Create message deleted div (This is separate from a normal message div)
-//         let message = document.createElement("div");
-//         message.className = "message deleted flex-row p10";
-//         let name = document.createElement("p");
-//         name.className = "f125";
-//         name.innerText = `${p.name} has deleted this message`;
-//         message.appendChild(name);
-//         msg_c.appendChild(message);
-//     }
-
-//     //vars
-//     let uc = latestMessage.usingCharacter;
-//     let c = uc ? characterData.find((u) => u.id == latestMessage.characterId) : null;
-//     let color = uc ? c.color : p.color;
-
-//     //Create the main message div
-//     let message = document.createElement("div");
-//     message.className = "message user-grid top p10";
-
-//     // Check if the message is sent by the current user
-//     if(latestMessage.userId === currentUserId) { 
-//         message.classList.add("flip"); 
-//     }
-
-//     //pfp
-//     let icon = document.createElement("img");
-//     icon.src = !uc ? p.pfp : c.pfp;
-//     icon.classList.add("user-image");
-//     if(uc) {
-//         icon.style.borderColor = color;
-//         icon.style.backgroundColor = color;
-//         icon.style.borderWidth = "3px";
-//     }
-
-//     // Add click behavior
-//     if(!uc) icon.addEventListener("click", () => {
-//         localStorage.setItem("id", p.id);
-//         window.location.href = "Profile3.html";
-//     });
-
-//     if(uc) icon.addEventListener("click", () => { openCharacter(c.id - 1); });
-//     message.appendChild(icon);
-
-//     //name
-//     let name = document.createElement("h2");
-//     name.className = "name";
-//     name.innerText = !uc ? p.name : c.name;
-//     name.style.backgroundColor = color;
-//     message.appendChild(name);
-
-//     //content
-//     let text = !latestMessage.isImage ? document.createElement('p') : document.createElement('img');
-//     text.className = "text p10";
-//     if(!latestMessage.isImage) {
-//         text.innerHTML = styleText(latestMessage.content);
-//     } else {
-//         text.src = latestMessage.content;
-//     }
-//     text.style.backgroundColor = color;
-
-//     //combine
-//     message.appendChild(text);
-//     msg_c.prepend(message);
-
-//     // Reverses message data back to correct order
-//     msgData = msgData.reverse();
-// }
 
 // Load all messages
 function loadMessages(){
