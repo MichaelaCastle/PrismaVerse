@@ -737,6 +737,30 @@ async function relinquishRole() {
     } catch (error) {
         console.error("Error relinquishing role:", error);
     }
+
+    // Update UI
+    let cs = document.querySelector('.character-select'); // Parent container
+
+    for (let i = 0; i < characterData.length; i++) {
+        if (characterData[i].id == currentEditCharacterId) {
+
+            // Find matching button
+            const roleP = cs.querySelector(`[character-id='${characterData[i].id}']`);
+            
+            if (roleP) {
+                // Remove the button
+                //cs.removeChild(roleP); 
+                // Alternative: 
+                roleP.remove();
+                console.log(`Removed button for character-id: ${characterData[i].id}`);
+            } else {
+                console.log(`No button found for character-id: ${characterData[i].id}`);
+            }
+
+            break; // Exit the loop since the role was found
+        }
+    }
+
 }
 
 // User claims role
@@ -773,10 +797,7 @@ async function claimRole() {
         console.error("Error claiming role:", error); 
     }
 
-    // const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
-    // console.log("Role Index:", roleIndex);
-    // console.log("Currrent Edit Character Id:", currentEditCharacterId);
-
+    // Update UI
     let cs = document.querySelector('.character-select');
     for(let i = 0; i < characterData.length; i++){
         if(characterData[i].id == currentEditCharacterId){
