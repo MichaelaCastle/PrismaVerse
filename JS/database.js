@@ -241,26 +241,52 @@ app.post('/api/roles', async (req, res) => {
 //API URL to update roles
 app.patch('/api/roles/:id', async (req, res) => {
   const { id } = req.params;
-  const { relinquised } = req.body;
+  const { notes, description, relinquised } = req.body;
 
-  if (relinquised === undefined) {
-      return res.status(400).send('Relinquised status is required.');
+  // At least one field is provided
+  if (notes === undefined && description === undefined && relinquised === undefined) {
+    return res.status(400).send('At least one field (notes, description, or relinquised) is required.');
   }
 
   try {
-      const pool = await poolPromise;
-      await pool.request()
-          .input('id', sql.Int, id)
-          .input('relinquised', sql.Bit, relinquised)
-          .query('UPDATE Roles SET Relinquised = @relinquised WHERE Id = @id');
+    const pool = await poolPromise;
+    const updates = [];
+    const inputs = [];
 
-      res.status(200).json({ id, relinquised });
+    // Makes the query with fields provided
+    if (notes !== undefined) {
+      updates.push('Notes = @notes');
+      inputs.push({ name: 'notes', type: sql.NVarChar, value: notes });
+    }
+    if (description !== undefined) {
+      updates.push('Description = @description');
+      inputs.push({ name: 'description', type: sql.NVarChar, value: description });
+    }
+    if (relinquised !== undefined) {
+      updates.push('Relinquised = @relinquised');
+      inputs.push({ name: 'relinquised', type: sql.Bit, value: relinquised });
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).send('No valid fields provided for update.');
+    }
+
+    // Make the query
+    const query = `UPDATE Roles SET ${updates.join(', ')} WHERE Id = @id`;
+
+    // Execute query
+    const request = pool.request();
+    inputs.forEach(input => request.input(input.name, input.type, input.value));
+    request.input('id', sql.Int, id);
+
+    await request.query(query);
+
+    res.status(200).json({ id, notes, description, relinquised });
   } catch (error) {
-      console.error('Error updating role:', error);
-      res.status(500).send('Failed to update role.');
+    console.error('Error updating role:', error);
+    res.status(500).send('Failed to update role.');
   }
 });
-
 
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));

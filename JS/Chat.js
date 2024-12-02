@@ -678,7 +678,7 @@ async function roleInfoSave() {
         }
 
         // PATCH request to update database
-        const response = await fetch(`/api/roles/${roleToEdit.characterId}`, {
+        const response = await fetch(`/api/roles/${roleToEdit.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -914,6 +914,21 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
     role.appendChild(userGrid);
     role.appendChild(edit);
     role_c.insertBefore(role, pagination);
+
+    // Updates role selection
+    let cs = document.querySelector('.character-select');
+    let roleP = document.createElement("button");
+    roleP.className = "icon-btn labeled";
+    // Add reference to id and userid to the button
+    roleP.setAttribute('user-id', characterData[characterData.length-1].userid);
+    roleP.setAttribute('character-id', characterData[characterData.length-1].id);
+    roleP.style.setProperty('--c-col', characterData[characterData.length-1].color);
+    let nameP = document.createElement("p");
+    nameP.innerText = characterData[characterData.length-1].name;
+    roleP.appendChild(nameP);
+    cs.appendChild(roleP);
+    // Adds the roleSelect function to button onclick
+    roleP.addEventListener('click', roleSelect);
 }
 
 //Works
