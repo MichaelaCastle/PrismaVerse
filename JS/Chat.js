@@ -770,7 +770,35 @@ async function claimRole() {
 
         console.log("Role claimed:", updatedRole);
     } catch (error) {
-        console.error("Error claiming role:", error);
+        console.error("Error claiming role:", error); 
+    }
+
+    // const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
+    // console.log("Role Index:", roleIndex);
+    // console.log("Currrent Edit Character Id:", currentEditCharacterId);
+
+    let cs = document.querySelector('.character-select');
+    for(let i = 0; i < characterData.length; i++){
+        if(characterData[i].id == currentEditCharacterId){
+             // Appends role to role selection
+            let roleP = document.createElement("button");
+            roleP.className = "icon-btn labeled";
+
+            // Add reference to id and userid to the button
+            roleP.setAttribute('user-id', characterData[i].userid);
+            roleP.setAttribute('character-id', characterData[i].id);
+            //console.log("Role Index:", roleIndex);
+
+            roleP.style.setProperty('--c-col', characterData[i].color);
+            let nameP = document.createElement("p");
+            nameP.innerText = characterData[i].name;
+            roleP.appendChild(nameP);
+            cs.appendChild(roleP);
+
+            // Adds the roleSelect function to button onclick
+            roleP.addEventListener('click', roleSelect); 
+            break;
+        }
     }
 }
 
@@ -1007,7 +1035,7 @@ function loadCharacters(){
         //role.addEventListener('click', getEditCharacterId);
 
         // Role Selection (Bottom Left)
-        if(characterData[c].userid === userId){
+        if(characterData[c].relinquised){
             let roleP = document.createElement("button");
             roleP.className = "icon-btn labeled";
 
