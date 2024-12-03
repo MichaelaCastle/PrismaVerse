@@ -830,7 +830,6 @@ async function claimRole() {
     }
 }
 
-// Works
 // Resets character id so no role is currently selected
 function unselectRole(){
     currentCharacterId = 0; 
@@ -987,7 +986,6 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
     roleP.addEventListener('click', roleSelect);
 }
 
-//Works
 // Gets the userId and characterId of role selected
 function roleSelect(){
     //console.log("hi");
@@ -1007,7 +1005,6 @@ function roleSelect(){
     // console.log('Character ID:', currentCharacterId);
 }
 
-//Works
 // Determines what button is displayed for the user to either claim or relinquish a role
 // roleStatusButton()
 // for(let c = 0; c < characterData.length; c++){
@@ -1015,8 +1012,6 @@ function roleSelect(){
 // create relinqquish button -> relinquishRole
 // else create join button -> joinRole
 
-
-// Works 
 function loadCharacters(){
     // let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
