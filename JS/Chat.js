@@ -312,6 +312,7 @@ let characterData = [
     // }
 ];
 
+
 // Temporary filled variable that keeps track of the current character id the user has selected
 let currentCharacterId = 0
 let currentUserId = 2
