@@ -402,8 +402,10 @@ async function sendMessage(userId, content, usingCharacter, characterId = 0, isI
         Deleted: deleted,
         SentBy: sentby
     };
+
     console.log('currentUserId', userId);
-    console.log('New message:', newMessage);                          
+    console.log('New message:', newMessage);  
+                            
     try {
       // Send the message to the back-end API
       const response = await fetch('/api/messages', {
