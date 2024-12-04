@@ -372,13 +372,14 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = currentUserId 
-    ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
+    // const userId = currentUserId 
+    // ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
     const usingCharacter = !!currentCharacterId;
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
-    const sentby = currentUserId;
+    const sentby = userId;
+    console.log('currentUserId', userId);
 
     // Send message if a message was typed
     if(content){
@@ -401,6 +402,7 @@ async function sendMessage(userId, content, usingCharacter, characterId = 0, isI
         Deleted: deleted,
         SentBy: sentby
     };
+    console.log('currentUserId', userId);
     console.log('New message:', newMessage);                          
     try {
       // Send the message to the back-end API
@@ -469,7 +471,7 @@ function addMessage(){
     message.className = "message user-grid top p10";
 
 
-    if(msgData[0].UserId === currentUserId){ 
+    if(msgData[0].UserId === msgData[0].SentBy){ 
         message.classList.add("flip"); 
     }
     // if(uc) { message.classList.add("character-msg"); }
