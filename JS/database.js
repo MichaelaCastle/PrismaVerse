@@ -95,12 +95,12 @@ async function addMessage({ UserId, Content, UsingCharacter, CharacterId, IsImag
       .input('Content', sql.NVarChar, Content)
       .input('UsingCharacter', sql.Bit, UsingCharacter)
       .input('CharacterId', sql.Int, CharacterId || null)
-      .input('IsImage', sql.Bit, IsImage)
       .input('Deleted', sql.Bit, Deleted)
+      .input('IsImage', sql.Bit, IsImage)
       .input('SentBy', sql.Int, SentBy)
       .query(`
-        INSERT INTO ChatDM (UserId, SentBy, Content, UsingCharacter, CharacterId, IsImage, Deleted)
-        VALUES (@UserId, @Content, @UsingCharacter, @CharacterId, @IsImage, @Deleted, @SentBy);
+        INSERT INTO ChatDM (UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted, SentBy)
+        VALUES (@UserId, @Content, @UsingCharacter, @CharacterId, @Deleted, @IsImage, @SentBy);
         SELECT SCOPE_IDENTITY() AS MessageId;
       `);
 
@@ -215,8 +215,8 @@ app.post('/api/roles', async (req, res) => {
   console.log("Request body:", req.body);
   const { userid, name, nickname, color, pfp, notes, description, relinquised } = req.body;
 
-  // Make sure userId and content are provided
-  if (!name) {
+  // Make sure userId sentby and content are provided
+  if (!UserId || !Content || !SentBy) {
     return res.status(400).send('userid and name are required.');
   }
 

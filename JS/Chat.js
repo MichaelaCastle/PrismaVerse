@@ -372,8 +372,8 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = currentCharacterId 
-    ? characterData.find((c) => c.id === currentCharacterId)?.serId || currentUserId : currentUserId;  
+    const userId = currentUserId 
+    ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
     const usingCharacter = !!currentCharacterId;
     const characterId = currentCharacterId; 
     const isImage = false;
@@ -399,7 +399,7 @@ async function sendMessage(userId, content, usingCharacter, characterId = 0, isI
         CharacterId: characterId,
         IsImage: isImage,
         Deleted: deleted,
-        Sentby: sentby
+        SentBy: sentby
     };
     console.log('New message:', newMessage);                          
     try {
@@ -447,7 +447,7 @@ function addMessage(){
 
 
     // Data in first array is newly added data
-    if(msgData[0].deleted){
+    if(msgData[0].Deleted){
 
         // Create message deleted div (This is serperate from a normal message div)
         let message = document.createElement("div");
