@@ -23,13 +23,19 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 
 // Middleware to parse JSON request body
 app.use(express.json());  // This line is critical to parse JSON body in POST requests
+
+app.use((req, res, next) => {
+  console.log(`Received ${req.method} request for ${req.url}`);
+  next();  // Pass the request to the next middleware or route handler
+});
+
 
 // Configuration for database connection
 const config = {
@@ -68,6 +74,18 @@ async function getMessages() {
   }
 }
 
+// Connect to database and execute query to get roles
+async function getRoles() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request().query('SELECT * FROM Roles');
+    return result.recordset;
+  } 
+  catch (err) {
+    throw new Error('Error querying the database.');
+  }
+}
+
 // Connect to database and execute query to add a message
 async function addMessage({ userId, content, usingCharacter, characterId, isImage, deleted }) {
   try {
@@ -97,6 +115,41 @@ async function addMessage({ userId, content, usingCharacter, characterId, isImag
   } catch (err) {
     console.error('Error inserting message into database:', err);
     throw new Error('Failed to insert message.');
+  }
+}
+
+async function addRole({userid, name, nickname, color, pfp, notes, description, relinquised}) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool.request()
+      .input('userid', sql.Int, userid || 2)
+      .input('name', sql.NVarChar, name)
+      .input('nickname', sql.NVarChar, nickname)
+      .input('color', sql.NVarChar, color)
+      .input('pfp', sql.NVarChar, pfp)
+      .input('notes', sql.NVarChar, notes)
+      .input('description', sql.NVarChar, description)
+      .input('relinquised', sql.Bit, relinquised)
+      .query(`
+        INSERT INTO Roles (UserId, Name, Nickname, Color, Pfp, Notes, Description, Relinquised)
+        VALUES (@userid, @name, @nickname, @color, @pfp, @notes, @description, @relinquised);
+        SELECT SCOPE_IDENTITY() AS RoleId;
+      `);
+
+    return {
+      RoleId: result.recordset[0].RoleId,
+      userid,
+      name,
+      nickname,
+      color,
+      pfp,
+      notes,
+      description,
+      relinquised
+    };
+  } catch (err) {
+    console.error('Error inserting role into database:', err);
+    throw new Error('Failed to insert role.');
   }
 }
 
@@ -140,6 +193,100 @@ app.post('/api/messages', async (req, res) => {
   }
 });
 
+// API URL to get roles
+app.get('/api/roles', async (req, res) => {
+  try {
+    const roles = await getRoles();
+    res.json(roles);
+  } 
+  catch (err) {
+    console.error('Error in API endpoint:', err);
+    res.status(500).send('Error querying the database.');
+  }
+});
+
+
+// API URL to add roles
+app.post('/api/roles', async (req, res) => {
+  console.log("POST /api/messages called");
+  console.log("Request body:", req.body);
+  const { userid, name, nickname, color, pfp, notes, description, relinquised } = req.body;
+
+  // Make sure userId and content are provided
+  if (!name) {
+    return res.status(400).send('userid and name are required.');
+  }
+
+  try {
+    console.log("Adding role to database");
+    // Call addRole
+    const newRole = await addRole({
+      userid,
+      name, 
+      nickname, 
+      color: color || 0,
+      pfp: pfp || false,
+      notes, 
+      description, 
+      relinquised: relinquised || false,
+    });
+    console.log("Role added to database");
+    res.status(201).json(newRole);
+  } catch (err) {
+    console.error('Error in POST /api/roles:', err);
+    res.status(500).send('Failed to insert role.');
+  }
+});
+
+//API URL to update roles
+app.patch('/api/roles/:id', async (req, res) => {
+  const { id } = req.params;
+  const { notes, description, relinquised } = req.body;
+
+  // At least one field is provided
+  if (notes === undefined && description === undefined && relinquised === undefined) {
+    return res.status(400).send('At least one field (notes, description, or relinquised) is required.');
+  }
+
+  try {
+    const pool = await poolPromise;
+    const updates = [];
+    const inputs = [];
+
+    // Makes the query with fields provided
+    if (notes !== undefined) {
+      updates.push('Notes = @notes');
+      inputs.push({ name: 'notes', type: sql.NVarChar, value: notes });
+    }
+    if (description !== undefined) {
+      updates.push('Description = @description');
+      inputs.push({ name: 'description', type: sql.NVarChar, value: description });
+    }
+    if (relinquised !== undefined) {
+      updates.push('Relinquised = @relinquised');
+      inputs.push({ name: 'relinquised', type: sql.Bit, value: relinquised });
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).send('No valid fields provided for update.');
+    }
+
+    // Make the query
+    const query = `UPDATE Roles SET ${updates.join(', ')} WHERE Id = @id`;
+
+    // Execute query
+    const request = pool.request();
+    inputs.forEach(input => request.input(input.name, input.type, input.value));
+    request.input('id', sql.Int, id);
+
+    await request.query(query);
+
+    res.status(200).json({ id, notes, description, relinquised });
+  } catch (error) {
+    console.error('Error updating role:', error);
+    res.status(500).send('Failed to update role.');
+  }
+});
 
 // Get this directory
 app.use(express.static(path.join(__dirname, 'JS')));
@@ -150,4 +297,4 @@ app.listen(PORT, () => {
 });
 
 // Export functions
-module.exports = { getMessages };
+module.exports = { getMessages, getRoles };

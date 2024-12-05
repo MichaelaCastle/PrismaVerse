@@ -17,7 +17,6 @@ function closePanel(panel){
     panel.parentElement.classList.add("hidden");
 }
 
-
 function OnInput() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + "px";
@@ -39,6 +38,7 @@ function openCharacters(){
     }
     c_open = !c_open;
 }
+
 function openConvos(){
     if(!cv_open){
         cv.classList.add("extended");
@@ -56,6 +56,7 @@ function openConvos(){
     }
     cv_open = !cv_open;
 }
+
 function extendPullout(elem){
 
     // console.log("Element passed to extendPullout:", elem);
@@ -133,6 +134,7 @@ let participants = [
         color: "hsl(120 100% 20%)"
     }
 ];
+
 let msgData = [
 // {
 //     userId: 1,
@@ -242,72 +244,72 @@ let msgData = [
 ];
 
 let characterData = [
-    {
-        id: 1,
-        userid: 1,
-        name: "Jay Star",
-        nickname: "Magic boi",
-        color: "hsl(200 100% 15%)",
-        pfp: "Images/Pfps/Jay512.png",
-        notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
-        description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html",
-        relinquised: false
-    },
-    {
-        id: 2,
-        userid: 2,
-        name: "Jacob",
-        nickname: "Ray of sunshine",
-        color: "hsl(0 100% 15%)",
-        pfp: "Images/Pfps/Jacob512.png",
-        notes: "",
-        description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html",
-        relinquised: false
-    },
-    {
-        id: 3,
-        userid: 2,
-        name: "Elliot",
-        nickname: "Doggo",
-        color: "hsl(75 100% 15%)",
-        pfp: "Images/Pfps/Elliot512.png",
-        notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
-        description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html",
-        relinquised: false
-    },
-    {
-        id: 4,
-        userid: 1,
-        name: "Sam",
-        nickname: "NERD",
-        color: "hsl(120 100% 15%)",
-        pfp: "Images/Pfps/Sam512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    },
-    {
-        id: 5,
-        userid: 2,
-        name: "Rene",
-        nickname: "Computer boi",
-        color: "hsl(270 100% 15%)",
-        pfp: "Images/Pfps/Rene512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    },
-    {
-        id: 6,
-        userid: 1,
-        name: "Adam",
-        nickname: " ",
-        color: "hsl(30 100% 15%)",
-        pfp: "Images/Pfps/Adam512.png",
-        notes: "",
-        description: "",
-        relinquised: false
-    }
+    // {
+    //     id: 1,
+    //     userid: 1,
+    //     name: "Jay Star",
+    //     nickname: "Magic boi",
+    //     color: "hsl(200 100% 15%)",
+    //     pfp: "Images/Pfps/Jay512.png",
+    //     notes: "About to have another character arc\nWaiting on the Night to Fall\nFan of Bluey",
+    //     description: "Full name: Jay Star\nAge: 24\nLink: prismoria.site/Jay.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 2,
+    //     userid: 2,
+    //     name: "Jacob",
+    //     nickname: "Ray of sunshine",
+    //     color: "hsl(0 100% 15%)",
+    //     pfp: "Images/Pfps/Jacob512.png",
+    //     notes: "",
+    //     description: "Full name: Jacob Jackson\nAge: 22\nLink: prismoria.site/Jacob.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 3,
+    //     userid: 2,
+    //     name: "Elliot",
+    //     nickname: "Doggo",
+    //     color: "hsl(75 100% 15%)",
+    //     pfp: "Images/Pfps/Elliot512.png",
+    //     notes: "Anniversary: (date)\nStill planning payback\nRennovation ideas for the lab\nYooooooooooooooooooo",
+    //     description: "Full name: Elliot Evans\nAge: 42\nLink: prismoria.site/Elliot.html",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 4,
+    //     userid: 1,
+    //     name: "Sam",
+    //     nickname: "NERD",
+    //     color: "hsl(120 100% 15%)",
+    //     pfp: "Images/Pfps/Sam512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 5,
+    //     userid: 2,
+    //     name: "Rene",
+    //     nickname: "Computer boi",
+    //     color: "hsl(270 100% 15%)",
+    //     pfp: "Images/Pfps/Rene512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // },
+    // {
+    //     id: 6,
+    //     userid: 1,
+    //     name: "Adam",
+    //     nickname: " ",
+    //     color: "hsl(30 100% 15%)",
+    //     pfp: "Images/Pfps/Adam512.png",
+    //     notes: "",
+    //     description: "",
+    //     relinquised: false
+    // }
 ];
 
 // Temporary filled variable that keeps track of the current character id the user has selected
@@ -318,7 +320,7 @@ let currentEditUserId = 1
 
 // Gets and parses messages from database
 async function fetchMessages() {
-    // URL for the api and messages
+    // URL for the messages API
     try {
       const response = await fetch('/api/messages');
       if (!response.ok) {
@@ -341,6 +343,26 @@ async function fetchMessages() {
     }
 }
 
+async function fetchCharacters() {
+    
+    // URL for the roles API
+    try {
+        const response = await fetch('/api/roles');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        // Parse information
+        const roles = await response.json();
+        
+        // Array contains parsed information
+        characterData = roles;
+    } 
+    catch (error) {
+        console.error('Error fetching roles:', error);
+    }
+}
+
 // Gets the data in the textarea needed for a message 
 function getMessage(){
     const messageInput = document.getElementById('input');
@@ -349,8 +371,9 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = currentUserId;  
-    const usingCharacter = false; 
+    const userId = currentCharacterId 
+    ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
+    const usingCharacter = !!currentCharacterId;
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
@@ -365,7 +388,7 @@ function getMessage(){
 
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
-async function sendMessage(userId, content, usingCharacter = false, characterId = 0, isImage = false, deleted = false) {
+async function sendMessage(userId, content, usingCharacter, characterId = 0, isImage = false, deleted = false) {
     // Create a new message object
     const newMessage = {
       userId: userId,
@@ -398,10 +421,8 @@ async function sendMessage(userId, content, usingCharacter = false, characterId 
       // Add the saved message to the local msgData array
       msgData.push(savedMessage);
 
-      // Optional: Log the response for debugging
       console.log('Message successfully sent and saved:', savedMessage);
 
-      // Optional: Update the UI if needed (e.g., refresh the message list or display the new message)
       addMessage(); // Ensure this function is correctly defined elsewhere in your code
     } 
     
@@ -444,7 +465,9 @@ function addMessage(){
     message.className = "message user-grid top p10";
 
 
-    if(msgData[0].userId === userId) { message.classList.add("flip"); }
+    if(msgData[0].userId === currentUserId){ 
+        message.classList.add("flip"); 
+    }
     // if(uc) { message.classList.add("character-msg"); }
     //pfp
 
@@ -452,9 +475,11 @@ function addMessage(){
     let icon = document.createElement("img");
     icon.src = !uc ? p.pfp : c.pfp;
     icon.classList.add("user-image");
-    if(uc) icon.style.borderColor = color;
-    if(uc) icon.style.backgroundColor = color;
-    if(uc) icon.style.borderWidth = "3px";
+    if(uc){
+        icon.style.borderColor = color;
+        icon.style.backgroundColor = color;
+        icon.style.borderWidth = "3px";
+    }
 
     // If profile picture is clicked and is not using a character, go to users profile
     if(!uc) icon.addEventListener("click", () =>
@@ -481,7 +506,9 @@ function addMessage(){
     {
         text.innerHTML = styleText(msgData[0].content);//msgData[m].content;
     }
-    else {text.src = msgData[0].content; }
+    else{
+        text.src = msgData[0].content; 
+    }
     text.style.backgroundColor = color;
 
     //combine
@@ -496,6 +523,7 @@ function addMessage(){
     //loadMessages();
 }
 
+// Load all messages
 function loadMessages(){
     //console.log("loading messages");
 
@@ -512,11 +540,13 @@ function loadMessages(){
     // </div>
 
     // msgData resetting after fetchMessages
-    //console.log(msgData.length);
+    //console.log(msgData);
     // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
-        //console.log("Message", msgData[m]);
+        //console.log(`Message #${m}`, msgData[m]);
         let p = participants.find((u) => u.id == msgData[m].userId);
+        //console.log("Participants:", participants);
+        //console.log("User found for message:", p);
 
         // If message is deleted
         if(msgData[m].deleted){
@@ -533,27 +563,40 @@ function loadMessages(){
         }
         //vars
         let uc = msgData[m].usingCharacter;
-        let c = uc ? characterData.find((u) => u.id == msgData[m].characterId) : null;
+        let c = null;
+        let color = p.color;
         //console.log(uc);
-        let color = uc ? c.color : p.color;
+        //console.log(msgData);
+        //console.log(characterData);
+        // If using a character gets color
+        if (uc) {
+            c = characterData.find((u) => u.id == msgData[m].characterId);
+            if (c) {
+                color = c.color;
+                //console.log("color:", color);
+            }
+        }
 
         //Create the main message div
         let message = document.createElement("div");
         message.className = "message user-grid top p10";
 
 
-        if(msgData[m].userId === userId) { message.classList.add("flip"); }
+        if(msgData[m].userId === userId){
+             message.classList.add("flip"); 
+        }
         // if(uc) { message.classList.add("character-msg"); }
         //pfp
 
         // Create profile picture image element
         let icon = document.createElement("img");
-        icon.src = !uc ? p.pfp : c.pfp;
+        icon.src = !uc ? p.pfp : (c ? c.pfp : p.pfp);
         icon.classList.add("user-image");
-        if(uc) icon.style.borderColor = color;
-        if(uc) icon.style.backgroundColor = color;
-        if(uc) icon.style.borderWidth = "3px";
-
+        if(uc && c) {
+            icon.style.borderColor = color;
+            icon.style.backgroundColor = color;
+            icon.style.borderWidth = "3px";
+        }
         // If profile picture is clicked and is not using a character, go to users profile
         if(!uc) icon.addEventListener("click", () =>
         {
@@ -569,7 +612,7 @@ function loadMessages(){
         //name
         let name = document.createElement("h2");
         name.className = "name";
-        name.innerText = !uc ? p.name : c.name;
+        name.innerText = !uc ? p.name : (c ? c.name : p.name);
         name.style.backgroundColor = color;
         message.appendChild(name);
         //content
@@ -587,11 +630,10 @@ function loadMessages(){
     }
 
     // Reverses message data back to correct order
-    msgData = msgData.reverse();
-
-    
+    msgData = msgData.reverse();  
 }
 
+//Works
 // Gets the characterid of current character being viewed/edited
 function getEditCharacterId(){
     //console.log("hi");
@@ -606,72 +648,201 @@ function getEditCharacterId(){
     //console.log(currentEditCharacterId);
     //console.log(currentEditUserId);
 }
-// Getes the current role being viewed/edit
-function roleInfoSave(){
-    //console.log("button clicked");
 
-    // Gets text in notes textarea
-    let roleNotes = document.querySelector('.f125.notes');
-    const roleNotesContent = roleNotes.value;
-    console.log("Notes: " + roleNotesContent);
+// Update current role being viewed/edit
+async function roleInfoSave() {
+    try {
+        console.log("roleInfoSave called");
+        // Gets text in notes textarea
+        let roleNotes = document.querySelector('.f125.notes');
+        const roleNotesContent = roleNotes.value;
+        console.log("Notes: " + roleNotesContent);
 
-    // Gets text in description textarea
-    let roleDescription = document.querySelector('.f125.description');
-    const roleDescriptionContent = roleDescription.value;
-    console.log("Description: " + roleDescriptionContent);
+        // Gets text in description textarea
+        let roleDescription = document.querySelector('.f125.description');
+        const roleDescriptionContent = roleDescription.value;
+        console.log("Description: " + roleDescriptionContent);
 
+        let roleToEdit = null;
 
-    //console.log(characterData.length);
+        // Find role in characterData
+        //console.log('Character Data:', characterData);
+        for (let i = 0; i < characterData.length; i++) {
+            console.log('User ID:', characterData[i].userid);
+            console.log('Character ID:', characterData[i].id);
+            if (characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
+                // The role in characterData to edit
+                roleToEdit = characterData[i];
+                console.log('Role to edit:', roleToEdit);
+                break;
+            }
+        }  
 
-    // Finds the correct item in msgData and saves the values
-     for(let i = 0; i < characterData.length; i++) {
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditCharacterId){
-            characterData[i].notes = roleNotesContent;
-            characterData[i].description = roleDescriptionContent;
-            //console.log("hi");
-            break;
+        if (!roleToEdit) {
+            console.error('No matching role found to update.');
+            return;
         }
-     }
+
+        // PATCH request to update database
+        const response = await fetch(`/api/roles/${roleToEdit.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                notes: roleNotesContent,
+                description: roleDescriptionContent,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update role in the database.');
+        }
+
+        console.log('Role successfully updated in the database.');
+
+        // Update the matching role in characterData
+        roleToEdit.notes = roleNotesContent;
+        roleToEdit.description = roleDescriptionContent;
+    } 
+    catch (error) {
+        console.error('Error saving role info:', error);
+    }
 }
 
 // User relinquishes role
-function relinquishRole(){
-    //console.log("hi");
+async function relinquishRole() {
+    try {
+        // Role is selected
+        if (!currentEditUserId || !currentEditCharacterId) {
+            console.error("No role selected");
+            return;
+        }
 
-    // Finds role current role with corresponding id and userid
-    for(let i = 0; i < characterData.length; i++){
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
-            // Updates relinquished status
-            characterData[i].relinquised = false;
-            console.log(characterData[i].relinquised);
+        // Update the relinquished status
+        const response = await fetch(`/api/roles/${currentEditCharacterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ relinquised: false }) // Set relinquished to false
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update role: ${response.statusText}`);
+        }
+
+        // Update characterData
+        const updatedRole = await response.json();
+        const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
+        if (roleIndex !== -1) {
+            characterData[roleIndex].relinquised = updatedRole.relinquised;
+        }
+
+        console.log("Role relinquished:", updatedRole);
+    } catch (error) {
+        console.error("Error relinquishing role:", error);
+    }
+
+    // Update UI
+    let cs = document.querySelector('.character-select'); // Parent container
+
+    for (let i = 0; i < characterData.length; i++) {
+        if (characterData[i].id == currentEditCharacterId) {
+
+            // Find matching button
+            const roleP = cs.querySelector(`[character-id='${characterData[i].id}']`);
+            
+            if (roleP) {
+                // Remove the button
+                //cs.removeChild(roleP); 
+                // Alternative: 
+                roleP.remove();
+                console.log(`Removed button for character-id: ${characterData[i].id}`);
+            } else {
+                console.log(`No button found for character-id: ${characterData[i].id}`);
+            }
+
+            break; // Exit the loop since the role was found
         }
     }
-    //set relinquished to true
+
 }
 
 // User claims role
-function claimRole(){
+async function claimRole() {
+    try {
+        // Role is selected
+        if (!currentEditUserId || !currentEditCharacterId) {
+            console.error("No role selected");
+            return;
+        }
 
-    // Finds role current role with corresponding id and userid
+        // Update relinquished
+        const response = await fetch(`/api/roles/${currentEditCharacterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ relinquised: true }) // Set relinquished to true
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update role: ${response.statusText}`);
+        }
+
+        // Update characterData
+        const updatedRole = await response.json();
+        const roleIndex = characterData.findIndex(role => role.id === currentEditCharacterId);
+        if (roleIndex !== -1) {
+            characterData[roleIndex].relinquised = updatedRole.relinquised;
+        }
+
+        console.log("Role claimed:", updatedRole);
+    } catch (error) {
+        console.error("Error claiming role:", error); 
+    }
+
+    // Update UI
+    let cs = document.querySelector('.character-select');
     for(let i = 0; i < characterData.length; i++){
-        if(characterData[i].userid == currentEditUserId && characterData[i].id == currentEditUserId){
-            // Updates relinquished status
-            characterData[i].relinquised = true;
-            console.log(characterData[i].relinquised);
+        if(characterData[i].id == currentEditCharacterId){
+             // Appends role to role selection
+            let roleP = document.createElement("button");
+            roleP.className = "icon-btn labeled";
+
+            // Add reference to id and userid to the button
+            roleP.setAttribute('user-id', characterData[i].userid);
+            roleP.setAttribute('character-id', characterData[i].id);
+            //console.log("Role Index:", roleIndex);
+
+            roleP.style.setProperty('--c-col', characterData[i].color);
+            let nameP = document.createElement("p");
+            nameP.innerText = characterData[i].name;
+            roleP.appendChild(nameP);
+            cs.appendChild(roleP);
+
+            // Adds the roleSelect function to button onclick
+            roleP.addEventListener('click', roleSelect); 
+            break;
         }
     }
 }
 
+// Works
 // Resets character id so no role is currently selected
 function unselectRole(){
     currentCharacterId = 0; 
     console.log('User ID:', currentUserId);
     console.log('Character ID:', currentCharacterId);  
+    let roleBtn = document.querySelector('#role-btn');
+    let img = roleBtn.querySelector("img");
+    img.src = "Images/pfp2.jpg";
 }
 
 // Create new role
 function createNewRole(){
-    //console.log("hiwo");
+    console.log("createNewRole called");
 
     // Gets text in name textarea
     let roleName = document.querySelector('.name-input');
@@ -698,33 +869,65 @@ function createNewRole(){
 
     // Add role to existing roles
     addNewRole(roleNameContent, roleSubtextContent, "hsl(0 100% 15%)", "Images/Pfps/Jay512.png", roleNotesContent, roleDescriptionContent, false);
+
+    roleName.value = '';
+    roleSubtext.value = '';
+    roleNotes.value = '';
+    roleDescription.value = '';
 }
 
 // Add role to existing roles
-function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
+async function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
 
-    // Create new role and add to characterData
-    characterData.push({id: characterData.length + 1, userid: currentUserId, name: name, nickname: nickname,
-         color: color, pfp: pfp, notes: notes, description: description, relinquised: relinquised});
+    try {
+        // Create new role object
+        const newRoleData = {
+            userId: currentUserId,
+            name: name,
+            nickname: nickname,
+            color: color,
+            pfp: pfp,
+            notes: notes,
+            description: description,
+            relinquised: relinquised,
+        };
+        //console.log(newRoleData);
 
-    // Update role selection (if applicable)
-    if(characterData[characterData.length-1].userid === userId){
-        let cs = document.querySelector('.character-select');
-        let roleP = document.createElement("button");
-        roleP.className = "icon-btn labeled";
+        // Add new role to database
+        const response = await fetch('/api/roles', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newRoleData),
+        });
 
-        // Add reference to id and userid to the button
-        roleP.setAttribute('user-id', characterData[characterData.length-1].userid);
-        roleP.setAttribute('character-id', characterData[characterData.length-1].id);
+        if (!response.ok) {
+            throw new Error('Failed to add new role to the database.');
+        }
 
-        roleP.style.setProperty('--c-col', characterData[characterData.length-1].color);
-        let nameP = document.createElement("p");
-        nameP.innerText = characterData[characterData.length-1].name;
-        roleP.appendChild(nameP);
-        cs.appendChild(roleP);
+        // Get the created role data from server
+        const createdRole = await response.json();
+        console.log('New role added to database:', createdRole);
 
-        // Adds the roleSelect function to button onclick
-        roleP.addEventListener('click', roleSelect);           
+        // Add the role to characterData (with id)
+        const newRoleWithId = {
+            id: characterData.length + 1,
+            userId: currentUserId,
+            name: name,
+            nickname: nickname,
+            color: color,
+            pfp: pfp,
+            notes: notes,
+            description: description,
+            relinquised: relinquised,
+        };
+
+        characterData.push(newRoleWithId); // Push the object to the array
+        console.log('New role added to characterData:', newRoleWithId);
+
+    } catch (error) {
+        console.error('Error adding new role:', error);
     }
 
     // Update role display
@@ -766,8 +969,24 @@ function addNewRole(name, nickname, color, pfp, notes, description, relinquised)
     role.appendChild(userGrid);
     role.appendChild(edit);
     role_c.insertBefore(role, pagination);
+
+    // Updates role selection
+    let cs = document.querySelector('.character-select');
+    let roleP = document.createElement("button");
+    roleP.className = "icon-btn labeled";
+    // Add reference to id and userid to the button
+    roleP.setAttribute('user-id', characterData[characterData.length-1].userid);
+    roleP.setAttribute('character-id', characterData[characterData.length-1].id);
+    roleP.style.setProperty('--c-col', characterData[characterData.length-1].color);
+    let nameP = document.createElement("p");
+    nameP.innerText = characterData[characterData.length-1].name;
+    roleP.appendChild(nameP);
+    cs.appendChild(roleP);
+    // Adds the roleSelect function to button onclick
+    roleP.addEventListener('click', roleSelect);
 }
 
+//Works
 // Gets the userId and characterId of role selected
 function roleSelect(){
     //console.log("hi");
@@ -786,6 +1005,8 @@ function roleSelect(){
     // console.log('User ID:', currentUserId);
     // console.log('Character ID:', currentCharacterId);
 }
+
+//Works
 // Determines what button is displayed for the user to either claim or relinquish a role
 // roleStatusButton()
 // for(let c = 0; c < characterData.length; c++){
@@ -793,6 +1014,8 @@ function roleSelect(){
 // create relinqquish button -> relinquishRole
 // else create join button -> joinRole
 
+
+// Works 
 function loadCharacters(){
     // let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
@@ -839,7 +1062,7 @@ function loadCharacters(){
         //role.addEventListener('click', getEditCharacterId);
 
         // Role Selection (Bottom Left)
-        if(characterData[c].userid === userId){
+        if(characterData[c].relinquised){
             let roleP = document.createElement("button");
             roleP.className = "icon-btn labeled";
 
@@ -874,7 +1097,6 @@ function loadCharacters(){
     //     <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
     // </div>
 }
-
 
 function loadUsers(){
     let role_c = document.querySelector('.users');
@@ -967,6 +1189,7 @@ let styleSubtext = (s, splitter, style) => {
 }
 let c_info_notes = null;
 let c_info_desc = null;
+
 function openCharacter(c){
     c_info.style.setProperty('--character-color', characterData[c].color);
     c_info.querySelector('header h2').innerText = characterData[c].name;
@@ -1030,6 +1253,7 @@ async function starting() {
     document.getElementById('save').addEventListener('click', roleInfoSave);    
     
     await fetchMessages(); // Wait for messages to be fetched
+    await fetchCharacters(); // Wait for characters to be fetched
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
@@ -1056,4 +1280,5 @@ async function starting() {
     }, true); 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
+
 window.onload = starting;
