@@ -312,6 +312,7 @@ let characterData = [
     // }
 ];
 
+
 // Temporary filled variable that keeps track of the current character id the user has selected
 let currentCharacterId = 0
 let currentUserId = 2
@@ -371,16 +372,18 @@ function getMessage(){
     const content = messageInput.value;
 
     // Sets parameters needed to construct message
-    const userId = currentCharacterId 
-    ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
+    // const userId = currentUserId 
+    // ? characterData.find((c) => c.id === currentCharacterId)?.userId || currentUserId : currentUserId;  
     const usingCharacter = !!currentCharacterId;
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
+    const sentby = userId;
+    console.log('currentUserId', userId);
 
     // Send message if a message was typed
     if(content){
-    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
+    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted, sentby);
     // Reset textarea
     messageInput.value = '';
     }
@@ -388,16 +391,21 @@ function getMessage(){
 
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
-async function sendMessage(userId, content, usingCharacter, characterId = 0, isImage = false, deleted = false) {
+async function sendMessage(userId, content, usingCharacter, characterId = 0, isImage = false, deleted = false, sentby) {
     // Create a new message object
     const newMessage = {
-      userId: userId,
-      content: content,
-      usingCharacter: usingCharacter,
-      characterId: characterId,
-      isImage: isImage,
-      deleted: deleted,
+        UserId: userId,
+        Content: content,
+        UsingCharacter: usingCharacter,
+        CharacterId: characterId,
+        IsImage: isImage,
+        Deleted: deleted,
+        SentBy: sentby
     };
+
+    console.log('currentUserId', userId);
+    console.log('New message:', newMessage);  
+                            
     try {
       // Send the message to the back-end API
       const response = await fetch('/api/messages', {
@@ -439,11 +447,11 @@ function addMessage(){
     // Reverses the order of the message data
     msgData = msgData.reverse();
 
-    let p = participants.find((u) => u.id == msgData[0].userId);
+    let p = participants.find((u) => u.id == msgData[0].UserId);
 
 
     // Data in first array is newly added data
-    if(msgData[0].deleted){
+    if(msgData[0].Deleted){
 
         // Create message deleted div (This is serperate from a normal message div)
         let message = document.createElement("div");
@@ -456,8 +464,8 @@ function addMessage(){
     }
 
     //vars
-    let uc = msgData[0].usingCharacter;
-    let c = uc ? characterData.find((u) => u.id == msgData[0].characterId) : null;
+    let uc = msgData[0].UsingCharacter;
+    let c = uc ? characterData.find((u) => u.id == msgData[0].CharacterId) : null;
     let color = uc ? c.color : p.color;
 
     //Create the main message div
@@ -465,7 +473,7 @@ function addMessage(){
     message.className = "message user-grid top p10";
 
 
-    if(msgData[0].userId === currentUserId){ 
+    if(msgData[0].UserId === msgData[0].SentBy){ 
         message.classList.add("flip"); 
     }
     // if(uc) { message.classList.add("character-msg"); }
@@ -500,14 +508,14 @@ function addMessage(){
     message.appendChild(name);
     //content
 
-    let text = !msgData[0].isImage ? document.createElement('p') : document.createElement('img');
+    let text = !msgData[0].IsImage ? document.createElement('p') : document.createElement('img');
     text.className = "text p10";
-    if(!msgData[0].isImage)
+    if(!msgData[0].IsImage)
     {
-        text.innerHTML = styleText(msgData[0].content);//msgData[m].content;
+        text.innerHTML = styleText(msgData[0].Content);//msgData[m].content;
     }
     else{
-        text.src = msgData[0].content; 
+        text.src = msgData[0].Content; 
     }
     text.style.backgroundColor = color;
 
@@ -544,12 +552,12 @@ function loadMessages(){
     // For every message in the message data
     for(let m = 0; m < msgData.length; m++){
         //console.log(`Message #${m}`, msgData[m]);
-        let p = participants.find((u) => u.id == msgData[m].userId);
+        let p = participants.find((u) => u.id == msgData[m].UserId);
         //console.log("Participants:", participants);
         //console.log("User found for message:", p);
 
         // If message is deleted
-        if(msgData[m].deleted){
+        if(msgData[m].Deleted){
 
             // Create message deleted div (This is serperate from a normal message div)
             let message = document.createElement("div");
@@ -562,7 +570,7 @@ function loadMessages(){
             continue
         }
         //vars
-        let uc = msgData[m].usingCharacter;
+        let uc = msgData[m].UsingCharacter;
         let c = null;
         let color = p.color;
         //console.log(uc);
@@ -570,7 +578,7 @@ function loadMessages(){
         //console.log(characterData);
         // If using a character gets color
         if (uc) {
-            c = characterData.find((u) => u.id == msgData[m].characterId);
+            c = characterData.find((u) => u.id == msgData[m].CharacterId);
             if (c) {
                 color = c.color;
                 //console.log("color:", color);
@@ -582,7 +590,7 @@ function loadMessages(){
         message.className = "message user-grid top p10";
 
 
-        if(msgData[m].userId === userId){
+        if(msgData[m].UserId === userId){
              message.classList.add("flip"); 
         }
         // if(uc) { message.classList.add("character-msg"); }
@@ -616,13 +624,13 @@ function loadMessages(){
         name.style.backgroundColor = color;
         message.appendChild(name);
         //content
-        let text = !msgData[m].isImage ? document.createElement('p') : document.createElement('img');
+        let text = !msgData[m].IsImage ? document.createElement('p') : document.createElement('img');
         text.className = "text p10";
-        if(!msgData[m].isImage)
+        if(!msgData[m].IsImage)
         {
-            text.innerHTML = styleText(msgData[m].content);//msgData[m].content;
+            text.innerHTML = styleText(msgData[m].Content);//msgData[m].content;
         }
-        else {text.src = msgData[m].content; }
+        else {text.src = msgData[m].Content; }
         text.style.backgroundColor = color;
         //combine
         message.appendChild(text);
@@ -829,7 +837,6 @@ async function claimRole() {
     }
 }
 
-// Works
 // Resets character id so no role is currently selected
 function unselectRole(){
     currentCharacterId = 0; 
@@ -986,7 +993,6 @@ async function addNewRole(name, nickname, color, pfp, notes, description, relinq
     roleP.addEventListener('click', roleSelect);
 }
 
-//Works
 // Gets the userId and characterId of role selected
 function roleSelect(){
     //console.log("hi");
@@ -1006,7 +1012,6 @@ function roleSelect(){
     // console.log('Character ID:', currentCharacterId);
 }
 
-//Works
 // Determines what button is displayed for the user to either claim or relinquish a role
 // roleStatusButton()
 // for(let c = 0; c < characterData.length; c++){
@@ -1014,8 +1019,6 @@ function roleSelect(){
 // create relinqquish button -> relinquishRole
 // else create join button -> joinRole
 
-
-// Works 
 function loadCharacters(){
     // let role_c = document.querySelector('.roles');
     let cs = document.querySelector('.character-select');
@@ -1229,9 +1232,9 @@ async function starting() {
         });
     });
 
-    document.getElementById('dice-btn').addEventListener('click', function () {
-        showHide('.dice-options');
-    });
+    // document.getElementById('dice-btn').addEventListener('click', function () {
+    //     showHide('.dice-options');
+    // });
     
     document.getElementById('role-btn').addEventListener('click', function () {
         showHide('.character-select');
@@ -1257,7 +1260,7 @@ async function starting() {
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
-    loadUsers();
+    // loadUsers();
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){

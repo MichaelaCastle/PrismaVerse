@@ -87,30 +87,32 @@ async function getRoles() {
 }
 
 // Connect to database and execute query to add a message
-async function addMessage({ userId, content, usingCharacter, characterId, isImage, deleted }) {
+async function addMessage({ UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted, SentBy}) {
   try {
     const pool = await poolPromise;
     const result = await pool.request()
-      .input('userId', sql.Int, userId)
-      .input('content', sql.NVarChar, content)
-      .input('usingCharacter', sql.Bit, usingCharacter)
-      .input('characterId', sql.Int, characterId || 0)
-      .input('isImage', sql.Bit, isImage)
-      .input('deleted', sql.Bit, deleted)
+      .input('UserId', sql.Int, UserId)
+      .input('Content', sql.NVarChar, Content)
+      .input('UsingCharacter', sql.Bit, UsingCharacter)
+      .input('CharacterId', sql.Int, CharacterId || null)
+      .input('Deleted', sql.Bit, Deleted)
+      .input('IsImage', sql.Bit, IsImage)
+      .input('SentBy', sql.Int, SentBy)
       .query(`
-        INSERT INTO ChatDM (UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted)
-        VALUES (@userId, @content, @usingCharacter, @characterId, @isImage, @deleted);
+        INSERT INTO ChatDM (UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted, SentBy)
+        VALUES (@UserId, @Content, @UsingCharacter, @CharacterId, @Deleted, @IsImage, @SentBy);
         SELECT SCOPE_IDENTITY() AS MessageId;
       `);
 
     return {
-      messageId: result.recordset[0].MessageId,
-      userId,
-      content,
-      usingCharacter,
-      characterId,
-      isImage,
-      deleted,
+      MessageId: result.recordset[0].MessageId,
+      UserId,
+      Content,
+      UsingCharacter,
+      CharacterId,
+      IsImage,
+      Deleted,
+      SentBy,
     };
   } catch (err) {
     console.error('Error inserting message into database:', err);
@@ -129,7 +131,7 @@ async function addRole({userid, name, nickname, color, pfp, notes, description, 
       .input('pfp', sql.NVarChar, pfp)
       .input('notes', sql.NVarChar, notes)
       .input('description', sql.NVarChar, description)
-      .input('relinquised', sql.Bit, relinquised)
+      .input('relinquised', sql.Bit, relinquised !== undefined ? relinquised : true)
       .query(`
         INSERT INTO Roles (UserId, Name, Nickname, Color, Pfp, Notes, Description, Relinquised)
         VALUES (@userid, @name, @nickname, @color, @pfp, @notes, @description, @relinquised);
@@ -145,7 +147,7 @@ async function addRole({userid, name, nickname, color, pfp, notes, description, 
       pfp,
       notes,
       description,
-      relinquised
+      relinquised: relinquised !== undefined ? relinquised : true
     };
   } catch (err) {
     console.error('Error inserting role into database:', err);
@@ -168,22 +170,23 @@ app.get('/api/messages', async (req, res) => {
 // API URL to add a message
 app.post('/api/messages', async (req, res) => {
   console.log("hi");
-  const { userId, content, usingCharacter, characterId, isImage, deleted } = req.body;
+  const { UserId, Content, UsingCharacter, CharacterId, IsImage, Deleted, SentBy } = req.body;
 
-  // Make sure userId and content are provided
-  if (!userId || !content) {
-    return res.status(400).send('userId and content are required.');
+  // Make sure UserId Content SentBy are provided
+  if (!UserId || !Content || !SentBy) {
+    return res.status(400).send('UserId, Content, and SentBy are required.');
   }
 
   try {
     // Call addMessage
     const newMessage = await addMessage({
-      userId,
-      content,
-      usingCharacter: usingCharacter || false,
-      characterId: characterId || 0,
-      isImage: isImage || false,
-      deleted: deleted || false,
+      UserId,
+      Content,
+      UsingCharacter: UsingCharacter || false,
+      CharacterId: CharacterId || null,
+      IsImage: IsImage || false,
+      Deleted: Deleted || false,
+      SentBy,
     });
 
     res.status(201).json(newMessage);
@@ -212,8 +215,8 @@ app.post('/api/roles', async (req, res) => {
   console.log("Request body:", req.body);
   const { userid, name, nickname, color, pfp, notes, description, relinquised } = req.body;
 
-  // Make sure userId and content are provided
-  if (!name) {
+  // Make sure userId sentby and content are provided
+  if (!UserId || !Content || !SentBy) {
     return res.status(400).send('userid and name are required.');
   }
 
@@ -228,7 +231,7 @@ app.post('/api/roles', async (req, res) => {
       pfp: pfp || false,
       notes, 
       description, 
-      relinquised: relinquised || false,
+      relinquised: relinquised !== undefined ? relinquised : true,
     });
     console.log("Role added to database");
     res.status(201).json(newRole);
