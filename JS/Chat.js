@@ -394,6 +394,7 @@ function getMessage(){
     messageInput.value = '';
     }
 }
+}
 
 // Adds a message to the table of all the message data between users (msgData)
 // Is not permanently adding it to the table (Update the table in the database with SQL)
@@ -1256,6 +1257,7 @@ async function starting() {
     // Add button press events
     document.getElementById('send').addEventListener('click', getMessage);
     document.getElementById('noRole').addEventListener('click', unselectRole);
+    document.querySelector('.chat-info').addEventListener('click', loadRolePage);;
     // document.getElementById('add-role').addEventListener('click', addRole);
     // document.getElementById('new-role').addEventListener('click', createNewRole);   
     // document.getElementById('close-character').addEventListener('click', closeCharacter);
