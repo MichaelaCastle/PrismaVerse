@@ -21,8 +21,8 @@ p, ul, body, header, nav {
     padding: 0;
     margin: 0;
 }
-body > header{
-    position: fixed;
+body header{
+    position: sticky;
     top: 0;
     width: 100vh;
     z-index: 10;
