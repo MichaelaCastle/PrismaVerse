@@ -836,6 +836,8 @@ function rolePage()
     var header = document.querySelector(".message-name");
     var onlineText = document.querySelector(".online");
     var imageElement = document.querySelector(".user-image");
+    var characterRoles = document.querySelector(".characters");
+    var chatMessages = document.querySelector("#chat");
     
     if(header.innerHTML == "Starlight")
     {
@@ -864,9 +866,7 @@ function rolePage()
         imageElement.style.display = "";
     }
 
-    var characterRoles = document.querySelector(".characters");
 
-    var chatMessages = document.querySelector(".chat");
     chatMessages.innerHTML = characterRoles.innerHTML;
 }
 window.onload = starting;
