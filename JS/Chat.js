@@ -1238,36 +1238,9 @@ async function starting() {
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
-    const expandButtons = document.querySelectorAll('.expand');
-    expandButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            //console.log("Button clicked:", this);
-            extendPullout(this);
-        });
-    });
-
     // document.getElementById('dice-btn').addEventListener('click', function () {
     //     showHide('.dice-options');
     // });
-    
-    document.getElementById('role-btn').addEventListener('click', function () {
-        showHide('.character-select');
-    });
-
-    const closePanelE = document.getElementById('exit-panel');
-    closePanelE.addEventListener('click', function () {
-        closePanel(this); // Pass the button as the panel to close
-    });
-
-    // Add button press events
-    document.getElementById('send').addEventListener('click', getMessage);
-    document.getElementById('noRole').addEventListener('click', unselectRole);
-    document.getElementById('add-role').addEventListener('click', addRole);
-    document.getElementById('new-role').addEventListener('click', createNewRole);   
-    document.getElementById('close-character').addEventListener('click', closeCharacter);
-    document.getElementById('claim').addEventListener('click', claimRole);   
-    document.getElementById('relinquish').addEventListener('click', relinquishRole);    
-    document.getElementById('save').addEventListener('click', roleInfoSave);    
     
     await fetchMessages(); // Wait for messages to be fetched
     await fetchCharacters(); // Wait for characters to be fetched
@@ -1312,6 +1285,11 @@ const addEventListeners = () => {
         closePanel(this); // Pass the button as the panel to close
     });
 
+    // To open role button to change current role
+    document.getElementById('role-btn').addEventListener('click', function () {
+        showHide('.character-select');
+    });
+
     // To send message on Enter keypress
     const inputBox = document.querySelector('#input');
     inputBox.addEventListener('keypress', function (e) {
@@ -1326,6 +1304,28 @@ const addEventListeners = () => {
 
     // Back button to go to DM list
     document.querySelector('.back-button').addEventListener('click', loadConversations);
+
+    // Add button press events
+    document.getElementById('send').addEventListener('click', getMessage);
+    document.getElementById('noRole').addEventListener('click', unselectRole);
+    document.getElementById('add-role').addEventListener('click', addRole);
+    document.getElementById('new-role').addEventListener('click', createNewRole);   
+    document.getElementById('close-character').addEventListener('click', closeCharacter);
+    document.getElementById('claim').addEventListener('click', claimRole);   
+    document.getElementById('relinquish').addEventListener('click', relinquishRole);    
+    document.getElementById('save').addEventListener('click', roleInfoSave);
+
+    // Expandable buttons (deprecated)
+    // const expandButtons = document.querySelectorAll('.expand');
+    // expandButtons.forEach(button => {
+    //     button.addEventListener('click', function () {
+    //         //console.log("Button clicked:", this);
+    //         extendPullout(this);
+    //     });
+    // });
+
+    // To open role page
+    document.querySelector('.chat-info').addEventListener('click', loadRolePage);
 };
 
 function loadRolePage()
