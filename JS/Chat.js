@@ -1219,8 +1219,8 @@ async function starting() {
     c_expand = document.querySelector('#characters .expand i');
     // c_expand_class = c_expand.classList;
     c_info = document.querySelector('#character-info');
-    // c_info_notes = c_info.querySelector('.notes');
-    // c_info_desc = c_info.querySelector('.description');
+    c_info_notes = c_info.querySelector('.notes');
+    c_info_desc = c_info.querySelector('.description');
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
