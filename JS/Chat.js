@@ -894,7 +894,8 @@ const loadConversations = () => {
 }
 
 window.addEventListener("scroll", function() {
-    var header = document.querySelector("#message-header-grid");
+    var header = document.querySelector(".message-header-grid");
+    // Adjust the position based on scroll
     var scrollPosition = window.scrollY;
     header.style.top = 50 + scrollPosition * 0.5 + 'px'
 });
