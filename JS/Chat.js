@@ -9,6 +9,10 @@ let cv_open = false;
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
+    const closePanelE = document.querySelector('#exit-panel');
+    closePanelE.addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
 }
 function closePanel(panel){
     panel.parentElement.classList.add("hidden");
@@ -307,6 +311,8 @@ function getMessage(){
     const messageInput = document.getElementById('input');
     // Get textarea text
     const content = messageInput.value;
+    // Reset textarea
+    messageInput.value = '';
 
     // Sets parameters needed to construct message
     const userId = currentUserId;  
@@ -314,13 +320,12 @@ function getMessage(){
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
-
+    
     // Send message if a message was typed
-    if(content){
-    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
-    // Reset textarea
-    messageInput.value = '';
+    if(content.trim()){
+        sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
     }
+    
     // else{
     //     console.log("nothing in the textarea");
     // }
@@ -519,7 +524,20 @@ function loadMessages(){
     // Reverses message data back to correct order
     msgData = msgData.reverse();
 
-    
+    //accept messages after pages load
+    const inputBox = document.querySelector('#input');
+    inputBox.addEventListener('keypress', function (e) {
+        console.log('keypress');
+        if (e.key === 'Enter') {
+            // sened message and update stream
+            getMessage();
+
+            // clear input box
+            inputBox.value = '';
+        }
+    });
+
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 // Gets the characterid of current character being viewed/edited
@@ -651,7 +669,6 @@ function loadCharacters(){
     //     <button class="icon-btn circular"><i class="fa fas fa-pencil"></i></button>
     // </div>
 }
-
 
 function loadUsers(){
     let role_c = document.querySelector('.users');
@@ -797,7 +814,7 @@ async function starting() {
     }, true); 
     document.body.addEventListener("blur", () => {
         document.body.classList.remove("keyboard");
-    }, true); 
+    }, true);
     window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 window.onload = starting;
