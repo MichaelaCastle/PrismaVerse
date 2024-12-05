@@ -119,15 +119,45 @@
             </section>
             <button class="expand"><i class="fa fas fa-caret-right"></i></button>
         </aside> -->
-        <section id="chat" class="flex-col">
+        
+        <header class="p10 message-header-grid">
+            <a href="./Chats4.html"><i class="fa-solid fa-arrow-left back-button"></i></a>
+            <img class="user-image" src="Images/pfp.jpg" alt="User image" />
+            <span class="user-container">
+                <h1 class="message-name">Starlight</h1>
+                <p class="text online">Online</p>
+            </span>
+            <aside id="characters" class="flex-row pullout bottom">
+                <section class="characters flex-col pullout-content"> 
+                    <h2>Roles</h2>
+                    <hr>
+                    <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
+                        <div class="user-grid">
+                            <div class="user-image new"></div>
+                            <h1 class="name">New Role</h1>
+                            <p class="text">Click the plus to get started</p>
+                        </div>
+                        <!-- <button class="icon-btn circular"><i class="fa fas fa-plus"></i></button> -->
+                        <button class="icon-btn circular small"></button>
+                    </div>
+                    <!-- <div class="flex-rc-p pagination hidden">
+                        <button class="icon-btn circular small"></button>
+                    </div> -->
+                </section>
+                <button class="expand"><i class="fa fas fa-caret-left"></i></button>
+            </aside>
+        </header>
 
+
+        <!-- Chat Messages -->
+        <section id="chat" class="flex-col">
             <!-- User status (online, offline, away, etc.) nav bar -->
-            <header class="p10 user-grid">
+            <!-- Fine -->
+            <!-- <header class="p10 user-grid">
                 <img class="user-image" src="Images/pfp.jpg" />
                 <h1 class="name">Starlight</h1>
                 <p class="text online">Online</p>
-            </header>
-
+            </header> -->
             <section class="flex-col">
                 <!-- <div class="message dice user-grid top p10">
                     <img src="Images/Pfps/Jacob512.png" class="user-image" style="border-color: rgb(77, 0, 0); background-color: rgb(77, 0, 0); border-width: 3px;">
@@ -138,9 +168,35 @@
                     </div>
                 </div> -->
             </section>
-            
-            <!-- Fine -->
-            <footer class="flex-c-p-g">
+        </section>
+
+        <!-- Role Info Popup -->
+        <!-- Fine -->
+        <article id="character-info">
+            <h1 id="close-character" class="f2">Role Info</h1>
+            <i class="lower fa fas fa-caret-down"></i>
+            <hr>
+            <header class="flex-cc-p">
+                <img src="Images/pfpGreen2.webp">
+                <h2 class="f175">Jay Star</h2>
+                <p class="f125">nickname thing</p>
+            </header>
+            <hr>
+            <section class="p10">
+                <h2 class="f15">Notes</h2>
+                <textarea class="f125 notes"></textarea>
+                <h2 class="f15">Description</h2>
+                <textarea class="f125 description"></textarea>
+            </section>
+            <footer class="flex-r-g">
+                <button id="relinquish" class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
+                <button id="claim" class="icon-btn"><i class="fa fas fa-ban"></i><p>Join Role</p></button>
+                <button id="save" class="icon-btn"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
+            </footer>
+        </article>
+
+        <!-- Fine -->
+        <footer class="flex-c-p-g">
             <div class="character-select flex-r-g hidden">
                 <button class="icon-btn labeled" id="noRole"><p>None</p></button>
             </div>
@@ -170,8 +226,6 @@
             </div> -->
         </footer>
 
-        </section>
-
         <!-- Roles Arrow Bar -->
         <!-- <aside id="characters" class="flex-row pullout right"> -->
             <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
@@ -193,31 +247,9 @@
             <button class="expand"><i class="fa fas fa-caret-left"></i></button>
         </aside> -->
 
-        <!-- Role Info Popup -->
-        <!-- <article id="character-info">
-            <h1 id="close-character" class="f2">Role Info</h1>
-            <i class="lower fa fas fa-caret-down"></i>
-            <hr>
-            <header class="flex-cc-p">
-                <img src="Images/pfpGreen2.webp">
-                <h2 class="f175">Jay Star</h2>
-                <p class="f125">nickname thing</p>
-            </header>
-            <hr>
-            <section class="p10">
-                <h2 class="f15">Notes</h2>
-                <textarea class="f125 notes"></textarea>
-                <h2 class="f15">Description</h2>
-                <textarea class="f125 description"></textarea>
-            </section>
-            <footer class="flex-r-g">
-                <button id="relinquish" class="icon-btn"><i class="fa fas fa-ban"></i><p>Relinquish Role</p></button>
-                <button id="claim" class="icon-btn"><i class="fa fas fa-ban"></i><p>Join Role</p></button>
-                <button id="save" class="icon-btn"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
-            </footer>
-        </article> -->
     </main>
-    <footer>
-    </footer>
+    
+    <!-- <footer>
+    </footer> -->
 </body>
 </html>
