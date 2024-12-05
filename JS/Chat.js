@@ -826,53 +826,72 @@ const addEventListeners = () => {
             inputBox.value = '';
         }
     });
+
+    // Back button to go to DM list
+    document.querySelector('.back-button').addEventListener('click', loadConversations);
 };
 
-function rolePage()
+function loadRolePage()
 {
-    var header = document.querySelector(".message-name");
-    var onlineText = document.querySelector(".online");
-    var imageElement = document.querySelector(".user-image");
-    var characterRoles = document.querySelector(".characters");
-    var chatMessages = document.querySelector("#chat");
-    var footer = document.querySelector(".flex-c-p-g");
+    // get elements
+    const infoIcon = document.querySelector('.chat-info');
+    const header = document.querySelector(".message-name");
+    const onlineText = document.querySelector(".online");
+    const imageElement = document.querySelector(".user-image");
+    const backButton = document.querySelector('.back-button');
+    const footer = document.querySelector('.flex-c-p-g');
+
+    // hide info icon
+    infoIcon.style.display = 'none';
+
+    // update header
+    header.innerHTML = "Roles";
+    onlineText.style.display = "none";
+    imageElement.style.display = "none";
+
+    // replace event for back button
+    backButton.removeEventListener('click', loadConversations);
+    backButton.addEventListener('click', loadChatPage);
     
-    if(header.innerHTML == "Starlight")
-    {
-        header.innerHTML = "Roles";
-    }
-    else
-    {
-        header.innerHTML = "Starlight";
-    }
+    // update content
+    let characterRoles = document.querySelector(".characters");
+    let chatMessages = document.querySelector("#chat");
+    chatMessages.innerHTML = characterRoles.innerHTML;
 
-    if(onlineText.innerHTML == "Online")
-    {
-        onlineText.innerHTML = "";
-    }
-    else
-    {
-        onlineText.innerHTML = "Online";
-    }
-
-    if(imageElement.style.display == "")
-    {
-        imageElement.style.display = "none";
-    }
-    else
-    {
-        imageElement.style.display = "";
-    }
-        chatMessages.innerHTML = characterRoles.innerHTML;
-
-        footer.style.display = "none";
+    // remove footer
+    footer.style.display = 'none';
 }
 
-window.addEventListener("scroll", function() {
-    var header = document.querySelector(".p10 message-header-grid");
-    var positionMove = window.scrollY;
-    header.style.top = 50 + positionMove * .5 + 'px';
+const loadChatPage = () => {
+    // get elements
+    const infoIcon = document.querySelector('.chat-info');
+    const name = document.querySelector(".message-name");
+    const onlineText = document.querySelector(".online");
+    const imageElement = document.querySelector(".user-image");
+    const backButton = document.querySelector('.back-button');
+    const footer = document.querySelector('.flex-c-p-g');
 
-});
+    // reset info icon display
+    infoIcon.style.display = 'block';
+
+    // update header
+    name.innerHTML = "Starlight";
+    onlineText.style.display = "block";
+    imageElement.style.display = "block";
+
+    // replace event for back button
+    backButton.removeEventListener('click', loadChatPage);
+    backButton.addEventListener('click', loadConversations);
+
+    // load messages
+    loadMessages();
+
+    // add footer
+    footer.style.display = 'block';
+}
+const loadConversations = () => {
+    window.location.href = 'Chats4.html';
+}
+
 window.onload = starting;
 
