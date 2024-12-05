@@ -828,9 +828,7 @@ const addEventListeners = () => {
     });
 
     // Back button to go to DM list
-    document.querySelector('.back-button').addEventListener('click', () => {
-        window.location.href = 'Chats4.html';
-    });
+    document.querySelector('.back-button').addEventListener('click', loadConversations);
 };
 
 function loadRolePage()
@@ -853,7 +851,7 @@ function loadRolePage()
 
     // replace event for back button
     backButton.removeEventListener('click', loadConversations);
-    document.querySelector('.back-button').addEventListener('click', loadChatPage);
+    backButton.addEventListener('click', loadChatPage);
     
     // update content
     let characterRoles = document.querySelector(".characters");
@@ -883,7 +881,7 @@ const loadChatPage = () => {
 
     // replace event for back button
     backButton.removeEventListener('click', loadChatPage);
-    document.querySelector('.back-button').addEventListener('click', loadConversations);
+    backButton.addEventListener('click', loadConversations);
 
     // load messages
     loadMessages();
