@@ -388,7 +388,7 @@ function getMessage(){
     
     // Send message if a message was typed
     if(content.trim()){
-        sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
+        sendMessage(userId, content, usingCharacter, characterId, isImage, deleted, sentby);
     }
     // else{
     //     console.log("nothing in the textarea");
