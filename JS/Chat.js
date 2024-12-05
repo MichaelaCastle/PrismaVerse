@@ -74,7 +74,7 @@ function extendPullout(elem){
             }
         });
     }
-    // Using info icon now, no caret
+    // Using info icon now, no
     // if(ei.className.includes(" fa-caret-left")){
     //     ei.classList.remove("fa-caret-left");
     //     ei.classList.add("fa-caret-right");

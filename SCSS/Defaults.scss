@@ -327,7 +327,20 @@ h1, h2{
 
 
 
-
+.pullout.bottom {
+    top: 0;
+    right: 0;
+  }
+  
+  .pullout.bottom .pullout-content {
+    border-bottom-left-radius: 20px;
+    height: 0;
+    width: 0;
+  }
+  
+  .pullout.bottom .pullout-content.extended {
+    width: 100%;
+  }
 .pullout{
     position: fixed;
     top: 10rem;
