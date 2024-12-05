@@ -867,5 +867,12 @@ function rolePage()
 
         footer.style.display = "none";
 }
+
+window.addEventListener("scroll", function() {
+    var header = document.querySelector(".p10 message-header-grid");
+    var positionMove = window.scrollY;
+    header.style.top = 50 + positionMove * .5 + 'px';
+
+});
 window.onload = starting;
 
