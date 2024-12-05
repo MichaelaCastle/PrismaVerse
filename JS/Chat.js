@@ -74,14 +74,15 @@ function extendPullout(elem){
             }
         });
     }
-    if(ei.className.includes(" fa-caret-left")){
-        ei.classList.remove("fa-caret-left");
-        ei.classList.add("fa-caret-right");
-    }
-    else{
-        ei.classList.remove("fa-caret-right");
-        ei.classList.add("fa-caret-left");
-    }
+    // Using info icon now, no caret
+    // if(ei.className.includes(" fa-caret-left")){
+    //     ei.classList.remove("fa-caret-left");
+    //     ei.classList.add("fa-caret-right");
+    // }
+    // else{
+    //     ei.classList.remove("fa-caret-right");
+    //     ei.classList.add("fa-caret-left");
+    // }
 }
 
 function closeCharacter(){
