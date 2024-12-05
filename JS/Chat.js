@@ -1217,10 +1217,10 @@ async function starting() {
 
     characters = document.querySelector('.characters');
     c_expand = document.querySelector('#characters .expand i');
-    c_expand_class = c_expand.classList;
+    // c_expand_class = c_expand.classList;
     c_info = document.querySelector('#character-info');
-    c_info_notes = c_info.querySelector('.notes');
-    c_info_desc = c_info.querySelector('.description');
+    // c_info_notes = c_info.querySelector('.notes');
+    // c_info_desc = c_info.querySelector('.description');
     cv = document.querySelector('.convos');
     cv_expand = document.querySelector('#convos .expand i');
 
@@ -1240,20 +1240,20 @@ async function starting() {
         showHide('.character-select');
     });
 
-    const closePanelE = document.getElementById('exit-panel');
-    closePanelE.addEventListener('click', function () {
-        closePanel(this); // Pass the button as the panel to close
-    });
+    // const closePanelE = document.getElementById('exit-panel');
+    // closePanelE.addEventListener('click', function () {
+    //     closePanel(this); // Pass the button as the panel to close
+    // });
 
     // Add button press events
     document.getElementById('send').addEventListener('click', getMessage);
     document.getElementById('noRole').addEventListener('click', unselectRole);
-    document.getElementById('add-role').addEventListener('click', addRole);
-    document.getElementById('new-role').addEventListener('click', createNewRole);   
-    document.getElementById('close-character').addEventListener('click', closeCharacter);
-    document.getElementById('claim').addEventListener('click', claimRole);   
-    document.getElementById('relinquish').addEventListener('click', relinquishRole);    
-    document.getElementById('save').addEventListener('click', roleInfoSave);    
+    // document.getElementById('add-role').addEventListener('click', addRole);
+    // document.getElementById('new-role').addEventListener('click', createNewRole);   
+    // document.getElementById('close-character').addEventListener('click', closeCharacter);
+    // document.getElementById('claim').addEventListener('click', claimRole);   
+    // document.getElementById('relinquish').addEventListener('click', relinquishRole);    
+    // document.getElementById('save').addEventListener('click', roleInfoSave);    
     
     await fetchMessages(); // Wait for messages to be fetched
     await fetchCharacters(); // Wait for characters to be fetched
