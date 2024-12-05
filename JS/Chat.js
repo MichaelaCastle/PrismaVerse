@@ -1249,10 +1249,10 @@ async function starting() {
         showHide('.character-select');
     });
 
-    // const closePanelE = document.getElementById('exit-panel');
-    // closePanelE.addEventListener('click', function () {
-    //     closePanel(this); // Pass the button as the panel to close
-    // });
+    const closePanelE = document.getElementById('exit-panel');
+    closePanelE.addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
 
     // Add button press events
     document.getElementById('send').addEventListener('click', getMessage);
