@@ -1248,7 +1248,7 @@ async function starting() {
     // Add button press events
     document.getElementById('send').addEventListener('click', getMessage);
     document.getElementById('noRole').addEventListener('click', unselectRole);
-    document.getElementById('add-role').addEventListener('click', addRole);
+    // document.getElementById('add-role').addEventListener('click', addRole);
     document.getElementById('new-role').addEventListener('click', createNewRole);   
     document.getElementById('close-character').addEventListener('click', closeCharacter);
     document.getElementById('claim').addEventListener('click', claimRole);   
