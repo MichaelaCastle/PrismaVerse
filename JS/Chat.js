@@ -9,10 +9,6 @@ let cv_open = false;
 
 function addRole(){
     document.querySelector('.add').classList.remove("hidden");
-    const closePanelE = document.querySelector('#exit-panel');
-    closePanelE.addEventListener('click', function () {
-        closePanel(this); // Pass the button as the panel to close
-    });
 }
 function closePanel(panel){
     panel.parentElement.classList.add("hidden");
@@ -309,6 +305,7 @@ let currentEditCharacterId = 1;
 // Gets the data in the textarea needed for a message 
 function getMessage(){
     const messageInput = document.getElementById('input');
+
     // Get textarea text
     const content = messageInput.value;
     // Reset textarea
@@ -325,7 +322,6 @@ function getMessage(){
     if(content.trim()){
         sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
     }
-    
     // else{
     //     console.log("nothing in the textarea");
     // }
@@ -523,19 +519,6 @@ function loadMessages(){
 
     // Reverses message data back to correct order
     msgData = msgData.reverse();
-
-    //accept messages after pages load
-    const inputBox = document.querySelector('#input');
-    inputBox.addEventListener('keypress', function (e) {
-        console.log('keypress');
-        if (e.key === 'Enter') {
-            // sened message and update stream
-            getMessage();
-
-            // clear input box
-            inputBox.value = '';
-        }
-    });
 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
@@ -794,14 +777,24 @@ async function starting() {
 
     loadMessages();
     loadCharacters();
-    loadUsers();
+    // loadUsers(); // Removed this feature
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){
         cr[c].addEventListener("click", () => openCharacter(c));
     }
 
+    // add event listeners
+    addEventListeners();
+    
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
+}
+window.onload = starting;
 
+
+// Helper method for adding event listeners
+const addEventListeners = () => {
+    // Focus events
     // focus events don't bubble, must use capture phase
     document.body.addEventListener("focus", event => {
         const target = event.target;
@@ -815,6 +808,24 @@ async function starting() {
     document.body.addEventListener("blur", () => {
         document.body.classList.remove("keyboard");
     }, true);
-    window.scroll(0, Number.MAX_SAFE_INTEGER);
-}
-window.onload = starting;
+
+    // To close New Role (adding role) popup
+    document.querySelector('#exit-panel').addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
+
+    // To send message on Enter keypress
+    const inputBox = document.querySelector('#input');
+    inputBox.addEventListener('keypress', function (e) {
+        console.log('keypress');
+        if (e.key === 'Enter') {
+            // sened message and update stream
+            getMessage();
+
+            // clear input box
+            inputBox.value = '';
+        }
+    });
+
+
+};
