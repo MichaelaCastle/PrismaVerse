@@ -810,25 +810,22 @@ const addEventListeners = () => {
     }, true); 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
 
-// To close New Role (adding role) popup
-document.querySelector('#exit-panel').addEventListener('click', function () {
-    closePanel(this); // Pass the button as the panel to close
-});
+    // To close New Role (adding role) popup
+    document.querySelector('#exit-panel').addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
 
-// To send message on Enter keypress
-const inputBox = document.querySelector('#input');
-inputBox.addEventListener('keypress', function (e) {
-    console.log('keypress');
-    if (e.key === 'Enter') {
-        // sened message and update stream
-        getMessage();
+    // To send message on Enter keypress
+    const inputBox = document.querySelector('#input');
+    inputBox.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            // sened message and update stream
+            getMessage();
 
-        // clear input box
-        inputBox.value = '';
-    }
-});
-
-
+            // clear input box
+            inputBox.value = '';
+        }
+    });
 };
 
 function rolePage()
