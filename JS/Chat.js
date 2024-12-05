@@ -1232,9 +1232,9 @@ async function starting() {
         });
     });
 
-    document.getElementById('dice-btn').addEventListener('click', function () {
-        showHide('.dice-options');
-    });
+    // document.getElementById('dice-btn').addEventListener('click', function () {
+    //     showHide('.dice-options');
+    // });
     
     document.getElementById('role-btn').addEventListener('click', function () {
         showHide('.character-select');
@@ -1260,7 +1260,7 @@ async function starting() {
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
-    loadUsers();
+    // loadUsers();
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){
