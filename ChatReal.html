@@ -17,18 +17,56 @@
     <script type="module" src="JS/Chat.js" defer></script>
 </head>
 <body>
-    <nav>
-        <div id="nav-bar" class="flex-row">
-            <img src="Images/PrismaVerse_logo_transparent_white.png" alt="The PrismaVerse logo" id="logo"/>
-            <!-- <a class="icon-btn">Home</a> -->
-            <!-- <a class="icon-btn">My Spectrums</a> -->
-            <a class="icon-btn" href="/Chats4.html">Chats</a>
-            <img class="user-image" src="./Images/pfp2.jpg" alt="Profile picture">
-        </div>
-    </nav>
     <main>
+        <header class="p10 message-header-grid">
+            <i class="fa-solid fa-arrow-left back-button"></i>
+            <img class="user-image" src="Images/pfp.jpg" alt="User image" />
+            <span class="user-container">
+                <h1 class="message-name">Starlight</h1>
+                <p class="text online">Online</p>
+            </span>
+            <aside id="characters" class="flex-row pullout bottom">
+                <section class="characters flex-col pullout-content">
+                    <hr>
+                    <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
+                        <div class="user-grid">
+                            <div class="user-image new"></div>
+                            <h1 class="name">New Role</h1>
+                            <p class="text">Click the plus to get started</p>
+                        </div>
+                        <button class="icon-btn circular" onclick="addRole()"><i class="fa fas fa-plus"></i></button>
+                    </div>
+                    <div class="flex-rc-p pagination hidden">
+                        <button class="icon-btn circular small"></button>
+                    </div>
+                </section>
+                <!-- extendPullout(this) -->
+                <button class="expand chat-info" onclick="loadRolePage()"><i class="fa fa-solid fa-circle-info"></i></button>
+            </aside>
+        </header>
+
         <section class="add flex-cc-p-g hidden">
-            <button id="exit-panel" class="icon-btn circular exitPanel"><i class="fa fas fa-xmark"></i></button>
+            <button id="exit-panel" class="icon-btn circular exitPanel"><i class="fa fas fa-xmark" aria-hidden="true"></i></button>
+            <h2>New Role</h2>
+            <hr>
+            <div class="role-head flex-rc-p-g">
+                <button class="icon-btn circular"><i class="fa fas fa-upload" aria-hidden="true"></i></button>
+                <img class="user-image" src="Images/Pfps/GraAnonPFP.png">
+                <button class="icon-btn circular"><i class="fa fas fa-palette" aria-hidden="true"></i></button>
+            </div>
+            <input class="name-input" type="text" placeholder="Name">
+            <input class="subtext-input" type="text" placeholder="Subtext">
+            <p>Notes</p>
+            <textarea class="notes" style="height:-7px;"></textarea>
+            <p>Description</p>
+            <textarea class="description" style="height:-7px;"></textarea>
+            <button id="new-role" class="icon-btn">Save<i class="fa fas fa-floppy-disk" aria-hidden="true"></i></button>
+        </section>
+        <!-- <a href="./ChatInfo.html"><i class="fa-solid fa-circle-info"></i></a> -->
+
+        <!--Remove in the future, but keep as template: will be in roles page-->
+        <!-- <section class="add flex-cc-p-g hidden">
+            <button class="icon-btn circular exitPanel" onclick="closePanel(this)"><i class="fa fas fa-xmark"></i></button>
             <h2>Roles</h2>
             <hr>
             <div class="role-head flex-rc-p-g">
@@ -42,87 +80,11 @@
             <textarea class="notes"></textarea>
             <p>Description</p>
             <textarea class="description"></textarea>
-            <button id="new-role" class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
-        </section>
-        <!-- <aside id="members" class="flex-row pullout left">
-            <section class="members flex-col pullout-content">
-                <h1>Chat Info</h1>
-                <div class="users flex-rc-p-g">
-                </div>
-                <div class="progress progress-moved">
-                    <div class="progress-bar">
-                    </div>
-                </div>
-                <div class="searched flex-rc-p">
-                    <button class="flex-cc-p"><i class="fa fas fa-image"></i><p>Search</p></button>
-                    <button class="flex-cc-p"><i class="fa fas fa-message"></i><p>Search</p></button>
-                    <button class="flex-cc-p"><i class="fa fas fa-link"></i><p>Search</p></button>
-                </div>
-                <hr>
-                <div class="backgrounds flex-rc-p">
-                    <div class="card flex-cc-p">
-                        <img src="Images/purpleVert.jpg">
-                        <p>Vertical</p>
-                    </div>
-                    <div class="card flex-cc-p">
-                        <img src="Images/purpleH.jpg">
-                        <p>Horizontal</p>
-                    </div>
-                </div>
-                <button class="icon-btn labeled"><i class="fa fas fa-plus"></i><p>Add Users</p></button>
-                <button class="icon-btn labeled"><i class="fa fas fa-door-closed"></i><p>Leave</p></button>
-            </section>
-            <button class="expand"><i class="fa fas fa-caret-right"></i></button>
-        </aside> -->
-        <!-- <aside id="convos" class="flex-row pullout left secondary">
-            <section class="convos flex-col pullout-content">
-                <div id="convoMenu" class="flex-rc">
-                    <button id="privC" class="bottom_border">Private</button>
-                    <button id="pubC" class="bottom_border">Public</button>
-                    <button id="inviC" class="bottom_border">Invites</button>
-                    <button id="addC" class="bottom_border">+</button>
-                </div>
-                <div class="base-listing unread bottom_border user-grid p10">
-                    <img src="Images/pfp.jpg" class="user-image">
-                    <div class="heading flex-r-g name">
-                        <p class="title f15">Starlight</p>
-                        <p class="time">1m</p>
-                    </div>
-                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d. Do you agree that we should</p>
-                </div>
-                <div class="base-listing bottom_border user-grid p10">
-                    <img src="Images/pfp2.jpg" class="user-image">
-                    <div class="heading flex-r-g name">
-                        <p class="title f15">Jaylex, Starlight, Nix, Levi</p>
-                        <p class="time">1m</p>
-                    </div>
-                    <p class="text">hey!</p>
-                </div>
-                <div class="base-listing bottom_border user-grid p10">
-                    <img src="Images/pfpGreen.png" class="user-image">
-                    <div class="heading flex-r-g name">
-                        <p class="title f15">Unread</p>
-                        <p class="time">1m</p>
-                    </div>
-                    <p class="text">short sorry))</p>
-                </div>
-                <div class="base-listing bottom_border user-grid p10">
-                    <img src="Images/pfpGreen2.webp" class="user-image">
-                    <div class="heading flex-r-g name">
-                        <p class="title f15">Unread</p>
-                        <p class="time">1m</p>
-                    </div>
-                    <p class="text">hey, so about the project on l i z a r d s and canabalism... I think it's b a d.</p>
-                </div>
-            </section>
-            <button class="expand"><i class="fa fas fa-caret-right"></i></button>
-        </aside> -->
+            <button class="icon-btn">Save<i class="fa fas fa-floppy-disk"></i></button>
+        </section> -->
+
+        <!--Chat Messages-->
         <section id="chat" class="flex-col">
-            <header class="p10 user-grid">
-                <img class="user-image" src="Images/pfp.jpg" />
-                <h1 class="name">Starlight</h1>
-                <p class="text online">Online</p>
-            </header>
             <section class="flex-col">
                 <!-- <div class="message dice user-grid top p10">
                     <img src="Images/Pfps/Jacob512.png" class="user-image" style="border-color: rgb(77, 0, 0); background-color: rgb(77, 0, 0); border-width: 3px;">
@@ -133,51 +95,9 @@
                     </div>
                 </div> -->
             </section>
-            <footer class="flex-c-p-g">
-                <div class="character-select flex-r-g hidden">
-                    <button class="icon-btn labeled" id="noRole"><p>None</p></button>
-                </div>
-                <div class="flex-r-g message-line">
-                    <button id="role-btn" class="icon-btn"><!--<i class="fa fas fa-user"></i>--><img src="Images/pfp2.jpg"><p>Roles</p></button>
-                    <textarea placeholder="Type something..." rows="1" id="input"></textarea>
-                    <!-- Add sendMessage onclick -->
-                    <button class="icon-btn" id="send"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
-                </div>
-                <div class="flex-rc-g buttons">
-                    <!-- <button class="icon-btn"><i class="fa fas fa-microphone"></i><p>Voice Message</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-image"></i><p>Image</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-gamepad"></i><p>Game</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-face-laugh-beam"></i><p>Sticker</p></button> -->
-                    <!-- <button id="dice-btn" class="icon-btn"><i class="fa fas fa-dice-three"></i><p>Dice</p></button> -->
-                </div>
-                <!-- <div class="dice-options flex-rc-g hidden">
-                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>4</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>6</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>8</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>12</p></button>
-                    <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>20</p></button>
-                </div> -->
-            </footer>
         </section>
-        <aside id="characters" class="flex-row pullout right">
-            <!-- <button class="expand" onclick="openCharacters()"><i class="fa fas fa-caret-left"></i></button> -->
-            <section class="characters flex-col pullout-content">
-                <h2>Roles</h2>
-                <hr>
-                <div class="role-element flex-row" style="--role-color: rgb(0, 0, 0); --role-color-2: rgb(35, 15, 0)">
-                    <div class="user-grid">
-                        <div class="user-image new"></div>
-                        <h1 class="name">New Role</h1>
-                        <p class="text">Click the plus to get started</p>
-                    </div>
-                    <button id="add-role" class="icon-btn circular"><i class="fa fas fa-plus"></i></button>
-                </div>
-                <div class="flex-rc-p pagination hidden">
-                    <button class="icon-btn circular small"></button>
-                </div>
-            </section>
-            <button class="expand"><i class="fa fas fa-caret-left"></i></button>
-        </aside>
+
+        <!-- class="flex-row pullout right" Took out of aside below -->
         <article id="character-info">
             <h1 id="close-character" class="f2">Role Info</h1>
             <i class="lower fa fas fa-caret-down"></i>
@@ -200,8 +120,37 @@
                 <button id="save" class="icon-btn"><i class="fa fas fa-floppy-disk"></i><p>Save</p></button>
             </footer>
         </article>
+
+        <footer class="flex-c-p-g">
+            <div class="character-select flex-r-g hidden">
+                <button class="icon-btn labeled" id="noRole" onclick="unselectRole()"><p>None</p></button>
+            </div>
+            <div class="flex-r-g message-line">
+                <button id="role-btn" class="icon-btn" onclick="showHide('.character-select')"><!--<i class="fa fas fa-user"></i>--><img src="Images/pfp2.jpg"><p>Roles</p></button>
+                <textarea placeholder="Type something..." rows="1" id="input"></textarea>
+                <!-- Add sendMessage onclick -->
+                <button class="icon-btn" onclick="getMessage()"><i class="fa fas fa-paper-plane"></i><p>Send</p></button>
+            </div>
+    
+            <!--Collapse this into a menu button-->
+            <!-- <div class="flex-rc-g buttons">
+                <button class="icon-btn"><i class="fa fas fa-microphone"></i><p>Voice Message</p></button>
+                <button class="icon-btn"><i class="fa fas fa-image"></i><p>Image</p></button>
+                <button class="icon-btn"><i class="fa fas fa-gamepad"></i><p>Game</p></button>
+                <button class="icon-btn"><i class="fa fas fa-face-laugh-beam"></i><p>Sticker</p></button>
+                <button class="icon-btn" onclick="showHide('.dice-options')"><i class="fa fas fa-dice-three"></i><p>Dice</p></button>
+            </div> -->
+    
+            <!--Collapse this into a die button-->
+            <!-- <div class="dice-options flex-rc-g hidden">
+                <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>4</p></button>
+                <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>6</p></button>
+                <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>8</p></button>
+                <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>12</p></button>
+                <button class="icon-btn"><i class="fa fas fa-dice-three"></i><p>20</p></button>
+            </div> -->
+        </footer>
+
     </main>
-    <footer>
-    </footer>
 </body>
 </html>

@@ -4,14 +4,15 @@
   background-attachment: fixed;
 }
 
-#chat header, #chat footer {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 #chat section {
   flex: 1;
   overflow-y: auto;
   flex-direction: column-reverse;
+}
+
+#chat header {
+  display: flex;
+  flex-direction: column;
 }
 
 .message.deleted {

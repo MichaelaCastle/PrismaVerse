@@ -87,14 +87,15 @@ function extendPullout(elem){
             }
         });
     }
-    if(ei.className.includes(" fa-caret-left")){
-        ei.classList.remove("fa-caret-left");
-        ei.classList.add("fa-caret-right");
-    }
-    else{
-        ei.classList.remove("fa-caret-right");
-        ei.classList.add("fa-caret-left");
-    }
+    // Using info icon now, no
+    // if(ei.className.includes(" fa-caret-left")){
+    //     ei.classList.remove("fa-caret-left");
+    //     ei.classList.add("fa-caret-right");
+    // }
+    // else{
+    //     ei.classList.remove("fa-caret-right");
+    //     ei.classList.add("fa-caret-left");
+    // }
 }
 
 function closeCharacter(){
@@ -368,8 +369,11 @@ async function fetchCharacters() {
 function getMessage(){
     const messageInput = document.getElementById('input');
     
+
     // Get textarea text
     const content = messageInput.value;
+    // Reset textarea
+    messageInput.value = '';
 
     // Sets parameters needed to construct message
     // const userId = currentUserId 
@@ -381,12 +385,15 @@ function getMessage(){
     const sentby = userId;
     console.log('currentUserId', userId);
 
+    
     // Send message if a message was typed
-    if(content){
-    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted, sentby);
-    // Reset textarea
-    messageInput.value = '';
+    if(content.trim()){
+        sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
     }
+    // else{
+    //     console.log("nothing in the textarea");
+    // }
+
 }
 
 // Adds a message to the table of all the message data between users (msgData)
@@ -529,6 +536,8 @@ function addMessage(){
     //let msg_c = document.querySelector('#chat > section');
     //msg_c.innerHTML = "";
     //loadMessages();
+
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 // Load all messages
@@ -638,7 +647,9 @@ function loadMessages(){
     }
 
     // Reverses message data back to correct order
-    msgData = msgData.reverse();  
+    msgData = msgData.reverse();
+
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 //Works
@@ -1060,6 +1071,9 @@ function loadCharacters(){
         //combine
         role.appendChild(userGrid);
         role.appendChild(edit);
+        //Testing
+        console.log("role = ", role);
+        console.log("pagnation = ", pagination);
         role_c.insertBefore(role, pagination);
 
         //role.addEventListener('click', getEditCharacterId);
@@ -1217,7 +1231,7 @@ async function starting() {
 
     characters = document.querySelector('.characters');
     c_expand = document.querySelector('#characters .expand i');
-    c_expand_class = c_expand.classList;
+    // c_expand_class = c_expand.classList; // I don't think we need this, moving expand class to a new page for now for feature addition (11/27/2024)
     c_info = document.querySelector('#character-info');
     c_info_notes = c_info.querySelector('.notes');
     c_info_desc = c_info.querySelector('.description');
@@ -1260,14 +1274,24 @@ async function starting() {
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
-    // loadUsers();
+    // loadUsers(); // Removed this feature
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){
         cr[c].addEventListener("click", () => openCharacter(c));
     }
 
+    // add event listeners
+    addEventListeners();
+    
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
+}
+window.onload = starting;
 
+
+// Helper method for adding event listeners
+const addEventListeners = () => {
+    // Focus events
     // focus events don't bubble, must use capture phase
     document.body.addEventListener("focus", event => {
         const target = event.target;
@@ -1282,6 +1306,89 @@ async function starting() {
         document.body.classList.remove("keyboard");
     }, true); 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
+
+    // To close New Role (adding role) popup
+    document.querySelector('#exit-panel').addEventListener('click', function () {
+        closePanel(this); // Pass the button as the panel to close
+    });
+
+    // To send message on Enter keypress
+    const inputBox = document.querySelector('#input');
+    inputBox.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            // sened message and update stream
+            getMessage();
+
+            // clear input box
+            inputBox.value = '';
+        }
+    });
+
+    // Back button to go to DM list
+    document.querySelector('.back-button').addEventListener('click', loadConversations);
+};
+
+function loadRolePage()
+{
+    // get elements
+    const infoIcon = document.querySelector('.chat-info');
+    const header = document.querySelector(".message-name");
+    const onlineText = document.querySelector(".online");
+    const imageElement = document.querySelector(".user-image");
+    const backButton = document.querySelector('.back-button');
+    const footer = document.querySelector('.flex-c-p-g');
+
+    // hide info icon
+    infoIcon.style.display = 'none';
+
+    // update header
+    header.innerHTML = "Roles";
+    onlineText.style.display = "none";
+    imageElement.style.display = "none";
+
+    // replace event for back button
+    backButton.removeEventListener('click', loadConversations);
+    backButton.addEventListener('click', loadChatPage);
+    
+    // update content
+    let characterRoles = document.querySelector(".characters");
+    let chatMessages = document.querySelector("#chat");
+    chatMessages.innerHTML = characterRoles.innerHTML;
+
+    // remove footer
+    footer.style.display = 'none';
+}
+
+const loadChatPage = () => {
+    // get elements
+    const infoIcon = document.querySelector('.chat-info');
+    const name = document.querySelector(".message-name");
+    const onlineText = document.querySelector(".online");
+    const imageElement = document.querySelector(".user-image");
+    const backButton = document.querySelector('.back-button');
+    const footer = document.querySelector('.flex-c-p-g');
+
+    // reset info icon display
+    infoIcon.style.display = 'block';
+
+    // update header
+    name.innerHTML = "Starlight";
+    onlineText.style.display = "block";
+    imageElement.style.display = "block";
+
+    // replace event for back button
+    backButton.removeEventListener('click', loadChatPage);
+    backButton.addEventListener('click', loadConversations);
+
+    // load messages
+    loadMessages();
+
+    // add footer
+    footer.style.display = 'block';
+}
+const loadConversations = () => {
+    window.location.href = 'Chats4.html';
 }
 
 window.onload = starting;
+
