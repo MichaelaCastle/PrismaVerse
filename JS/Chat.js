@@ -305,8 +305,11 @@ let currentEditCharacterId = 1;
 // Gets the data in the textarea needed for a message 
 function getMessage(){
     const messageInput = document.getElementById('input');
+
     // Get textarea text
     const content = messageInput.value;
+    // Reset textarea
+    messageInput.value = '';
 
     // Sets parameters needed to construct message
     const userId = currentUserId;  
@@ -314,12 +317,10 @@ function getMessage(){
     const characterId = currentCharacterId; 
     const isImage = false;
     const deleted = false;  
-
+    
     // Send message if a message was typed
-    if(content){
-    sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
-    // Reset textarea
-    messageInput.value = '';
+    if(content.trim()){
+        sendMessage(userId, content, usingCharacter, characterId, isImage, deleted);
     }
     // else{
     //     console.log("nothing in the textarea");
@@ -519,7 +520,7 @@ function loadMessages(){
     // Reverses message data back to correct order
     msgData = msgData.reverse();
 
-    
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 // Gets the characterid of current character being viewed/edited
@@ -652,7 +653,6 @@ function loadCharacters(){
     // </div>
 }
 
-
 function loadUsers(){
     let role_c = document.querySelector('.users');
     for(let c = 0; c < participants.length; c++){
@@ -777,14 +777,24 @@ async function starting() {
 
     loadMessages();
     loadCharacters();
-    loadUsers();
+    // loadUsers(); // Removed this feature
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){
         cr[c].addEventListener("click", () => openCharacter(c));
     }
 
+    // add event listeners
+    addEventListeners();
+    
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
+}
+window.onload = starting;
 
+
+// Helper method for adding event listeners
+const addEventListeners = () => {
+    // Focus events
     // focus events don't bubble, must use capture phase
     document.body.addEventListener("focus", event => {
         const target = event.target;
@@ -799,7 +809,27 @@ async function starting() {
         document.body.classList.remove("keyboard");
     }, true); 
     window.scroll(0, Number.MAX_SAFE_INTEGER);
-}
+
+// To close New Role (adding role) popup
+document.querySelector('#exit-panel').addEventListener('click', function () {
+    closePanel(this); // Pass the button as the panel to close
+});
+
+// To send message on Enter keypress
+const inputBox = document.querySelector('#input');
+inputBox.addEventListener('keypress', function (e) {
+    console.log('keypress');
+    if (e.key === 'Enter') {
+        // sened message and update stream
+        getMessage();
+
+        // clear input box
+        inputBox.value = '';
+    }
+});
+
+
+};
 
 function rolePage()
 {
@@ -840,3 +870,4 @@ function rolePage()
     chatMessages.innerHTML = characterRoles.innerHTML;
 }
 window.onload = starting;
+
