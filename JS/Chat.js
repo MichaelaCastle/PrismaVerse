@@ -894,10 +894,9 @@ const loadConversations = () => {
 }
 
 window.addEventListener("scroll", function() {
-    var header = document.getElementById("#p10 message-header-grid");
-    // Adjust the position based on scroll
+    var header = document.querySelector("#message-header-grid");
     var scrollPosition = window.scrollY;
-    header.style.top = 50 + scrollPosition * 0.5 + 'px'; // Move header with scroll
+    header.style.top = 50 + scrollPosition * 0.5 + 'px'
 });
 
 window.onload = starting;
