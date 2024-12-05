@@ -529,6 +529,8 @@ function addMessage(){
     //let msg_c = document.querySelector('#chat > section');
     //msg_c.innerHTML = "";
     //loadMessages();
+
+    window.scroll(0, Number.MAX_SAFE_INTEGER);
 }
 
 // Load all messages
@@ -1060,6 +1062,9 @@ function loadCharacters(){
         //combine
         role.appendChild(userGrid);
         role.appendChild(edit);
+        //Testing
+        console.log("role = ", role);
+        console.log("pagnation = ", pagination);
         role_c.insertBefore(role, pagination);
 
         //role.addEventListener('click', getEditCharacterId);
@@ -1217,7 +1222,7 @@ async function starting() {
 
     characters = document.querySelector('.characters');
     c_expand = document.querySelector('#characters .expand i');
-    c_expand_class = c_expand.classList;
+    // c_expand_class = c_expand.classList; // I don't think we need this, moving expand class to a new page for now for feature addition (11/27/2024)
     c_info = document.querySelector('#character-info');
     c_info_notes = c_info.querySelector('.notes');
     c_info_desc = c_info.querySelector('.description');
