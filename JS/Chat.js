@@ -1101,24 +1101,24 @@ function loadCharacters(){
     // </div>
 }
 
-function loadUsers(){
-    let role_c = document.querySelector('.users');
-    for(let c = 0; c < participants.length; c++){
-        let role = document.createElement("div");
-        role.className = "role flex-cc";
-        role.style.setProperty('--role-color', participants[c].color);
-        //pfp
-        let icon = document.createElement("img");
-        icon.src = participants[c].pfp;
-        role.appendChild(icon);
-        //name
-        let name = document.createElement("p");
-        name.innerText = participants[c].name;
-        role.appendChild(name);
-        //combine
-        role_c.appendChild(role);
-    }
-}
+// function loadUsers(){
+//     let role_c = document.querySelector('.users');
+//     for(let c = 0; c < participants.length; c++){
+//         let role = document.createElement("div");
+//         role.className = "role flex-cc";
+//         role.style.setProperty('--role-color', participants[c].color);
+//         //pfp
+//         let icon = document.createElement("img");
+//         icon.src = participants[c].pfp;
+//         role.appendChild(icon);
+//         //name
+//         let name = document.createElement("p");
+//         name.innerText = participants[c].name;
+//         role.appendChild(name);
+//         //combine
+//         role_c.appendChild(role);
+//     }
+// }
 
 let styleText = (s) => {
     if(!s.includes('*')) return s;
@@ -1232,9 +1232,9 @@ async function starting() {
         });
     });
 
-    document.getElementById('dice-btn').addEventListener('click', function () {
-        showHide('.dice-options');
-    });
+    // document.getElementById('dice-btn').addEventListener('click', function () {
+    //     showHide('.dice-options');
+    // });
     
     document.getElementById('role-btn').addEventListener('click', function () {
         showHide('.character-select');
@@ -1260,7 +1260,7 @@ async function starting() {
     //console.log("before loadmessages is called", msgData);
     loadMessages();
     loadCharacters();
-    loadUsers();
+    // loadUsers();
     
     const cr = characters.querySelectorAll('.roles .role');
     for(let c = 0; c < cr.length; c++){
