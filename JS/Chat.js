@@ -885,20 +885,21 @@ function createNewRole(){
 
 // Add role to existing roles
 async function addNewRole(name, nickname, color, pfp, notes, description, relinquised){
-
+    console.log("addNewRole called");
+    console.log('User ID:', currentUserId);
     try {
         // Create new role object
         const newRoleData = {
-            userId: currentUserId,
+            userid: currentUserId,
             name: name,
             nickname: nickname,
             color: color,
             pfp: pfp,
             notes: notes,
             description: description,
-            relinquised: relinquised,
+            relinquised: true,
         };
-        //console.log(newRoleData);
+        console.log(newRoleData);
 
         // Add new role to database
         const response = await fetch('/api/roles', {
